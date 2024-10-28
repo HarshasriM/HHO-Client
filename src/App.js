@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import Navbar from './components/Navbar';
-import {Routes,Route,Link} from 'react-router-dom';
+import {Routes,Route} from 'react-router-dom';
 import Home from './Pages/Home/HomePage';
 import Event from './Pages/Event/EventPage';
 import Transactions from './Pages/Transaction/TransactionPage';

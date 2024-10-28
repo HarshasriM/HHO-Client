@@ -1,11 +1,13 @@
 import React from 'react';
+import TransactionLayout from '../../components/Transaction/TransactionLayout';
 
-function TransactionPage(props) {
+
+function Transaction() {
     return (
         <div>
-            
+            <TransactionLayout/>
         </div>
     );
 }
 
-export default TransactionPage;
+export default Transaction;

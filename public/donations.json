@@ -1,0 +1,35 @@
+[
+    {
+      "name": "John Doe",
+      "title": "Medical Support for Surgery",
+      "description": "John is raising funds for a life-saving surgery scheduled next month.",
+      "amt": 50000,
+      "date": "2024-10-01",
+      "image":"https://img.freepik.com/premium-photo/happy-volunteers-looking-donation-box_1269290-718.jpg?ga=GA1.1.979507765.1726655807&semt=ais_hybrid"
+    },
+    {
+      "name": "Emily Clark",
+      "title": "Education Aid for Underprivileged Kids",
+      "description": "Emily is gathering funds to help children from low-income families get school supplies.",
+      "amt": 15000,
+      "date": "2024-09-20",
+      "image":"https://img.freepik.com/premium-photo/happy-volunteers-looking-donation-box_1269290-718.jpg?ga=GA1.1.979507765.1726655807&semt=ais_hybrid"
+    },
+    {
+      "name": "Michael Smith",
+      "title": "Community Clean Water Initiative",
+      "description": "Michael is raising funds to provide clean drinking water in rural areas.",
+      "amt": 30000,
+      "date": "2024-09-15",
+      "image":"https://res.cloudinary.com/dgye02qt9/image/upload/v1729256419/fundraising_image_sejlcp.jpg"
+    },
+    {
+      "name": "Sophia Johnson",
+      "title": "Animal Shelter Rehabilitation",
+      "description": "Sophia is working to rebuild an animal shelter destroyed by floods.",
+      "amt": 20000,
+      "date": "2024-09-28",
+      "image":"https://img.freepik.com/premium-photo/happy-volunteers-looking-donation-box_1269290-718.jpg?ga=GA1.1.979507765.1726655807&semt=ais_hybrid"
+    }
+  ]
+  

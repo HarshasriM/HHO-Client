@@ -1,0 +1,158 @@
+/*Google Fonts*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.back-image{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+:root{
+    --white-color:hsl(0,0%,100%);
+    --black-color:hsl(0,0%,0%,0.75);
+    --body-font:"Poppins",sans-serif;
+    --h1-font-size:2rem;
+    --normal-font-size:1rem;
+    --small-font-size:.813rem;
+    --font-medium:600;
+}
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.back-image .input .button{
+    font-size: var(--normal-font-size);
+    font-family: var(--body-font);
+}
+.back-image{
+    color:var(--black-color)
+}
+.input .button{
+    border: none;
+    outline:none;
+}
+a{
+    text-decoration: none;
+}
+
+.login{
+    position: relative;
+    height: 107vh;
+}
+.image{
+    max-width: 100%;
+    height: 110vh;
+    position:absolute;
+    opacity: 0.45;
+}
+.login-form{
+    position: relative;
+    background-color: transparent;
+    text-align: center;
+    padding-right: 1rem;
+    border-radius: 1rem;
+    text-shadow: 2px 2px 3px #fa9a34;
+}
+.login-title{
+    text-align: center;
+    font-size: var(--h1-font-size);
+    font-weight: var(--font-medium);
+    margin-bottom: 2rem;
+}
+.login-content{
+    display: grid;
+    row-gap: 1rem;
+
+}
+.login-box{
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    column-gap: 0.75rem;
+    border-bottom: 2px solid var(--black-color);
+}
+.login-icon,#login-eye{
+    font-size: 1.25rem !important;
+}
+.login-input{
+    width:100%;
+    padding-block: 0.8rem;
+    background: none;
+    border: none;
+    outline: none;
+}
+.login-box-input{
+    position: relative;
+}
+.login-label{
+    position: absolute;
+    left: 0;
+    top:14px;
+    font-weight: var(--font-medium);
+    transition: top .3s , font-size .3s;
+}
+#login-eye{
+    position: absolute;
+    right:0;
+    top: 18px;
+    z-index: 10;
+    cursor: pointer;
+}
+.login-forgot{
+    color: var(--black-color);
+    text-align: end;
+}
+.login-forgot:hover{
+    color:var(--black-color);
+    text-decoration: underline;
+}
+.login-btn{
+    width:80%;
+    margin: auto;
+    border: none;
+    outline: none;
+    padding: 0.7rem 0;
+    border-radius: .5rem;
+    background-color: #fa9a34;
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    color: var(--white-color);
+}
+.login-btn:hover{
+    border: 2px solid #fa9a34;
+    background-color: transparent;
+    color: #fa9a34;
+    box-shadow: 2px 5px #fa9a34;
+}
+.login-input:focus + .login-label{
+    top: -12px;
+    font-size: var(--small-font-size);
+}
+.login-input:not(:placeholder-shown).login-input:not(:focus)+ .login-label{
+    top:-12px;
+    font-size: var(--small-font-size);
+}
+/* Add this to your CSS file */
+@media only screen and (max-width: 800px) {
+    .image {
+      width: 100vw;
+      height: 100vh;
+      margin: auto;
+      display: block;
+      object-fit:cover;
+       /* Optional: ensure the image covers the area without stretching */
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .image {
+      display: none;
+       /* Optional: ensure the image covers the area without stretching */
+    }
+    .login-form{
+        border:2px solid #fa9a34;
+        box-shadow: 2px 2px 2px 2px #fa9a34;
+        padding: 10px;
+    }
+  }
+  

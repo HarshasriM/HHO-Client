@@ -1,0 +1,47 @@
+
+[
+
+    {
+
+        "title": "Fundraising Event",
+
+        "description": "Join us in raising funds for various causes that make a difference in the community.",
+
+        "image": "https://res.cloudinary.com/dgye02qt9/image/upload/v1729256419/fundraising_image_sejlcp.jpg"
+
+    },
+
+    {
+
+        "title": "Coding Event",
+
+        "description": "A coding marathon to solve real-world problems and create impactful solutions.",
+
+        "image": "https://res.cloudinary.com/dgye02qt9/image/upload/v1729256420/codingcontest_rnxoog.jpg"
+
+    },
+
+    {
+
+        "title": "Blood Donation Camps",
+
+        "description": "Help save lives by donating blood at our organized camps.",
+
+        "image": "https://res.cloudinary.com/dgye02qt9/image/upload/v1729256419/blood_donation_g4qamj.png"
+
+    },
+
+    {
+
+        "title": "Plastic Picking",
+
+        "description": "Participate in our environmental initiative to keep the surroundings clean and green.",
+
+        "image": "https://res.cloudinary.com/dgye02qt9/image/upload/v1729256419/plasticpicking_s4ylq5.jpg"
+
+    }
+
+]
+
+
+

@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Playpen+Sans:wght@100..800&display=swap');
+.about-section{
+    background-color: whitesmoke;
+}
+.about-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 76vh;
+    background-color: white;
+    margin-bottom: 50px;
+}
+
+.about-title {
+    margin-bottom: 1rem;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-size: 50px;
+    letter-spacing: 3px;
+    font-style: normal;
+}
+
+.span {
+    margin-bottom: 1rem;
+    font-family: "Anton", sans-serif;
+    font-weight: 300;
+    font-size: 50px;
+    letter-spacing: 3px;
+    font-style: normal;
+    color: #fa9a34;
+}
+
+.about-content {
+    font-family: "Playpen Sans", cursive;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.about-history {
+    padding: 4.5rem;
+    background-color: white;
+}
+
+.about-mission-img {
+    
+    height: 95%;
+    width: 95%;
+    transition:.5s ;
+}
+.about-img{
+    position: relative;
+}
+.about-img:hover  .about-mission-img{
+    height: 100%;
+    width: 100%;
+}
+
+.overlay {
+    
+    position: absolute;
+    top: 50%;
+    /* Center vertically */
+    left: 50%;
+    /* Center horizontally */
+    transform: translate(-50%, -50%);
+    /* Adjust position */
+    color: white;
+    /* Text color */
+    text-align: center;
+    /* Center text */
+    opacity: 0;
+    /* Initially hidden */
+    transition: opacity .5s;
+}
+.about-img:hover .overlay {
+    opacity: 1; /* Show text on hover */
+}
+.about-mission-img:hover{
+    opacity: 0.8;
+}
+@media screen and (max-width:800px)  {
+
+    .about-title{
+      font-size: 45px;
+    }
+    .span{
+      font-size: 40px;
+    }
+    
+  } 

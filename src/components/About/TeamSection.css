@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Playpen+Sans:wght@100..800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.about-team{
+    background-color: white;
+}
+.team{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-bottom: 50px;
+    margin-bottom:20px ;
+    background-color: white;
+}
+.profile-card{
+    position: relative;
+    width: 220px;
+    height: 220px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 50%;
+    box-shadow: 0 0 22px #3336;
+    transition: 1s;
+}
+.profile-card:hover{
+    border-radius: 10px;
+    width: 250px;
+    height: auto;
+
+}
+.profile-card img{
+    position: relative;
+    border-radius: 50%;
+    width: 100%;
+    z-index: 99;
+}
+.img img{
+    width: 100%;
+    height: 160px;
+    border-radius: 50%;
+    transition: .5s;
+    
+}
+.profile-card:hover img{
+    width: 90%;
+    height: 150px;
+}
+
+.caption{
+    color:black;
+    text-align: center;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: .5s;
+}
+.profile-card:hover .caption{
+    opacity: 1;
+}
+
+.caption p{
+    font-size: 17px;
+    color: darkorange;
+    margin: 2px 0px 4px 0px;
+}
+.caption .social-links a{
+    color:darkorange;
+    margin-right: 12px;
+    font-size: 20px;
+}

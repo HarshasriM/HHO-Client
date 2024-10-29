@@ -1,0 +1,119 @@
+/* *{
+    font-family: serif;
+}
+.bg-orange {
+    background-color: rgb(255, 183, 48) !important;
+}
+
+.navbar-logo {
+    height: 70px;
+    width: 70px;
+}
+
+#nav-item1 ,
+#nav-item2,
+#nav-item3 ,
+#nav-item4,
+#nav-item5{
+    color: white;
+    font-family: "Roboto";
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 16px;
+} 
+
+ .nav-link {
+    transition: all 0.5s;
+}
+
+
+.nav-link:hover {
+    color: #ff9900 !important;
+    background-color: white;
+    border-radius: 16px;
+}
+.nav-login{
+    background-color: white;
+    color: #ff9900;
+    border-radius: 20px;
+    padding:10px 20px;
+    font-family: "Roboto";
+    font-size: large;
+    font-weight: bold;
+    text-decoration: none;
+}
+ .nav-login:hover{
+    color: #e99e2e;
+    text-decoration: none;
+}  */
+
+*{
+    font-family: serif;
+    margin: 0px;
+}
+.bg-orange {
+    background-color: rgb(255, 177, 75) !important;
+}
+
+.navbar-logo {
+    height: 70px;
+    width: 70px;
+}
+
+#nav-item1 ,
+#nav-item2,
+#nav-item3 ,
+#nav-item4{
+    color: white;
+    font-family: "Roboto";
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 16px;
+}
+
+
+.nav-link {
+    color: white;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    padding: 16px !important;
+    margin: 0px 8px;
+    text-transform: none !important;
+    transition: all 0.3s !important;
+}
+
+.nav-link:hover {
+    transition: all 1s !important;
+    color: #ff9900 !important;
+    background-color: white;
+    border-radius: 16px;
+}
+.nav-login{
+    background-color: white !important;
+    color: #ff9900 !important;
+    border-radius: 20px !important;
+    padding:10px 20px !important;
+    font-family: "Roboto" !important;
+    font-size: large !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+}
+.nav-login:hover{
+    color: white !important;
+    border: 1px solid white !important;
+    background-color: transparent !important;
+    text-decoration: none;
+}
+.login-logo{
+    border-style: none;
+    border-radius: 50%;
+    padding: 12px;
+    color: #ff9900;
+    background-color: white;
+    font-weight: 600;
+    font-size: 18px;
+}

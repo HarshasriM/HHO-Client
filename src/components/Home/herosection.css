@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Playpen+Sans:wght@100..800&display=swap');
+@media (min-width: 992px) {
+    .car-img {
+      height: 90vh; /* Height for large and extra-large devices */
+    }
+  }
+  
+  .about-text{
+    text-align: center;
+    font-family: "Playpen Sans", cursive;
+  }
+  .about-head-text{
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+  }
+  .about-button{
+    background-color: #fa9a34;
+    color: white;
+  }
+
+
+  /* Keyframes for animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Initially hide elements with opacity 0 and slightly translate them down */
+.container-fluid .about-head,
+.container-fluid .about-head-text,
+.container-fluid .about-text,
+.container-fluid img,
+.container-fluid .about-button {
+  opacity: 1;
+  transform: translateY(20px); /* Start slightly below */
+  transition: opacity 3s ease-out, transform 0.3s ease-out;
+}
+
+/* Apply animations when the section becomes visible (when 'animate' class is added) */
+.container-fluid.animate .about-head {
+  animation: fadeInUp 3s forwards;
+}
+
+.container-fluid.animate .about-head-text {
+  animation: fadeInUp 3s forwards;
+}
+
+.container-fluid.animate .about-text {
+  animation: fadeInUp 3s forwards;
+}
+
+.container-fluid.animate img {
+  animation: slideInLeft 3s forwards;
+}
+
+.container-fluid.animate .about-button {
+  opacity: 1;
+  animation: buttonPulse 1.5s infinite; /* Pulse animation for the button */
+  transform: scale(1); /* Ensure it starts from normal size */
+  margin-top: 20px;
+}
+
+/* Optional hover effect for the button */
+.about-button {
+  background-color: #fa9a34;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  animation: pulse 2s infinite;
+}
+
+.about-button:hover {
+  background-color: transparent;
+  color: #fa9a34;
+  box-shadow: 2px 2px 4px #f8ca98;
+  transform: scale(1.05);
+  border: 1px solid #fa9a34;
+}
+
+
+.banner-container {
+  display: flex;
+  padding: 50px;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  height:76vh;
+}
+/* .banner-container{
+    background-image: url("https://img.freepik.com/premium-vector/handshake-human-help-icon_24877-1243.jpg?ga=GA1.1.979507765.1726655807&semt=ais_hybrid");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+} */
+.banner-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 50%;
+  animation: fadeInLeft 1.5s ease-in-out;
+}
+
+.banner-title {
+  font-family: "Anton", sans-serif;
+  font-size: 50px;
+  letter-spacing: 3px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  animation: slideInTop 2s ease-in-out;
+}
+
+.banner-subtitle {
+  font-size: 1.5rem;
+  color: #555;
+  margin-top: 10px;
+  font-family: "Playpen Sans", cursive;
+  animation: slideInBottom 2s ease-in-out;
+}
+
+.banner-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+
+.banner-image-container {
+  max-width: 40%;
+  animation: fadeInRight 1.5s ease-in-out;
+}
+
+.banner-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media screen and (max-width:800px)  {
+  .about-button{
+      margin-left: 0px !important;
+  }
+  .banner-title{
+    font-size: 45px;
+  }
+  .span{
+    font-size: 40px;
+  }
+  
+} 
+  

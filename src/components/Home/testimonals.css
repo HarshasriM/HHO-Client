@@ -1,0 +1,156 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
+.testimonials {
+  text-align: center;
+  padding: 50px;
+  background-color: #FFFFF0;
+  
+}
+
+.testimonials h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.testimonials h2 span {
+  font-style: italic;
+}
+
+.testimonials p {
+  color:black;
+  margin-bottom: 50px;
+}
+
+.testimonials-container {
+  display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* min-width: 500px; */
+    gap: 25px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-left: 0px;
+}
+
+.testimonial-card {
+  background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    min-width: 290px;
+    max-width: 150px;
+    height: 280px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    font-family: "Dancing Script",cursive;
+}
+@media (width >= 768px) {
+  .testimonial-card{
+    min-width: 500px;
+  }
+}
+
+.stars {
+  color: #ffb400;
+  margin-bottom: 15px;
+  padding: 20px 0px 10px 30px;
+  font-size: 25px;
+}
+
+.client-info {
+  display: flex;
+    align-items: center;
+    background-color: #fa9a34; /* Orange color */
+    padding:0px 8px 12px 12px;
+    border-radius: 0 0 10px 10px; 
+    font-family: "Dancing Script",cursive;
+    margin-top: 0px;
+
+}
+
+.client-info h3 {
+  margin: 0;
+  color: white; 
+  font-size: 1.2rem;
+}
+
+.client-info p {
+  color: white;
+  margin: 0;
+  font-size: 14px;
+}
+
+ .quote-text{
+  font-family: "Dancing Script",cursive;
+  font-size: 17px;
+  font-weight: 300;
+  padding: 0px 32px;
+  flex-grow: 1;
+  overflow-y: auto;
+ }
+  /* For WebKit Browsers (Chrome, Safari, Edge) */
+  .testimonials-container {
+    overflow: auto; /* Enable scroll for this container */
+    margin: 0px 10px;
+  }
+  
+  .testimonials-container::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  .testimonials-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+    margin: 50px;
+  }
+  
+  .testimonials-container::-webkit-scrollbar-thumb {
+    background-color: #fa9a34; /* Color of the scrollbar handle (thumb) */
+    border-radius: 10px; /* Round corners on the scrollbar */
+    border: 2px solid #f1f1f1; /* Optional: Add a border around the thumb */
+    
+  }
+  
+  .testimonials-container::-webkit-scrollbar-thumb:hover {
+    background-color: #fa9a34; /* Change thumb color on hover */
+  }
+  
+  /* For Firefox */
+  .testimonials-container {
+    scrollbar-width: thin; /* Can be 'auto', 'thin', or 'none' */
+    scrollbar-color: #fa9a34 #f1f1f1; /* thumb color and track color */
+  }
+  .testimonials-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .logo{
+    color: white;
+    width: 30px;
+  }
+/*   
+  .arrow {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+  
+  .left-arrow {
+    left: 10px;
+  }
+  
+  .right-arrow {
+    right: 10px;
+  }
+  
+  .testimonials-container {
+    overflow-x: hidden;
+    display: flex;
+    scroll-behavior: smooth;
+  } */

@@ -1,0 +1,44 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.banner-title{
+    padding: 0px;
+}
+.pre-event-card {
+    border-radius: 16px;
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+
+.pre-event-card:hover {
+    transform: scale(1.05);
+    box-shadow: 2px 2px 16px rgb(253, 201, 140) !important;
+}
+
+.pre-event-image {
+    border-radius: 16px;
+}
+
+.pre-event-title {
+    color: #323f4b;
+    font-family: "Roboto";
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.pre-event-link {
+    color: black;
+    font-family: "Roboto";
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.me-2 {
+    margin-right: 8px;
+}
+.card-icon{
+    color: rgb(255, 148, 60);
+}
+

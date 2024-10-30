@@ -2,15 +2,15 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import "./AboutContent.css";
 import "./TeamSection.css";
-function TeamSection() {
+import axios from 'axios';
+function Team() {
     const [teamData, setTeamData] = useState(null);
 
     useEffect(() => {
-        // Fetching the local JSON file
-        fetch('/team.json') // Note: This will look for the file in the 'public' folder
-            .then(response => response.json())
-            .then(data => setTeamData(data))
-            .catch(error => console.error('Error fetching team data:', error));
+        axios.get("http://localhost:8000/api/users/offUsers/").then(res=>{
+            console.log(res.data);
+            setTeamData(res.data);
+        })
     }, []);
     console.log(teamData)
 
@@ -37,14 +37,14 @@ function TeamSection() {
                         <h5 style={{ marginBottom: "15px" }} className='role mt-5 about-content'>{item.role}</h5>
                         <div className='profile-card'>
                             <div className='img'>
-                                <img src={item.photo} alt=".." />
+                                <img src={item.image} alt=".." />
                             </div>
                             <div className='caption'>
                                 <h5 className='about-content'>{item.name}</h5>
                                 <h5 className='about-content'>{item.id}</h5>
                                 <p className='about-content'>{item.role}</p>
                                 <div className='social-links'>
-                                    <a href={`tel:${item.contact}`}><i className="fa-solid fa-phone"></i></a>
+                                    <a href={`tel:${item.mobile}`}><i className="fa-solid fa-phone"></i></a>
                                     <a href={`mailto:${item.email}`}><i className="fa-solid fa-envelope"></i></a>
                                     <a href={`${item.linkedin}`} target="_blank" rel="noreferrer"><i className="fa-brands fa-linkedin"></i></a>
                                 </div>
@@ -67,4 +67,4 @@ function TeamSection() {
     );
 }
 
-export default TeamSection;
+export default Team;

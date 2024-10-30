@@ -17,7 +17,7 @@ function LoginPage() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [msg, setMsg] = useState();
-  const { token, setToken, open, setOpen, alertMsg, setAlertMsg } = useContext(AppContext);
+  const { token, setToken, open, setOpen, alertMsg, setAlertMsg,setMsgType } = useContext(AppContext);
 
 
   // Function to show the Snackbar (when login is successful)
@@ -45,7 +45,7 @@ function LoginPage() {
         const response = await axios.post('http://localhost:8000/api/users/offusers/login', {
           email,
           password,
-        });    alert("hello prasad");
+        });    
 
 
         console.log('Response:', response.data);
@@ -53,6 +53,7 @@ function LoginPage() {
           // alert("You are logged in")
           if(response.data.token) {
             setAlertMsg("Login Successful..");
+            setMsgType("success");
             setOpen(true);
             console.log(response.data.token);
             localStorage.setItem('token', response.data.token);

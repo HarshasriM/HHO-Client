@@ -1,0 +1,24 @@
+.testimonial-table{
+    width: 75vw;
+}
+.testimonial-table td,th{
+    padding: 1vw;
+    text-align: center;
+}
+.cardContainer{
+    display: none;
+}
+.message {
+    max-width: 25vw; 
+    overflow: hidden; 
+    white-space: normal;
+    word-wrap: break-word; 
+}
+@media screen and (max-width:800px) {
+    .testimonial-table{
+        display: none;
+    }
+    .cardContainer{
+        display: block;
+    }
+}  

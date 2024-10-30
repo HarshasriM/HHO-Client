@@ -13,6 +13,7 @@ export const AppProvider = ({ children }) => {
   const[open,setOpen] = useState();
   const[user,setUser] = useState({});
   const[alertMsg,setAlertMsg] = useState("");
+  const [msgType,setMsgType] = useState("success");
   // const handleLoginSuccess = () => {
   //   setOpen(true); // Open the Snackbar
   // };
@@ -22,10 +23,11 @@ export const AppProvider = ({ children }) => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpen(false); // Close the Snackbar
+    setOpen(false);
+    // Close the Snackbar
   };
   return (
-    <AppContext.Provider value={{token,setToken,user,setUser,open,setOpen,handleClose,alertMsg,setAlertMsg}}>
+    <AppContext.Provider value={{token,setToken,user,setUser,open,setOpen,handleClose,alertMsg,setAlertMsg,setMsgType,msgType}}>
       {children}
     </AppContext.Provider>
   );

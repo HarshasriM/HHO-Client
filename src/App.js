@@ -21,7 +21,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 function App() {
-  const{handleClose,open,alertMsg,setAlertMsg} = useContext(AppContext);
+  const{handleClose,open,alertMsg,setAlertMsg,msgType,setMsgType} = useContext(AppContext);
   return (
     <>
       <Navbar />
@@ -32,7 +32,7 @@ function App() {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }} // Position at the top-right corner
       >
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity={msgType} sx={{ width: '100%' }}>
           {alertMsg}
         </Alert>
       </Snackbar>

@@ -1,0 +1,30 @@
+/api/event/createEvent -> create event ->post
+/api/event/editEvent/:id -> edit event ->put
+/api/event/deleteEvent/:id -> delete event ->delete
+
+
+/api/users/offusers/login -> off user login ->post
+http://localhost:8000/api/users/offUsers/  ->get all users
+http://localhost:8000/api/users/offUsers/updateUsers/:id  -> edit user
+
+
+/api/volunteers/vol-registration -> volunteer registration ->post
+
+
+/api/transaction/add-transaction -> add a transaction -> post
+/api/transaction/update-transaction -> update a transaction ->put
+/delete-transaction/:id -> delete a event ->delete
+/get-all-transactions -> get all transactions -> get
+/search-transactions -> search transaction -> get
+
+
+/api/testimonial/ ->get all testimonials ->get
+/api/testimonial/createTestimonial -> create a testimonial -> post
+/api/testimonial/editTestimonial/:id -> edit a testimonial ->put
+/api/testimonial/deleteTestimonial/:id ->delete a testimonial ->delete
+
+
+http://localhost:8000/api/activities/getAll  ->get all activities
+http://localhost:8000/api/activities/create -> create a new activity
+http://localhost:8000/api/activities/update/:id -> update activity
+http://localhost:8000/api/activities/delete/:id -> delete activity

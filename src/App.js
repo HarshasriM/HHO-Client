@@ -3,19 +3,20 @@ import './App.css';
 import React from 'react';
 import Navbar from './components/Navbar';
 import {Routes,Route} from 'react-router-dom';
-import Home from './Pages/Home/HomePage';
-import Event from './Pages/Event/EventPage';
+import Home from './Pages/Home/Home';
+import Event from './Pages/Event/Event';
 import Transactions from './Pages/Transaction/TransactionPage';
 import About from './Pages/About/AboutPage';
 import Services from './Pages/Ourservices/OurservicesPage';
 import Login from './Pages/Login/LoginPage';
-import Footer from './components/Footer';
+import Footer from './components/footer';
 import Dashbord from './Pages/Dashboard/DashboardPage';
 import { useContext } from 'react';
 import { AppContext } from './context/Context';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import ProfileContainer from './Pages/Profile/ProfilePage';
+import Chaitra from './components/Event/Chaitra';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -46,7 +47,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/dashboard' element={<Dashbord />} />
         <Route path='/profile' element={<ProfileContainer />} />
-
+        <Route path='/chaitra' element={<Chaitra />} ></Route>
       </Routes>
     <Footer />
 

@@ -149,7 +149,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import './navbar.css'; // Importing the styles
 import ProfileMenu from './profile';
-import { AppContext } from '../Context/Context';
+import { AppContext } from '../context/Context';
 
 const drawerWidth = 280;
 const navItems = ['Home', 'Events', 'Transactions', 'Our Services', 'About Us'];

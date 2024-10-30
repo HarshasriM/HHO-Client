@@ -91,6 +91,12 @@
     background-color: white;
     border-radius: 16px;
 }
+.nav-link:active{
+    color: #ff9900 !important;
+    background-color: white;
+    border-radius: 16px;
+
+}
 .nav-login{
     background-color: white !important;
     color: #ff9900 !important;

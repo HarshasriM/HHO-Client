@@ -14,7 +14,6 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import AllTestimonials from "./Testimonials/AllTestimonials.js";
 import NewTestimonial from "./Testimonials/NewTestimonial.js";
-import { AdminPanelSettings } from '@mui/icons-material'; 
 import { useState } from 'react';
 import EmptyPage from './EmptyPage.js';
 import TestimonialIcon from "@mui/icons-material/Chat";
@@ -28,8 +27,8 @@ const NAV_ITEMS = [
     label: 'Testimonials',
     icon: <TestimonialIcon />,
     subItems: [
-      { label: 'New Testimonial', icon: null },
-      { label: 'All Testimonials', icon: null },
+      { label: 'New Testimonial',route:"/testimonials/newTestimonial" },
+      { label: 'All Testimonials',route:"/testimonials" },
     ],
   },
   {

@@ -2,7 +2,7 @@ import React from 'react';
 import AdminDashboard from './Admin/adminDashboard'
 function DashboardPage(props) {
     return (
-        <div style={{position:'',zIndex:20,height:"auto",width:"100vwv",minHeight:"100vh"}}>
+        <div style={{zIndex:20,height:"auto",width:"100vwv",minHeight:"100vh"}}>
       <AdminDashboard/>
     </div>
     );

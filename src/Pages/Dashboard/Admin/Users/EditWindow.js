@@ -51,7 +51,6 @@ const EditUserDialog = ({ onClose, user }) => {
         imageUrl = response.data.secure_url;
       } catch (e) {
         console.error("Image upload failed:", e);
-        return;
       }
     }
   

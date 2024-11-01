@@ -10,33 +10,48 @@ import About from './Pages/About/AboutPage';
 import Services from './Pages/Ourservices/OurservicesPage';
 import Login from './Pages/Login/LoginPage';
 import Footer from './components/footer';
-import Dashbord from './Pages/Dashboard/DashboardPage';
+import Dashbord from './Pages/Dashbord/Dashbord';
 import { useContext } from 'react';
 import { AppContext } from './context/Context';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import ProfileContainer from './Pages/Profile/ProfilePage';
 import Chaitra from './components/Event/Chaitra';
+import NewTransaction from './components/Dashbord/Accountant/NewTransaction';
+import PastTransactions from './components/Dashbord/Accountant/PastTransactions';
+import NewTestimonial from './components/Dashbord/Admin/Testimonials/NewTestimonial';
+import AllTestimonials from './components/Dashbord/Admin/Testimonials/AllTestimonials';
+import NewActivity from './components/Dashbord/Admin/Activities/NewActivity';
+import AllActivities from './components/Dashbord/Admin/Activities/AllActivities';
+import AllUsers from './components/Dashbord/Admin/Users/AllUsers';
+import { PrivateRoute } from './components/PrivateRoute';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 function App() {
-  const{handleClose,open,alertMsg,setAlertMsg,msgType,setMsgType} = useContext(AppContext);
+  const{handleClose,open,alertMsg,errorOcc} = useContext(AppContext);
   return (
     <>
       <Navbar />
       {
+        
         <Snackbar
         open={open}
-        autoHideDuration={3000} // Auto close after 3 seconds
+        autoHideDuration={3000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }} // Position at the top-right corner
+        // anchorOrigin={{ vertical: 'top', horizontal: 'right' }} 
       >
-        <Alert onClose={handleClose} severity={msgType} sx={{ width: '100%' }}>
+        {
+          errorOcc?<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {alertMsg}
+        </Alert>:
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
           {alertMsg}
         </Alert>
+        }
       </Snackbar>
-      }
+      
+    }
       <Routes>
         <Route  path='/' element={<Home />}/>
         
@@ -45,9 +60,18 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/services' element={<Services />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/dashboard' element={<Dashbord />} />
-        <Route path='/profile' element={<ProfileContainer />} />
+        <Route path='/dashboard' element={<PrivateRoute><Dashbord /></PrivateRoute>} >
+            <Route path='new-transaction' element={<NewTransaction />} />
+            <Route path='past-transactions' element={<PastTransactions />} />
+            <Route path='new-testimonial' element={<NewTestimonial />} />
+            <Route path='all-testimonials' element={<AllTestimonials />} />
+            <Route path='new-activity'  element={<NewActivity />} />
+            <Route path='all-activities' element={<AllActivities />} />
+            <Route path='users' element={<AllUsers />} />
+        </Route>
+        <Route path='/profile' element={<PrivateRoute><ProfileContainer /></PrivateRoute>} />
         <Route path='/chaitra' element={<Chaitra />} ></Route>
+        <Route path='*' element={<Home />} />
       </Routes>
     <Footer />
 

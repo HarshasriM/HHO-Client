@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -12,78 +11,42 @@ import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import AllTestimonials from "./Testimonials/AllTestimonials.js";
-import NewTestimonial from "./Testimonials/NewTestimonial.js";
-import { useState } from 'react';
-import EmptyPage from './EmptyPage.js';
-import TestimonialIcon from "@mui/icons-material/Chat";
-import VolunteerIcon from "@mui/icons-material/VolunteerActivism";
-import NewActivity from "./Activities/NewActivity.js";
-import AllActivities from "./Activities/AllActivities.js";
-import GroupIcon from "@mui/icons-material/Group";
-import AllUsers from "./Users/AllUsers.js";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+
 const NAV_ITEMS = [
   {
-    label: 'Testimonials',
-    icon: <TestimonialIcon />,
+    label: 'Transactions',
+    icon: <AccountBalanceIcon />,
     subItems: [
-      { label: 'New Testimonial',route:"/testimonials/newTestimonial" },
-      { label: 'All Testimonials',route:"/testimonials" },
+      { label: 'New Transaction', route: '/dashboard/new-transaction' },
+      { label: 'Past Transactions', route: '/dashboard/past-transactions' },
     ],
   },
-  {
-    label:"Activities",
-    icon:< VolunteerIcon/>,
-    subItems: [
-      { label: 'New Activity', icon: null },
-      { label: 'All Activities', icon: null },
-    ],
-  },
-  {
-    label:"Users",
-    icon:< GroupIcon/>,
-    subItems: [
-      { label: 'All Users', icon: null },
-    ],
-  }
 ];
 
 const theme = createTheme();
 
-function ContentArea({ selected }) {
-  return (
-    <>
-      {selected === 'New Testimonial' && <NewTestimonial />}
-      
-      {selected === 'All Testimonials' && <AllTestimonials />}
-      {selected === 'Default Page' && <EmptyPage/>}
-      {selected === 'New Activity' && <NewActivity />}
-      {selected === 'All Activities' && <AllActivities />}
-      {selected === "All Users" && <AllUsers />}
-    </>
-  );
-}
-
-ContentArea.propTypes = {
-  selected: PropTypes.string.isRequired,
-};
-
-function AcctDashboard() {
-  const [selectedPage, setSelectedPage] = useState('Default Page');
-  const [openSubNav, setOpenSubNav] = useState(null);
+function AcctDashbord() {
+  const [openSubNav, setOpenSubNav] = React.useState(null);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Navigate to new transaction by default if on /dashboard
+  React.useEffect(() => {
+    if (location.pathname === '/dashboard') {
+      navigate('/dashboard/new-transaction', { replace: true });
+    }
+  }, [location.pathname, navigate]);
 
   const handleItemClick = (label) => {
-    if (openSubNav === label) {
-      setOpenSubNav(null);
-    } else {
-      setOpenSubNav(label);
-    }
+    setOpenSubNav(openSubNav === label ? null : label);
   };
 
-  const handleSubItemClick = (label) => {
-    setSelectedPage(label);
-    setOpenSubNav(null); // Close the sub-navigation after selecting a sub-item
+  const handleSubItemClick = (route) => {
+    navigate(route); // Navigate to the specified route
+    setOpenSubNav(null); // Close the sub-navigation
   };
 
   return (
@@ -92,8 +55,7 @@ function AcctDashboard() {
         sx={{
           display: 'flex',
           flexDirection: isMobile ? 'column' : 'row',
-          height: 'auto',
-          minHeight:"100vh"
+          height: '100vh',
         }}
       >
         {/* Navigation */}
@@ -102,14 +64,14 @@ function AcctDashboard() {
           sx={{
             width: isMobile ? '100%' : 240,
             flexShrink: 0,
-            backgroundColor: '#f0f0f0',
+            backgroundColor: 'whitesmoke', // Change this to your desired color
             p: 2,
             display: 'flex',
             flexDirection: 'column',
           }}
         >
           <Typography variant="h6" sx={{ mb: 2 }}>
-            Admin Panel
+            Accountant Panel
           </Typography>
           <Divider />
           <List sx={{ p: 0 }}>
@@ -118,7 +80,6 @@ function AcctDashboard() {
                 <ListItem
                   button
                   onClick={() => handleItemClick(item.label)}
-                  selected={selectedPage === item.label}
                   sx={{
                     mb: 1,
                     cursor: 'pointer',
@@ -141,8 +102,7 @@ function AcctDashboard() {
                       <ListItem
                         button
                         key={subItem.label}
-                        onClick={() => handleSubItemClick(subItem.label)}
-                        selected={selectedPage === subItem.label}
+                        onClick={() => handleSubItemClick(subItem.route)}
                         sx={{
                           pl: 4,
                           cursor: 'pointer',
@@ -168,17 +128,17 @@ function AcctDashboard() {
             flexGrow: 1,
             p: 3,
             overflowY: 'auto',
-            height: 'auto',
-            minHeight:"100vh",
+            height: '100vh',
             display: 'flex',
             flexDirection: 'column',
           }}
         >
-          <ContentArea selected={selectedPage} />
+          {/* Renders the nested routes */}
+          <Outlet />
         </Box>
       </Box>
     </ThemeProvider>
   );
 }
 
-export default AcctDashboard;
+export default AcctDashbord;

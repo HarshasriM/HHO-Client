@@ -45,7 +45,7 @@ function LoginPage() {
         const response = await axios.post('http://localhost:8000/api/users/offusers/login', {
           email,
           password,
-        });    
+        });   
 
 
         console.log('Response:', response.data);

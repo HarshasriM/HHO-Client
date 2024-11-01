@@ -17,7 +17,7 @@ function LoginPage() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [msg, setMsg] = useState();
-  const { token, setToken, open, setOpen, alertMsg, setAlertMsg,setMsgType } = useContext(AppContext);
+  const { token, setToken, open, setOpen, alertMsg, setAlertMsg,setErrorOcc } = useContext(AppContext);
 
 
   // Function to show the Snackbar (when login is successful)
@@ -38,43 +38,39 @@ function LoginPage() {
     e.preventDefault();
     if (!email || !password) {
       setAlertMsg("Credentials Required...");
+      setErrorOcc(true);
       setOpen(true);
-    }
-    else {
+    } else {
       try {
         const response = await axios.post('http://localhost:8000/api/users/offusers/login', {
           email,
           password,
-        });   
-
-
-        console.log('Response:', response.data);
-        if(response.data) {
-          // alert("You are logged in")
-          if(response.data.token) {
-            setAlertMsg("Login Successful..");
-            setMsgType("success");
-            setOpen(true);
-            console.log(response.data.token);
-            localStorage.setItem('token', response.data.token);
-            setToken(localStorage.getItem('token'));
-            navigate("/");
-          }
-          else {
-            setAlertMsg("Wrong Credentials..");
-            setOpen(true);
-            navigate("/login");
-          }
+        });
+        
+        // Check for success status in the response data
+        if (response.data.success) {
+          console.log(response.data);
+          setAlertMsg("Login Successful..");
+          setErrorOcc(false);
+          localStorage.setItem('token', response.data.token);
+          setToken(response.data.token); // Set the token directly from response
+          setOpen(true);
+          navigate("/");
+        } else {
+          setAlertMsg(response.data.message || "Login failed.");
+          setErrorOcc(true);
+          setOpen(true);
         }
-        console.log('Response:', response.data);
       } catch (error) {
-        setAlertMsg("Internal Server Error..");
+        // Handle errors here if the request fails
+        const errorMsg = error.response?.data?.message || "Login failed due to a server error.";
+        setAlertMsg(errorMsg);
         setOpen(true);
         console.error('Error logging in:', error);
       }
     }
-  }
-
+  };
+  
 
   return (
 

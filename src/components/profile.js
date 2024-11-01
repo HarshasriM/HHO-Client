@@ -7,7 +7,7 @@ const settings = ['Profile', 'Dashboard'];
 
 function ProfileMenu() {
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const{token,setToken,role,setRole} = useContext(AppContext);
+  const{token,setToken,role,setRole,setAlertMsg,setOpen,setErrorOcc} = useContext(AppContext);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -21,6 +21,9 @@ function ProfileMenu() {
   const handleLogout = ()=>{
       localStorage.removeItem('token');
       localStorage.removeItem('role');
+      setAlertMsg("Logout Successful..");
+      setErrorOcc(false);
+      setOpen(true);
       setToken(null);
       setRole(null);
   }

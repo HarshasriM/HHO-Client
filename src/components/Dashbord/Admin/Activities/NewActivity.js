@@ -12,9 +12,10 @@ import axios from "axios";
 import { AppContext } from "../../../../context/Context";
 import { useContext } from "react";
 import LoadingAnimation from "../../../../components/LoadingAnimation";
-const SimpleForm = () => {
+import { SettingsPowerRounded } from "@mui/icons-material";
+const NewActivity = () => {
   const [btnText, setBtnText] = useState("Submit");
-  const { alertMsg, setAlertMsg, setOpen, setMsgType } = useContext(AppContext);
+  const { alertMsg, setAlertMsg, setOpen, setErrorOcc } = useContext(AppContext);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -81,7 +82,8 @@ const SimpleForm = () => {
           console.log(res);
           if (res.status === 200) {
             setAlertMsg("Activity Added...");
-            setMsgType("success");
+            // setMsgType("success");
+            setErrorOcc(false);
             setOpen(true);
             setFormData({
               title: "",
@@ -168,4 +170,4 @@ const SimpleForm = () => {
   );
 };
 
-export default SimpleForm;
+export default NewActivity;

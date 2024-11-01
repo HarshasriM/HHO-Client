@@ -3,8 +3,8 @@ import { TextField, Button, Box, Typography, Rating } from "@mui/material";
 import axios from "axios";
 import LoadingAnimation from "../../../../components/LoadingAnimation";
 import { AppContext } from "../../../../context/Context";
-function FeedbackForm() {
-  const {setAlertMsg,setOpen,setMsgType} = useContext(AppContext);
+function NewTestimonial() {
+  const {setAlertMsg,setOpen,setErrorOcc} = useContext(AppContext);
   const [name, setName] = useState('');
   const [discipline, setDiscipline] = useState('');
   const [rating, setRating] = useState(0);
@@ -27,11 +27,15 @@ function FeedbackForm() {
         setRating(0);
         setMessage("");
         setAlertMsg("New Testimonial Added...");
-        setMsgType("success");
-
+        // setMsgType("success");
+        setErrorOcc(false);
         setOpen(true);
     }).catch(err =>{
         console.log(err);
+        setAlertMsg("Something went wrong...");
+        setErrorOcc(true);
+        setOpen(true);
+        setAddBtnContent("Add");
     })
   };
 
@@ -101,4 +105,4 @@ function FeedbackForm() {
   );
 }
 
-export default FeedbackForm;
+export default NewTestimonial;

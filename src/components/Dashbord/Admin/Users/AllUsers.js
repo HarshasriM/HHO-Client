@@ -1,13 +1,30 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import EditWindow from "./EditWindow.js";
+import { AppContext } from '../../../../context/Context.js';
 const AllUsers = () => {
     const [users,setUsers] = useState();
+    const{token} = useContext(AppContext);
     useEffect(()=>{
-        axios.get("http://localhost:8000/api/users/offUsers/").then(res=>{
-            setUsers(res.data);
-            console.log(res.data);
-        })
+       
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          };
+
+        const getUserData = async()=>{
+            try {
+                await axios.get("http://localhost:8000/api/users/offUsers/",{headers}).then(res=>{
+                    setUsers(res.data);
+                    console.log(res.data);
+                }).catch((err)=>{
+                    console.log(err.message);
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getUserData();
     },[])
     const [editWindow,setEditWindow] = useState(false);
     const [selected,setSelected] = useState();

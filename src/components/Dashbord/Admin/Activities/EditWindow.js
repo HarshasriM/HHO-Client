@@ -16,7 +16,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import LoadingAnimation from "../../../../components/LoadingAnimation";
 const EditItemDialog = ({ handleClose, activity }) => {
-  const {setAlertMsg,setOpen,setMsgType} = useContext(AppContext);
+  const {setAlertMsg,setOpen,setMsgType,token} = useContext(AppContext);
 
   const [btnText, setBtnText] = useState("Save");
   const [formData, setFormData] = useState({
@@ -44,6 +44,10 @@ const EditItemDialog = ({ handleClose, activity }) => {
   };
 
   const handleSubmit = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
     setBtnText(<LoadingAnimation/>);
     let imageUrl = imageFile;
     if (imageFile instanceof File) {
@@ -65,7 +69,7 @@ const EditItemDialog = ({ handleClose, activity }) => {
       }
 
     }
-    axios.put(`http://localhost:8000/api/activities/update/${activity._id}`,formData)
+    await axios.put(`http://localhost:8000/api/activities/update/${activity._id}`,formData,{headers})
         .then((res) => {
           setAlertMsg("Activity Edited..");
           setMsgType("success");

@@ -14,9 +14,9 @@ function Dashbord() {
   console.log(role);
   return (
     <>
-      {role=='admin' && <AdminDashboard />}
-      {role=='core' && <CoreDashbord />}
-      {role=='accountant' && <AcctDashbord />}
+      {role=='Admin' && <AdminDashboard />}
+      {role=='Core' && <CoreDashbord />}
+      {role=='Accountant' && <AcctDashbord />}
     </>
   )
 }

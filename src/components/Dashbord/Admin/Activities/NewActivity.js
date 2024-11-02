@@ -15,7 +15,7 @@ import LoadingAnimation from "../../../../components/LoadingAnimation";
 import { SettingsPowerRounded } from "@mui/icons-material";
 const NewActivity = () => {
   const [btnText, setBtnText] = useState("Submit");
-  const { alertMsg, setAlertMsg, setOpen, setErrorOcc } = useContext(AppContext);
+  const { alertMsg, setAlertMsg, setOpen, setErrorOcc,token } = useContext(AppContext);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -72,12 +72,17 @@ const NewActivity = () => {
       };
       console.log("Form Data:", finalFormData);
 
-      axios
+
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      };
+     await axios
         .post("http://localhost:8000/api/activities/create", {
           name: finalFormData.title,
           description: finalFormData.description,
           image: finalFormData.image,
-        })
+        },{headers})
         .then((res) => {
           console.log(res);
           if (res.status === 200) {

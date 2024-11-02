@@ -11,9 +11,9 @@ http://localhost:8000/api/users/offUsers/updateUsers/:id  -> edit user
 /api/volunteers/vol-registration -> volunteer registration ->post
 
 
-/api/transaction/add-transaction -> add a transaction -> post
-/api/transaction/update-transaction -> update a transaction ->put
-/delete-transaction/:id -> delete a event ->delete
+/api/transactions/add-transaction -> add a transaction -> post
+/api/transactions/update-transaction -> update a transaction ->put
+/delete-transactions/:id -> delete a event ->delete
 /get-all-transactions -> get all transactions -> get
 /search-transactions -> search transaction -> get
 

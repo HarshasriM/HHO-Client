@@ -21,14 +21,14 @@ const AllTestimonials = () => {
   const [editWindow, setEditWindow] = useState(false);
   const [deleteWindow, setDeleteWindow] = useState(false);
   useEffect(() => {
-    axios.get("http://localhost:8000/api/testimonial/").then((res) => {
+    axios.get("http://localhost:8000/api/testimonials/").then((res) => {
       console.log(res.data);
       setTestimonials(res.data);
     });
   }, []);
-  const handleClose = (type) => {
+  const handleClose = async(type) => {
     type === "edit" ? setEditWindow(false) : setDeleteWindow(false);
-    axios.get("http://localhost:8000/api/testimonial/").then((res) => {
+   await axios.get("http://localhost:8000/api/testimonials/").then((res) => {
       console.log(res.data);
       setTestimonials(res.data);
     });

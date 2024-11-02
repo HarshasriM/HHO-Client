@@ -4,13 +4,13 @@ import axios from "axios";
 import LoadingAnimation from "../../../../components/LoadingAnimation";
 import { AppContext } from "../../../../context/Context";
 function NewTestimonial() {
-  const {setAlertMsg,setOpen,setErrorOcc} = useContext(AppContext);
+  const {setAlertMsg,setOpen,setErrorOcc,token} = useContext(AppContext);
   const [name, setName] = useState('');
   const [discipline, setDiscipline] = useState('');
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState('');
   const [addBtnContent,setAddBtnContent] = useState("Add");
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     setAddBtnContent(<LoadingAnimation color="white" size={25}/>);
     event.preventDefault();
     const formData = {
@@ -20,7 +20,12 @@ function NewTestimonial() {
       message,
     };
 
-    axios.post("http://localhost:8000/api/testimonial/createTestimonial",formData).then(res=>{
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+
+    await axios.post("http://localhost:8000/api/testimonials/createTestimonial",formData,{headers}).then(res=>{
         setAddBtnContent("Add");
         setName("");
         setDiscipline("");

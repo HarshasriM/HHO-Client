@@ -12,12 +12,18 @@ import { useContext } from "react";
 import axios from "axios";
 
 const DeleteWindow = ({ testimonial, handleClose }) => {
-  const { setOpen, setAlertMsg, setMsgType,msgType } = useContext(AppContext);
+  const { setOpen, setAlertMsg, setMsgType,msgType,token } = useContext(AppContext);
 
-  const handleConfirm = () => {
-    axios
+  const handleConfirm = async() => {
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+   await  axios
       .delete(
-        `http://localhost:8000/api/testimonial/deleteTestimonial/${testimonial._id}`
+        `http://localhost:8000/api/testimonials/deleteTestimonial/${testimonial._id}`,
+        {headers}
       )
       .then((res) => {
         setMsgType("warning");

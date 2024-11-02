@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import axios from "axios";
 const EditWindow = ({ testimonial, handleClose }) => {
-    const {setOpen,setAlertMsg,alertMsg,setMsgType} = useContext(AppContext);
+    const {setOpen,setAlertMsg,alertMsg,setMsgType,token} = useContext(AppContext);
   const [formData, setFormData] = useState({
     name: testimonial.name,
     rating: testimonial.rating,
@@ -28,8 +28,14 @@ const EditWindow = ({ testimonial, handleClose }) => {
     });
   };
 
-  const handleSubmit = () => {
-    axios.put(`http://localhost:8000/api/testimonial/editTestimonial/${testimonial._id}`,formData).then(res=>{
+  const handleSubmit = async() => {
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+
+    await axios.put(`http://localhost:8000/api/testimonials/editTestimonial/${testimonial._id}`,formData,{headers}).then(res=>{
       setAlertMsg("Testimonial edited successfully...");
       setMsgType("info");
       setOpen(true);

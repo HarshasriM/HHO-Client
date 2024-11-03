@@ -9,24 +9,24 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { AppContext } from "../../../../context/Context";
-const DeleteConfirmationDialog = ({ handleClose, activity }) => {
+const DeleteConfirmationDialog = ({ onClose, user }) => {
   const {setAlertMsg,setOpen,token,setErrorOcc} = useContext(AppContext);
   return (
     <Dialog
       open={true}
       onClose={() => {
-        handleClose("delete");
+        onClose("delete");
       }}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description">
       <DialogTitle id="alert-dialog-title">Delete Confirmation</DialogTitle>
       <DialogContent>
         <Typography id="alert-dialog-description">
-          Are you sure you want to delete this item?
+          Are you sure you want to delete this user?
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleClose("delete")} color="primary">
+        <Button onClick={() => onClose("delete")} color="primary">
           Cancel
         </Button>
         <Button
@@ -39,20 +39,21 @@ const DeleteConfirmationDialog = ({ handleClose, activity }) => {
 
            await axios
               .delete(
-                `http://localhost:8000/api/activities/delete/${activity._id}`,{headers}
+                `http://localhost:8000/api/users/offUsers/deleteUsers/${user._id}`,{headers}
               )
               .then((res) => {
                 if(res.status === 200){
-                setAlertMsg("Activity Deleted..");
+                setAlertMsg("User Deleted..");
                 setOpen(true);
                 setErrorOcc(false);
-                handleClose("delete");
+                onClose("delete");
                 }
               })
               .catch((e) => {console.log(e)
                 setAlertMsg(e.message);
                 setErrorOcc(true);
                 setOpen(true);
+                onClose("delete");
               });
           }}
           color="error"

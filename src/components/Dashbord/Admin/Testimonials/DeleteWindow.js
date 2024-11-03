@@ -12,7 +12,7 @@ import { useContext } from "react";
 import axios from "axios";
 
 const DeleteWindow = ({ testimonial, handleClose }) => {
-  const { setOpen, setAlertMsg, setMsgType,msgType,token } = useContext(AppContext);
+  const { setOpen, setAlertMsg,setErrorOcc,token } = useContext(AppContext);
 
   const handleConfirm = async() => {
 
@@ -26,12 +26,16 @@ const DeleteWindow = ({ testimonial, handleClose }) => {
         {headers}
       )
       .then((res) => {
-        setMsgType("warning");
         setAlertMsg("Testimonial deleted...");
         setOpen(true);
         handleClose("delete");
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {console.log(e);
+        setAlertMsg(e.message);
+        setErrorOcc(true);
+        setOpen(true);
+        handleClose("delete");
+      });
   };
   return (
     <Dialog open={true} onClose={handleClose} maxWidth="xs" fullWidth>

@@ -25,6 +25,7 @@ import NewActivity from './components/Dashbord/Admin/Activities/NewActivity';
 import AllActivities from './components/Dashbord/Admin/Activities/AllActivities';
 import AllUsers from './components/Dashbord/Admin/Users/AllUsers';
 import { PrivateRoute } from './components/PrivateRoute';
+import NewUser from "./components/Dashbord/Admin/Users/NewUser";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -68,6 +69,7 @@ function App() {
             <Route path='new-activity'  element={<NewActivity />} />
             <Route path='all-activities' element={<AllActivities />} />
             <Route path='users' element={<AllUsers />} />
+            <Route path='users/new' element={<NewUser />} />
         </Route>
         <Route path='/profile' element={<PrivateRoute><ProfileContainer /></PrivateRoute>} />
         <Route path='/chaitra' element={<Chaitra />} ></Route>

@@ -16,13 +16,13 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import LoadingAnimation from "../../../../components/LoadingAnimation";
 const EditItemDialog = ({ handleClose, activity }) => {
-  const {setAlertMsg,setOpen,setMsgType,token} = useContext(AppContext);
+  const {setAlertMsg,setOpen,token,setErrorOcc} = useContext(AppContext);
 
   const [btnText, setBtnText] = useState("Save");
   const [formData, setFormData] = useState({
-    name: activity?.name || "",
-    description: activity?.description || "",
-    image: activity?.image || "",
+    name: activity.name || "",
+    description: activity.description || "",
+    image: activity.image || "",
   });
   const [imageFile, setImageFile] = useState(null);
 
@@ -48,7 +48,7 @@ const EditItemDialog = ({ handleClose, activity }) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     };
-    setBtnText(<LoadingAnimation/>);
+    setBtnText(<LoadingAnimation size={24}/>);
     let imageUrl = imageFile;
     if (imageFile instanceof File) {
       const uploadData = new FormData();
@@ -62,22 +62,28 @@ const EditItemDialog = ({ handleClose, activity }) => {
         );
         imageUrl = response.data.secure_url;
         setFormData({...formData,image:imageUrl});
-        console.log("Image uploaded", response.data.secure_url);
         console.log(formData);
       } catch (e) {
         console.error("Image upload failed:", e);
+        setErrorOcc(true);
+        setAlertMsg("Image upload failed");
+        setOpen(true);
       }
 
     }
     await axios.put(`http://localhost:8000/api/activities/update/${activity._id}`,formData,{headers})
         .then((res) => {
           setAlertMsg("Activity Edited..");
-          setMsgType("success");
           setOpen(true);
+          setErrorOcc(false);
           handleClose("edit");
-
           setBtnText("Save");
-    }).catch(e=>console.log(e));
+    }).catch(e=>{
+      setAlertMsg(e.message);
+      setErrorOcc(true);
+      setOpen(true);
+      handleClose("edit");
+      console.log(e)});
   };
   return (
     <Dialog
@@ -85,7 +91,7 @@ const EditItemDialog = ({ handleClose, activity }) => {
       onClose={() => handleClose("edit")}
       maxWidth="sm"
       fullWidth>
-      <DialogTitle>Edit Item</DialogTitle>
+      <DialogTitle>Edit Activity</DialogTitle>
       <DialogContent>
         <Box display="flex" flexDirection="column" gap={2}>
           <TextField
@@ -149,7 +155,7 @@ const EditItemDialog = ({ handleClose, activity }) => {
           color="secondary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color="primary">
+        <Button onClick={handleSubmit} color="primary" disabled={btnText === "Save" ? false : true}>
           {btnText}
         </Button>
       </DialogActions>

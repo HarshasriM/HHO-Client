@@ -6,6 +6,8 @@
 /api/users/offusers/login -> off user login ->post
 http://localhost:8000/api/users/offUsers/  ->get all users
 http://localhost:8000/api/users/offUsers/updateUsers/:id  -> edit user
+http://localhost:8000/api/users/offUsers/newUser  -> create new user ->post
+http://localhost:8000/api/users/offUsers/deleteUsers/:id -> delete user
 
 
 /api/volunteers/vol-registration -> volunteer registration ->post

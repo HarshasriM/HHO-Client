@@ -184,8 +184,6 @@ import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import PeopleIcon from '@mui/icons-material/People';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 
 // Import icons for the nav items
@@ -214,7 +212,9 @@ const NAV_ITEMS = [
     label: "Users",
     icon: <GroupIcon />,
     subItems: [
+      { label: 'New User', route: "/dashboard/users/new" },
       { label: 'All Users', route: "/dashboard/users" },
+
     ],
   }
 ];
@@ -227,12 +227,11 @@ function AdminDashbord() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Navigate to new transaction by default if on /dashboard
-  React.useEffect(() => {
-    if (location.pathname === '/dashboard') {
-      navigate('/dashboard/new-testimonial', { replace: true });
-    }
-  }, [location.pathname, navigate]);
+  // React.useEffect(() => {
+  //   if (location.pathname === '/dashboard') {
+  //     navigate('/dashboard/new-testimonial', { replace: true });
+  //   }
+  // }, [location.pathname, navigate]);
 
   const handleItemClick = (label) => {
     setOpenSubNav(openSubNav === label ? null : label);
@@ -249,7 +248,7 @@ function AdminDashbord() {
         sx={{
           display: 'flex',
           flexDirection: isMobile ? 'column' : 'row',
-          height: '100vh',
+          height: 'auto',
         }}
       >
         {/* Navigation */}
@@ -318,11 +317,12 @@ function AdminDashbord() {
         {/* Main Content Area */}
         <Box
           component="main"
+          style={{minHeight:"100vh"}}
           sx={{
             flexGrow: 1,
             p: 3,
             overflowY: 'auto',
-            height: '100vh',
+            height: 'auto',
             display: 'flex',
             flexDirection: 'column',
           }}

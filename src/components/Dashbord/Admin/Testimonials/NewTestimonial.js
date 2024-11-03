@@ -4,44 +4,57 @@ import axios from "axios";
 import LoadingAnimation from "../../../../components/LoadingAnimation";
 import { AppContext } from "../../../../context/Context";
 function NewTestimonial() {
-  const {setAlertMsg,setOpen,setErrorOcc,token} = useContext(AppContext);
-  const [name, setName] = useState('');
-  const [discipline, setDiscipline] = useState('');
+  const { setAlertMsg, setOpen, setErrorOcc, token } = useContext(AppContext);
+  const [name, setName] = useState("");
+  const [discipline, setDiscipline] = useState("");
   const [rating, setRating] = useState(0);
-  const [message, setMessage] = useState('');
-  const [addBtnContent,setAddBtnContent] = useState("Add");
-  const handleSubmit = async(event) => {
-    setAddBtnContent(<LoadingAnimation color="white" size={25}/>);
+  const [message, setMessage] = useState("");
+  const [addBtnContent, setAddBtnContent] = useState("Add");
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = {
-      name,
-      discipline,
-      rating,
-      message,
-    };
+    if (rating == 0) {
+      setAlertMsg("All fields are mandatory");
+      setOpen(true);
+      setErrorOcc(true);
+    } else {
+      setAddBtnContent(<LoadingAnimation color="white" size={25} />);
+      const formData = {
+        name,
+        discipline,
+        rating,
+        message,
+      };
 
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    };
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
 
-    await axios.post("http://localhost:8000/api/testimonials/createTestimonial",formData,{headers}).then(res=>{
-        setAddBtnContent("Add");
-        setName("");
-        setDiscipline("");
-        setRating(0);
-        setMessage("");
-        setAlertMsg("New Testimonial Added...");
-        // setMsgType("success");
-        setErrorOcc(false);
-        setOpen(true);
-    }).catch(err =>{
-        console.log(err);
-        setAlertMsg("Something went wrong...");
-        setErrorOcc(true);
-        setOpen(true);
-        setAddBtnContent("Add");
-    })
+      await axios
+        .post(
+          "http://localhost:8000/api/testimonials/createTestimonial",
+          formData,
+          { headers }
+        )
+        .then((res) => {
+          setAddBtnContent("Add");
+          setName("");
+          setDiscipline("");
+          setRating(0);
+          setMessage("");
+          setAlertMsg("New Testimonial Added...");
+
+          setErrorOcc(false);
+          setOpen(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setAlertMsg("Something went wrong...");
+          setErrorOcc(true);
+          setOpen(true);
+          setAddBtnContent("Add");
+        });
+    }
   };
 
   return (
@@ -52,13 +65,12 @@ function NewTestimonial() {
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        width: {sm:"30vw",xs:"90vw"},
+        width: { sm: "30vw", xs: "90vw" },
         margin: "0 auto",
         padding: 3,
         border: "1px solid #ccc",
         borderRadius: 2,
-      }}
-    >
+      }}>
       <Typography variant="h5" textAlign="center">
         Add a new Testimonial
       </Typography>

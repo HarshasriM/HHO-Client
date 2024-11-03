@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import axios from "axios";
 import {
   Card,
@@ -10,8 +10,9 @@ import {
 } from "@mui/material";
 import EditWindow from "./EditWindow";
 import DeleteWindow from "./DeleteWindow";
-
+import { AppContext } from "../../../../context/Context";
 const AllActivities = () => {
+  const { setAlertMsg, setOpen, setErrorOcc, token } = useContext(AppContext);
   const [activities, setActivities] = useState([]);
   const [selected, setSelected] = useState(null);
   const [editWindow, setEditWindow] = useState(false);
@@ -22,16 +23,15 @@ const AllActivities = () => {
       const res = await axios.get("http://localhost:8000/api/activities/getAll");
       setActivities(res.data.data);
     } catch (error) {
-      console.error("Error fetching activities:", error);
+      console.log("Error fetching activities:", error);
+      setAlertMsg(error.message);
+      setErrorOcc(true);
+      setOpen(true);
     }
   };
 
   const handleClose = async (type) => {
-    if (type === "edit") {
-      setEditWindow(false);
-    } else {
-      setDeleteWindow(false);
-    }
+    type === "edit" ? setEditWindow(false) : setDeleteWindow(false);
     await fetchActivities();
   };
 
@@ -45,14 +45,15 @@ const AllActivities = () => {
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {activities.map((activity) => (
           <Card
-            key={activity._id} // Add a unique key to each Card
+            key={activity._id} 
             sx={{
               maxWidth: 800,
               mx: "auto",
               boxShadow: 3,
               borderRadius: 2,
+              width: { xs: "70vw", sm: "50vw", md: "25vw" }
             }}
-            style={{ width: "30vw" }}
+            style={{marginBottom:"4vh" }}
           >
             <CardMedia
               component="img"

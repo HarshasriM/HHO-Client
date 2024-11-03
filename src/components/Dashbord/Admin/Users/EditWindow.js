@@ -14,21 +14,25 @@ import { AppContext } from "../../../../context/Context";
 import { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import LoadingAnimation from "../../../../components/LoadingAnimation";
+
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 const EditUserDialog = ({ onClose, user }) => {
-  const {alertMsg,setAlertMsg,setOpen,setMsgType} = useContext(AppContext);
+  const {setAlertMsg,setOpen,setErrorOcc,token} = useContext(AppContext);
+  const [btnText, setBtnText] = useState("Save");
 
   const [formData, setFormData] = useState({
-    image: user?.image || "",
-    name: user?.name || "",
-    email: user?.email || "",
-    password: user?.password || "",
-    role: user?.role || "",
-    ID: user?.ID || "",
-    mobile: user?.mobile || "",
-    linkedin: user?.linkedin || "",
+    image: user.image || "",
+    name: user.name || "",
+    email: user.email || "",
+    password: user.password || "",
+    role: user.role || "",
+    ID: user.ID || "",
+    mobile: user.mobile || "",
+    linkedin: user.linkedin || "",
   });
-
+  const [imageFile,setImageFile] = useState(null);
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -36,11 +40,14 @@ const EditUserDialog = ({ onClose, user }) => {
 
   const onSubmit = async () => {
     let imageUrl = formData.image;
-  
-    // Upload the image only if it's a file object
-    if (formData.image instanceof File) {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+    setBtnText(<LoadingAnimation size={23}/>)
+    if (imageFile instanceof File) {
       const uploadData = new FormData();
-      uploadData.append("file", formData.image);
+      uploadData.append("file", imageFile);
       uploadData.append("upload_preset", "unsigned_upload");
   
       try {
@@ -62,32 +69,42 @@ const EditUserDialog = ({ onClose, user }) => {
     try {
       const response = await axios.put(
         `http://localhost:8000/api/users/offUsers/updateUsers/${user._id}`,
-        updatedData
+        updatedData,{headers}
       );
       console.log(response.data);
-      if(response.data.message === "success"){
         setAlertMsg("Updated Successfully");
-        setMsgType("success");
         setOpen(true);
-      }
+        setErrorOcc(false);
+        onClose("edit");
+      
+      setBtnText("Save");
     } catch (e) {
       console.error("User update failed:", e);
-    }
+      setAlertMsg(e.message);
+      setOpen(true);
+      setErrorOcc(true);
+      onClose("edit");
+      setBtnText("Save");
+    } 
   };
   
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData({ ...formData, image: file });
-    };
-    if (file) reader.readAsDataURL(file);
+    setImageFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, image: reader.result });
+      };
+      reader.readAsDataURL(file);
+      console.log(formData);
+    }
   };
 
   const handleSubmit = async () => {
     await onSubmit();
-    onClose();
+    onClose("edit");
   };
 
   return (
@@ -191,11 +208,13 @@ const EditUserDialog = ({ onClose, user }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="secondary">
+        <Button onClick={()=>{
+          onClose("edit");
+        }} color="secondary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color="primary">
-          Save
+        <Button onClick={handleSubmit} color="primary" disabled={btnText === "Save" ? false : true}>
+          {btnText}
         </Button>
       </DialogActions>
     </Dialog>

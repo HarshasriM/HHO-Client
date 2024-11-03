@@ -1,21 +1,13 @@
-import React, { useState } from "react";
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  IconButton,
-  Avatar,
-} from "@mui/material";
+import React, { useRef, useState } from "react";
+import { Box, TextField, Button, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import { AppContext } from "../../../../context/Context";
 import { useContext } from "react";
 import LoadingAnimation from "../../../../components/LoadingAnimation";
-import { SettingsPowerRounded } from "@mui/icons-material";
 const NewActivity = () => {
   const [btnText, setBtnText] = useState("Submit");
-  const { alertMsg, setAlertMsg, setOpen, setErrorOcc,token } = useContext(AppContext);
+  const { setAlertMsg, setOpen, setErrorOcc, token } = useContext(AppContext);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -60,47 +52,54 @@ const NewActivity = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setBtnText(<LoadingAnimation size={25} color="white" />);
-    const uploadedImageUrl = imageFile
-      ? await uploadImageToCloudinary()
-      : formData.image;
-
-    if (uploadedImageUrl) {
-      const finalFormData = {
-        ...formData,
-        image: uploadedImageUrl,
-      };
-      console.log("Form Data:", finalFormData);
-
-
-      const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      };
-     await axios
-        .post("http://localhost:8000/api/activities/create", {
-          name: finalFormData.title,
-          description: finalFormData.description,
-          image: finalFormData.image,
-        },{headers})
-        .then((res) => {
-          console.log(res);
-          if (res.status === 200) {
-            setAlertMsg("Activity Added...");
-            // setMsgType("success");
-            setErrorOcc(false);
-            setOpen(true);
-            setFormData({
-              title: "",
-              description: "",
-              image: "",
-            });
-            setBtnText("Submit");
-          }
-        })
-        .catch((e) => console.log(e));
+    if (formData.image === "") {
+      setErrorOcc(true);
+      setAlertMsg("Please upload image");
+      setOpen(true);
     } else {
-      console.error("Failed to upload image.");
+      console.log("Submitting");
+      setBtnText(<LoadingAnimation size={25} color="white" />);
+      const uploadedImageUrl = await uploadImageToCloudinary();
+
+      if (uploadedImageUrl) {
+        const finalFormData = {
+          ...formData,
+          image: uploadedImageUrl,
+        };
+        console.log("Form Data:", finalFormData);
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+        await axios
+          .post(
+            "http://localhost:8000/api/activities/create",
+            {
+              name: finalFormData.title,
+              description: finalFormData.description,
+              image: finalFormData.image,
+            },
+            { headers }
+          )
+          .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              setAlertMsg("Activity Added...");
+              setErrorOcc(false);
+              setOpen(true);
+              setFormData({
+                title: "",
+                description: "",
+                image: "",
+              });
+              setBtnText("Submit");
+            }
+          })
+          .catch((e) => console.log(e));
+      } else {
+        console.error("Failed to upload image.");
+      }
     }
   };
 
@@ -126,6 +125,7 @@ const NewActivity = () => {
         value={formData.title}
         onChange={handleChange}
         fullWidth
+        required
         variant="outlined"
         margin="dense"
       />
@@ -134,6 +134,7 @@ const NewActivity = () => {
         label="Description"
         name="description"
         value={formData.description}
+        required
         onChange={handleChange}
         fullWidth
         variant="outlined"
@@ -143,14 +144,17 @@ const NewActivity = () => {
       />
 
       <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-        <img src={formData.image} style={{
-              width: "5vw",
-              height: "5vw",
-              objectFit: "cover",
-              borderRadius: "8px",
-              marginBottom: "8px",
-              marginTop:"1vh"
-            }} />
+        <img
+          src={formData.image}
+          style={{
+            width: "5vw",
+            height: "5vw",
+            objectFit: "cover",
+            borderRadius: "8px",
+            marginBottom: "8px",
+            marginTop: "1vh",
+          }}
+        />
         <input
           accept="image/*"
           style={{ display: "none" }}
@@ -168,7 +172,7 @@ const NewActivity = () => {
         </label>
       </Box>
 
-      <Button type="submit" variant="contained" color="primary" fullWidth>
+      <Button type="submit" variant="contained" color="primary" fullWidth disabled={btnText === "Submit" ? false : true}>
         {btnText}
       </Button>
     </Box>

@@ -46,29 +46,10 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
     }));
   };
 
-  useEffect(() => {
-    const storedEventDetails = localStorage.getItem('eventDetails');
-    const storedSubEvents = localStorage.getItem('subEvents');
-
-    if (storedEventDetails) {
-      setEventDetails(JSON.parse(storedEventDetails));
-    }
-
-    if (storedSubEvents) {
-      setSubEvents(JSON.parse(storedSubEvents));
-    }
-  }, []);
+  
 
 
-   // Save main event details to localStorage whenever they change
-   useEffect(() => {
-    localStorage.setItem('eventDetails', JSON.stringify(eventDetails));
-  }, [eventDetails]);
-
-  // Save sub-events to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('subEvents', JSON.stringify(subEvents));
-  }, [subEvents]);
+   
 
 
   

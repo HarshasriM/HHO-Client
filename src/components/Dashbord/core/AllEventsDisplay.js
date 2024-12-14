@@ -1,28 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Card, CardMedia, CardContent, Typography, Button, Grid } from '@mui/material';
 import { LocationOn, CalendarToday } from '@mui/icons-material'; // Import icons
+import { useNavigate } from 'react-router-dom';
 
 function AllEventsDisplay() {
-  const events = [
-    {
-      id: 'event1',
-      title: 'Music Concert',
-      image: 'https://res.cloudinary.com/dgye02qt9/image/upload/v1729256420/codingcontest_rnxoog.jpg',
-      description: 'An amazing music concert featuring top artists.',
-      startDate: '2024-12-15',
-      endDate: '2024-12-16',
-      location: 'Madison Square Garden, NY',
-    },
-    {
-      id: 'event2',
-      title: 'Art Exhibition',
-      image: 'https://res.cloudinary.com/dgye02qt9/image/upload/v1729256420/codingcontest_rnxoog.jpg',
-      description: 'Showcasing the finest art from local artists.',
-      startDate: '2024-12-20',
-      endDate: '2024-12-25',
-      location: 'Art Gallery, LA',
-    },
-  ];
+  const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
+  // Fetch events using axios
+  useEffect(() => {
+    axios
+      .get('http://localhost:8000/api/events') // Replace with your backend API
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching events:', error);
+      });
+  }, []);
+
+  // Helper to format the date to YYYY-MM-DD
+  const formatDate = (dateTime) => {
+    const date = new Date(dateTime);
+    return date.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+  };
+
+  // Function to handle "View More" click
+  const handleViewMore = (event) => {
+    // Navigate to event details page and pass the event data via state
+    navigate(`/dashboard/events/${event._id}`, { state: { event } });
+  };
 
   return (
     <div>
@@ -34,34 +41,36 @@ function AllEventsDisplay() {
               <CardMedia
                 component="img"
                 height="200"
-                image={event.image}
-                alt={event.title}
+                image={event.eventPoster}
+                alt={event.eventTitle}
               />
               <CardContent>
                 {/* Title */}
                 <Typography variant="h5" gutterBottom>
-                  {event.title}
+                  {event.eventTitle}
                 </Typography>
                 {/* Description */}
                 <Typography variant="body2" color="textSecondary" paragraph>
-                  {event.description}
+                  {event.eventDescription.length > 60
+                    ? `${event.eventDescription.substring(0, 60)}...`
+                    : event.eventDescription}
                 </Typography>
                 {/* Dates */}
                 <Typography variant="body2" color="textSecondary" display="flex" alignItems="center" gutterBottom>
                   <CalendarToday style={{ marginRight: '8px' }} />
-                  {event.startDate} to  {event.endDate}
+                  {formatDate(event.event_start_date)} to {formatDate(event.event_end_date)}
                 </Typography>
                 {/* Location */}
                 <Typography variant="body2" color="textSecondary" display="flex" alignItems="center">
                   <LocationOn style={{ marginRight: '8px' }} />
-                  {event.location}
+                  {event.eventVenue}
                 </Typography>
                 {/* View More Button */}
                 <Button
                   variant="contained"
                   color="primary"
                   style={{ marginTop: '10px' }}
-                  onClick={() => window.location.href = `/dashboard/events/${event.id}`}
+                  onClick={() => handleViewMore(event)} // Navigate to event details page using window.location.href
                 >
                   View More
                 </Button>

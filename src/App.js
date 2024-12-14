@@ -29,7 +29,9 @@ import { PrivateRoute } from './components/PrivateRoute';
 import NewEventDisplay from './components/Dashbord/core/NewEventDisplay';
 import AllEventsDisplay from './components/Dashbord/core/AllEventsDisplay';
 import PrivateRole from './components/PrivateRole';
-import EventDescription from './components/Dashbord/core/EventDescription';
+import EventDescription from './components/Dashbord/core/EventDetails';
+import { Switch } from '@mui/material';
+import EventDetails from './components/Dashbord/core/EventDetails';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -100,9 +102,11 @@ function App() {
 
   {/* Core-Specific Routes */}
   <Route 
-    path="events" 
-    element={<PrivateRole><AllEventsDisplay /></PrivateRole>} 
-  />
+      path="events" 
+      element={<PrivateRole><AllEventsDisplay /></PrivateRole>} 
+    />
+  <Route path="/dashboard/events/:eventId" element={<EventDetails/>} />
+  
   <Route 
     path="new-event" 
     element={<PrivateRole><NewEventDisplay /></PrivateRole>} 

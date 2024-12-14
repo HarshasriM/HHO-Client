@@ -23,17 +23,17 @@ function TransactionCard({transaction}) {
               <ListItem>
                 <Avatar
                   sx={{
-                    bgcolor: getCardColor(transaction.type),
+                    bgcolor: getCardColor(transaction.transaction_type),
                     marginRight: 2,
                   }}
                 >
-                  {transaction.type === 'credit' && <CreditScore />}
-                  {transaction.type === 'debit' && <MoneyOff />}
-                  {transaction.type === 'donate' && <VolunteerActivism />}
+                  {transaction.transaction_type === 'credit' && <CreditScore />}
+                  {transaction.transaction_type === 'debit' && <MoneyOff />}
+                  {transaction.transaction_type === 'donation' && <VolunteerActivism />}
                 </Avatar>
                 <ListItemText
-                  primary={`${transaction.type}ed On`}
-                  secondary={transaction.description}
+                  primary={`${transaction.transaction_type}ed On`}
+                  secondary={transaction.purpose}
                   primaryTypographyProps={{ sx: { fontFamily: '"Playpen Sans", cursive', fontSize: '16px' } }}
                   secondaryTypographyProps={{ sx: { fontFamily: '"Playpen Sans", cursive', fontSize: '14px', color: 'gray' } }}
                 />
@@ -42,15 +42,16 @@ function TransactionCard({transaction}) {
                   sx={{ color: getCardColor(transaction.type), fontWeight: 'bold', fontFamily: '"Playpen Sans", cursive' }}
                 >
                   ₹{transaction.amount}
-                  {transaction.type === 'credit' && <AddCircleIcon />}
-                  {transaction.type === 'debit' && <RemoveCircleIcon />}
-                  {transaction.type === 'donate' && <HandshakeIcon />}
+                  {transaction.transaction_type === 'credit' && <AddCircleIcon />}
+                  {transaction.transaction_type === 'debit' && <RemoveCircleIcon />}
+                  {transaction.transaction_type === 'donation' && <HandshakeIcon />}
                 </Typography>
               </ListItem>
               <ListItem>
-                <Typography sx={{ fontFamily: '"Playpen Sans", cursive', fontSize: '13px', margin: 0 }}>
-                  {transaction.date}
-                </Typography>
+              <Typography sx={{ fontFamily: '"Playpen Sans", cursive', fontSize: '13px', margin: 0 }}>
+  {transaction.date.split('T')[0]}
+</Typography>
+
               </ListItem>
               <Divider />
             </React.Fragment>

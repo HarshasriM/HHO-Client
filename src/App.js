@@ -63,6 +63,7 @@ function App() {
         <Route  path='/' element={<Home />}/>
         
         <Route path='/events' element={<Event />} />
+        <Route path="/events/:eventName" element={<EventDescription />} />
         <Route path='/transactions' element={<Transactions />} />
         <Route path='/about' element={<About />} />
         <Route path='/services' element={<Services />} />
@@ -114,7 +115,7 @@ function App() {
   
 </Route>
         <Route path='/profile' element={<PrivateRoute><ProfileContainer /></PrivateRoute>} />
-        <Route path='/chaitra' element={<Chaitra />} ></Route>
+        {/* <Route path='/chaitra' element={<Chaitra />} ></Route> */}
         <Route path='*' element={<Home />} />
       </Routes>
     <Footer />

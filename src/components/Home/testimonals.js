@@ -10,9 +10,10 @@ const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/testimonial")
+    axios.get("http://localhost:8000/api/testimonials")
       .then((res) => {
         setTestimonials(res.data);
+        console.log(res.data);
       })
       .catch((error) => {
         console.error("Error fetching testimonials:", error);

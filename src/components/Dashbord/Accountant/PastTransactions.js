@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { blue } from '@mui/material/colors';
+import TransactionCard from '../../Transaction/TransactionCard';
 
 function PastTransactions() {
   const {
@@ -308,132 +309,134 @@ function PastTransactions() {
             No transactions available 
           </Typography>
         ) : (
-          <Grid container spacing={2}>
-          {filteredTransactions.map((transaction) => (
-            <Grid item xs={12} key={transaction.id}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  boxShadow: 3,
-                  borderRadius: 2,
-                  padding: 2,
-                  backgroundColor: '#f9f9f9',
-                  transition: 'transform 0.3s',
-                  '&:hover': {
-                    transform: 'scale(1.02)',
-                  },
-                }}
-              >
-                {/* Main Content (Amount, Type, Date, and Description) */}
-                <Box
-                  sx={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'row',
-                  }}
-                >
-                  {/* Left Box: Amount, Transaction Type, and Date */}
-                  <Box
-                    sx={{
-                      flex: 1,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      mr: 2,
-                    }}
-                  >
-                    <Typography variant="body1" sx={{ fontSize: '1.5rem', color: '#3f51b5', fontWeight: 'bold' }}>
-                      ₹{transaction.amount}
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                      {getTransactionIcon(transaction.transaction_type)}
-                      <Typography variant="body1" sx={{ ml: 0.5, color: '#555' }}>
-                        {transaction.transaction_type.charAt(0).toUpperCase() + transaction.transaction_type.slice(1)}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                      <DateRangeIcon sx={{ fontSize: 20, color: '#888' }} />
-                      <Typography variant="body2" sx={{ ml: 0.5, color: 'black' }}>
-                        {new Date(transaction.date).toLocaleDateString()}
-                      </Typography>
-                    </Box>
-                  </Box>
+        //   <Grid container spacing={2}>
+        //   {filteredTransactions.map((transaction) => (
+        //     <Grid item xs={12} key={transaction.id}>
+        //       <Box
+        //         sx={{
+        //           display: 'flex',
+        //           alignItems: 'center',
+        //           boxShadow: 3,
+        //           borderRadius: 2,
+        //           padding: 2,
+        //           backgroundColor: '#f9f9f9',
+        //           transition: 'transform 0.3s',
+        //           '&:hover': {
+        //             transform: 'scale(1.02)',
+        //           },
+        //         }}
+        //       >
+        //         {/* Main Content (Amount, Type, Date, and Description) */}
+        //         <Box
+        //           sx={{
+        //             flex: 1,
+        //             display: 'flex',
+        //             flexDirection: 'row',
+        //           }}
+        //         >
+        //           {/* Left Box: Amount, Transaction Type, and Date */}
+        //           <Box
+        //             sx={{
+        //               flex: 1,
+        //               display: 'flex',
+        //               flexDirection: 'column',
+        //               alignItems: 'flex-start',
+        //               mr: 2,
+        //             }}
+        //           >
+        //             <Typography variant="body1" sx={{ fontSize: '1.5rem', color: '#3f51b5', fontWeight: 'bold' }}>
+        //               ₹{transaction.amount}
+        //             </Typography>
+        //             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+        //               {getTransactionIcon(transaction.transaction_type)}
+        //               <Typography variant="body1" sx={{ ml: 0.5, color: '#555' }}>
+        //                 {transaction.transaction_type.charAt(0).toUpperCase() + transaction.transaction_type.slice(1)}
+        //               </Typography>
+        //             </Box>
+        //             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+        //               <DateRangeIcon sx={{ fontSize: 20, color: '#888' }} />
+        //               <Typography variant="body2" sx={{ ml: 0.5, color: 'black' }}>
+        //                 {new Date(transaction.date).toLocaleDateString()}
+        //               </Typography>
+        //             </Box>
+        //           </Box>
         
-                  {/* Center Box: Description */}
-                  <Box
-                    sx={{
-                      backgroundColor: '#f1f1f1',
-                      borderRadius: '8px',
-                      padding: '8px',
-                      flex: 2,
-                      color: '#333',
-                      fontSize: '0.9rem',
-                      lineHeight: '1.5',
-                      maxHeight: '50px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      ml: 2,
-                    }}
-                  >
-                    <Typography variant="body2">{transaction.purpose}</Typography>
-                  </Box>
-                </Box>
+        //           {/* Center Box: Description */}
+        //           <Box
+        //             sx={{
+        //               backgroundColor: '#f1f1f1',
+        //               borderRadius: '8px',
+        //               padding: '8px',
+        //               flex: 2,
+        //               color: '#333',
+        //               fontSize: '0.9rem',
+        //               lineHeight: '1.5',
+        //               maxHeight: '50px',
+        //               overflow: 'hidden',
+        //               textOverflow: 'ellipsis',
+        //               ml: 2,
+        //             }}
+        //           >
+        //             <Typography variant="body2">{transaction.purpose}</Typography>
+        //           </Box>
+        //         </Box>
         
-                {/* Action Buttons (Visible by default) */}
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    ml: 2,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#3f51b5',
-                      borderRadius: '50%',
-                      width: '40px',
-                      height: '40px',
-                      color: '#fff',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s',
-                      '&:hover': { backgroundColor: '#2c3e9b' },
-                      mr: 1,
-                    }}
-                    onClick={() => handleEdit(transaction)}
-                  >
-                    <EditIcon sx={{ fontSize: '1.25rem' }} />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#f50057',
-                      borderRadius: '50%',
-                      width: '40px',
-                      height: '40px',
-                      color: '#fff',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s',
-                      '&:hover': { backgroundColor: '#c51162' },
-                    }}
-                    onClick={() => handleDeleteClick(transaction._id)}
-                  >
-                    <DeleteIcon sx={{ fontSize: '1.25rem' }} />
-                  </Box>
-                </Box>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-        
+        //         {/* Action Buttons (Visible by default) */}
+        //         <Box
+        //           sx={{
+        //             display: 'flex',
+        //             flexDirection: 'row',
+        //             ml: 2,
+        //           }}
+        //         >
+        //           <Box
+        //             sx={{
+        //               display: 'flex',
+        //               justifyContent: 'center',
+        //               alignItems: 'center',
+        //               backgroundColor: '#3f51b5',
+        //               borderRadius: '50%',
+        //               width: '40px',
+        //               height: '40px',
+        //               color: '#fff',
+        //               cursor: 'pointer',
+        //               transition: 'background-color 0.2s',
+        //               '&:hover': { backgroundColor: '#2c3e9b' },
+        //               mr: 1,
+        //             }}
+        //             onClick={() => handleEdit(transaction)}
+        //           >
+        //             <EditIcon sx={{ fontSize: '1.25rem' }} />
+        //           </Box>
+        //           <Box
+        //             sx={{
+        //               display: 'flex',
+        //               justifyContent: 'center',
+        //               alignItems: 'center',
+        //               backgroundColor: '#f50057',
+        //               borderRadius: '50%',
+        //               width: '40px',
+        //               height: '40px',
+        //               color: '#fff',
+        //               cursor: 'pointer',
+        //               transition: 'background-color 0.2s',
+        //               '&:hover': { backgroundColor: '#c51162' },
+        //             }}
+        //             onClick={() => handleDeleteClick(transaction._id)}
+        //           >
+        //             <DeleteIcon sx={{ fontSize: '1.25rem' }} />
+        //           </Box>
+        //         </Box>
+        //       </Box>
+        //     </Grid>
+        //   ))}
+        // </Grid>
 
         
-
+          filteredTransactions.map((transaction, index) => {
+              return <TransactionCard transaction={transaction} />
+          })
+        
         
         
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Typography, Card, CardContent, CardMedia, IconButton} from '@mui/material';
+import axios from 'axios';
+import { Box, Typography, Card, CardContent, CardMedia, IconButton, responsiveFontSizes} from '@mui/material';
 import { useEffect,useState,useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react'; // Import Swiper components
 import { Navigation, Autoplay,EffectFade } from 'swiper/modules'; // Import Swiper modules
@@ -96,18 +97,25 @@ const Activities = () => {
     useEffect(()=>{
       setTimeout(() => {
         if (prevRef.current && nextRef.current) {
-          prevRef.current.style.display = 'block'; // Ensure arrows are visible
+          prevRef.current.style.display = 'block';
           nextRef.current.style.display = 'block';
         }
       }, 100);
     },[])
-    useEffect(() => {
-        fetch('/activities.json')
-          .then((response) => response.json())
-          .then((data) => {
-            setActivities(data);
-          })
-          .catch((error) => console.error('Error fetching donations:', error));
+    useEffect(async() => {
+        // fetch('/activities.json')
+        //   .then((response) => response.json())
+        //   .then((data) => {
+        //     setActivities(data);
+        //   })
+        //   .catch((error) => console.error('Error fetching donations:', error));
+         await axios.get("http://localhost:8000/api/activities/getAll")
+         .then((res)=>{
+            se
+         })
+         
+         setActivities(res.data.data);
+         console.log(res);
       }, []);
   return (
     <Box sx={{ padding: { xs: '20px', md: '50px' }, textAlign: 'center', position: 'relative' }}>
@@ -152,7 +160,7 @@ const Activities = () => {
           swiper.navigation.update();
         }}
       >
-        {activities.map((activity, index) => (
+        {activities?.map((activity, index) => (
           <SwiperSlide key={index}>
             <Card
               sx={{

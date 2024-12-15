@@ -10,8 +10,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Card,
-  CardContent,
 } from '@mui/material';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import { AppContext } from '../../../context/Context';
@@ -45,13 +43,6 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
       [name]: files ? files[0] : value,
     }));
   };
-
-  
-
-
-   
-
-
   
   const handleUpdateSubEvent = (updatedEvent) => {
     setSubEvents((prev) =>
@@ -125,7 +116,7 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
         })
         
     } catch (error) {
-        console.log(error.message);
+      console.error('Error:', err);
     }
   };
 

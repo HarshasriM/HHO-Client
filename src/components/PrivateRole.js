@@ -15,7 +15,7 @@ function PrivateRole({ children }) {
       '/dashboard/users',
     ],
     Core: ['/dashboard/new-event', '/dashboard/events'],
-    Accountant: ['/dashboard/new-transaction', '/dashboard/past-transactions'],
+    Accountant: ['/dashboard/new-transaction', '/dashboard/past-transactions','/dashboard/new-donation','/dashboard/all-donations'],
   };
 
   console.log('Current role:', role);

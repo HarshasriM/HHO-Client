@@ -8,14 +8,30 @@ import { useMediaQuery } from '@mui/material';
 function Donations() {
     const isMobile = useMediaQuery('(max-width:800px)');
     const [donations,setDonations] = useState([])
+    // useEffect(() => {
+    //     fetch('/donations.json')
+    //       .then((response) => response.json())
+    //       .then((data) => {
+    //         setDonations(data);
+    //       })
+    //       .catch((error) => console.error('Error fetching donations:', error));
+    //   }, []);
+
     useEffect(() => {
-        fetch('/donations.json')
-          .then((response) => response.json())
-          .then((data) => {
-            setDonations(data);
-          })
-          .catch((error) => console.error('Error fetching donations:', error));
-      }, []);
+        fetch('http://localhost:8000/api/donations/getall')
+            .then((res) => res.json())
+            .then((data) => {
+                // Sort donations by date in descending order
+                const sortedDonations = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+                // Set only the top 4 most recent donations
+                setDonations(sortedDonations.slice(0, 4));
+            })
+            .catch((error) => console.log('Error fetching donations:', error));
+    }, []);
+    
+
+    
+   
 
 
     const rows = donations.reduce((acc, donation, index) => {

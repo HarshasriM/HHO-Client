@@ -111,11 +111,11 @@ const Activities = () => {
         //   .catch((error) => console.error('Error fetching donations:', error));
          await axios.get("http://localhost:8000/api/activities/getAll")
          .then((res)=>{
-            se
+          console.log(res);
          })
          
-         setActivities(res.data.data);
-         console.log(res);
+        //  setActivities(res.data.data);
+        //  console.log(res);
       }, []);
   return (
     <Box sx={{ padding: { xs: '20px', md: '50px' }, textAlign: 'center', position: 'relative' }}>

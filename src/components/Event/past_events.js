@@ -74,6 +74,7 @@ const Card = ({ imageSrc, title, description }) => (
       <Link to={`/events/${title.replace(/\s+/g, '').toLowerCase()}`} className="event-card-button">
         Read More
       </Link>
+
     </div>
   </div>
 );

@@ -32,7 +32,9 @@ import PrivateRole from './components/PrivateRole';
 import EventDescription from './components/Dashbord/core/EventDetails';
 import { Switch } from '@mui/material';
 import EventDetails from './components/Dashbord/core/EventDetails';
-import EventInfo from './components/Event/EventSection';
+// import EventInfo from './components/Event/EventSection';
+import NewDonation from './components/Dashbord/Accountant/NewDonation';
+import AllDonations from './components/Dashbord/Accountant/AllDonations';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -84,6 +86,15 @@ function App() {
     path="past-transactions" 
     element={<PrivateRole><PastTransactions /></PrivateRole>} 
   />
+  <Route 
+    path='new-donation'
+    element={<PrivateRole><NewDonation /></PrivateRole>}
+    />
+
+  <Route 
+    path='all-donations'
+    element={<PrivateRole><AllDonations /></PrivateRole>}
+    />
 
   {/* Admin-Specific Routes */}
   <Route 

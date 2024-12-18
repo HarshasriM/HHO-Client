@@ -23,6 +23,16 @@ const NAV_ITEMS = [
       { label: 'Past Transactions', route: '/dashboard/past-transactions' },
     ],
   },
+  {
+    label:'Donations',
+    icon:<AccountBalanceIcon />,
+    subItems:[
+      {
+        label:'New Donation', route:'/dashboard/new-donation'
+      },
+      { label:'All Donations',route:'/dashboard/all-donations' }
+    ]
+  }
 ];
 
 const theme = createTheme();

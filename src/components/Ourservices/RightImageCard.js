@@ -19,7 +19,7 @@ function RightImageCard({donation,isEvenRow}) {
                     <CardMedia
                          component="img"
                          height="280"
-                         image={donation.image}
+                         image={donation.photo}
                          alt="green iguana"
                          sx={{
                             borderRadius:isMobile ? 
@@ -50,7 +50,7 @@ function RightImageCard({donation,isEvenRow}) {
                                     </Typography>
                                     <Typography gutterBottom variant="h6" component="div" sx={{padding:"6px 6px 6px 6px" , border:"1px solid #fa9a34",borderRadius:"15px"}}>
                                         <CalendarMonthIcon sx={{fontSize:isMobile? "20px":"25px",color:"#fa9a34"}}/>
-                                    &nbsp;<span style={{fontSize:"14px"}}>{donation.date}</span>
+                                    &nbsp;<span style={{fontSize:"14px"}}>{new Date(donation.date).toLocaleDateString()}</span>
                                     </Typography>
                                 </div>
                                

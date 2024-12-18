@@ -144,7 +144,7 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
                 fullWidth
                 label="Event Title"
                 name="eventTitle"
-                value={localStorage.getItem('eventDetails').eventTitle}   
+                value={eventDetails.eventTitle}   
                 onChange={handleInputChange}
                 required
               />

@@ -163,6 +163,15 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
         await axios.post("http://localhost:8000/api/events/createEvent",finalFormData,{headers})
         .then((response)=>{
           console.log(response.data);
+          setEventDetails({
+            eventTitle: '',
+            eventDescription: '',
+            eventVenue: '',
+            eventStartDate: '',
+            eventEndDate: '',
+            eventPoster: null,
+          })
+          setSubEvents([]);
         })
         .catch((err)=>{
           console.log(err);

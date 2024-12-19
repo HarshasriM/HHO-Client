@@ -35,6 +35,7 @@ import EventDetails from './components/Dashbord/core/EventDetails';
 // import EventInfo from './components/Event/EventSection';
 import NewDonation from './components/Dashbord/Accountant/NewDonation';
 import AllDonations from './components/Dashbord/Accountant/AllDonations';
+import DetailedEvent from './components/Event/DetailedEvent';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -70,8 +71,12 @@ function App() {
         <Route  path='/' element={<Home />}/>
         
         <Route path='/events' element={<Event />} />
-        <Route path="/events/:eventName" element={<EventDetailsWrapper />} />
-        <Route path="/events/:eventName" element={<EventDescription />} />
+// <<<<<<< main
+//         <Route path="/events/:eventName" element={<EventDetailsWrapper />} />
+//         <Route path="/events/:eventName" element={<EventDescription />} />
+// =======
+        <Route path="/events/:eventName" element={<DetailedEvent />} />
+// >>>>>>> main
         <Route path='/transactions' element={<Transactions />} />
         <Route path='/about' element={<About />} />
         <Route path='/services' element={<Services />} />

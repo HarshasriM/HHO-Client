@@ -13,11 +13,28 @@ function EventDetails() {
   const [openDialog, setOpenDialog] = useState(false);
   const [currentSubEvent, setCurrentSubEvent] = useState(null);
   const [editedEvent, setEditedEvent] = useState(event || {});
+  const [newDialog, setNewDailog] = useState(false);
+  const [newSubEvent, setNewSubEvent] = useState({
+    subEventTitle: '',
+    subEventDescription: '',
+    subEventDate: '',
+    subEventVenue: '',
+    subEventPoster: '',
+  });
+  
 
   if (!event) {
     return <div>No event details available.</div>;
   }
 
+  const handleNewDialog = (subEvent = null) =>{
+    setCurrentSubEvent(subEvent);
+    setNewDailog(true);
+  }
+  const handleCloseNewDialog = () =>{
+    setNewDailog(false);
+    setCurrentSubEvent(null);
+  }
   const handleOpenDialog = (subEvent = null) => {
     setCurrentSubEvent(subEvent);
     setOpenDialog(true);
@@ -28,39 +45,84 @@ function EventDetails() {
     setCurrentSubEvent(null);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (currentSubEvent) {
-      setCurrentSubEvent((prev) => ({ ...prev, [name]: value }));
-    } else {
-      setEditedEvent((prev) => ({ ...prev, [name]: value }));
+  const uploadImageToCloudinary = async (photoUrl) => {
+    // console.log(eventDetails.eventPoster);
+    const uploadData = new FormData();
+    uploadData.append("file",photoUrl);
+    uploadData.append("upload_preset", "unsigned_upload");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dkzzeiqhh/image/upload",
+        uploadData
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      return null;
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value,files } = e.target;
+    if (newDialog) {
+      setNewSubEvent((prev) => ({ ...prev, [name]: files ? uploadImageToCloudinary(files[0]) : value,}));
+    } else if (currentSubEvent) {
+      setCurrentSubEvent((prev) => ({ ...prev, [name]: files ? uploadImageToCloudinary(files[0]) : value, }));
+    } else {
+      setEditedEvent((prev) => ({ ...prev, [name]: files ? uploadImageToCloudinary(files[0]) : value, }));
+    }
+  };
+  
+
   const handleSubmit = async () => {
     try {
-      if (currentSubEvent) {
-        const updatedSubEvents = editedEvent.subEvents.map((subEvent) =>
-          subEvent._id === currentSubEvent._id ? currentSubEvent : subEvent
-        );
-
+      console.log("Payload being sent:", {
+        ...editedEvent,
+        subEvents: editedEvent.subEvents
+      });
+      
+      if (newDialog) {
+        // Adding a new subevent
+        const updatedSubEvents = [
+          ...editedEvent.subEvents,
+          { ...newSubEvent }, // Temporary ID
+        ];
+  
         await axios.put(`http://localhost:8000/api/events/editEvent/${editedEvent._id}`, {
           ...editedEvent,
           subEvents: updatedSubEvents,
         });
-
+  
+        setEditedEvent((prev) => ({ ...prev, subEvents: updatedSubEvents }));
+        console.log('New subevent added successfully');
+        setNewSubEvent({ subEventTitle: '', subEventDescription: '', subEventDate: '', subEventVenue: '' });
+      } else if (currentSubEvent) {
+        // Editing an existing subevent
+        const updatedSubEvents = editedEvent.subEvents.map((subEvent) =>
+          subEvent._id === currentSubEvent._id ? currentSubEvent : subEvent
+        );
+  
+        await axios.put(`http://localhost:8000/api/events/editEvent/${editedEvent._id}`, {
+          ...editedEvent,
+          subEvents: updatedSubEvents,
+        });
+  
+        setEditedEvent((prev) => ({ ...prev, subEvents: updatedSubEvents }));
         console.log('Subevent updated successfully');
       } else {
+        // Editing the main event
         await axios.put(`http://localhost:8000/api/events/editEvent/${editedEvent._id}`, editedEvent);
         console.log('Event updated successfully');
       }
-
+  
       handleCloseDialog();
-      //navigate('/dashboard/events');
+      handleCloseNewDialog();
     } catch (error) {
       console.error('Error updating event:', error);
     }
   };
+  
 
   const handleDeleteEvent = async () => {
     try {
@@ -114,6 +176,9 @@ function EventDetails() {
       </Grid>
 
       <Typography variant="h4" gutterBottom style={{ marginTop: '30px' }}>Subevents</Typography>
+      <IconButton color="primary" onClick={() => handleNewDialog()}>
+            <EditIcon /> Add New
+      </IconButton>
       <Grid container spacing={4}>
         {editedEvent.subEvents.map((subEvent, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -175,9 +240,63 @@ function EventDetails() {
             fullWidth
             margin="normal"
           />
+          <Button variant="contained" component="label">
+                        Upload Poster
+                        <input
+                          type="file"
+                          name="eventPoster"
+                          accept="image/*"
+                          // value={currentSubEvent ? currentSubEvent.subEventPoster : editedEvent.eventPoster}
+                          onChange={handleChange}
+                          hidden
+                        />
+                      </Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog} color="primary">Cancel</Button>
+          <Button onClick={handleSubmit} color="primary">Save</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={newDialog} onClose={handleCloseNewDialog}>
+        <DialogTitle>Add Subevent</DialogTitle>
+        <DialogContent>
+        <TextField
+          label="Title"
+          name="subEventTitle"
+          value={newSubEvent.subEventTitle}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Description"
+          name="subEventDescription"
+          value={newSubEvent.subEventDescription}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Date"
+          name="subEventDate"
+          value={newSubEvent.subEventDate}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Venue"
+          name="subEventVenue"
+          value={newSubEvent.subEventVenue}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseNewDialog} color="primary">Cancel</Button>
           <Button onClick={handleSubmit} color="primary">Save</Button>
         </DialogActions>
       </Dialog>

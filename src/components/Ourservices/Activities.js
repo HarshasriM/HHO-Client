@@ -40,7 +40,7 @@ const Activities = () => {
         }
         fetchActivities();
     },[])
-    
+
   return (
     <Box sx={{ padding: { xs: '20px', md: '50px' }, textAlign: 'center', position: 'relative' }}>
       {/* Heading */}

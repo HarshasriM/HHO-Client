@@ -11,7 +11,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
-import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
+import { ConstructionOutlined, Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import { AppContext } from '../../../context/Context';
 import axios from 'axios';
 
@@ -84,7 +84,26 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
     closeSubEventModal();
   };
 
-  const handleSubmit = (e) => {
+
+  const uploadImageToCloudinary = async (photoUrl) => {
+    // console.log(eventDetails.eventPoster);
+    const uploadData = new FormData();
+    uploadData.append("file",photoUrl);
+    uploadData.append("upload_preset", "unsigned_upload");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dkzzeiqhh/image/upload",
+        uploadData
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      return null;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Main Event Details:', eventDetails);
     console.log('Sub-events:', subEvents);
@@ -92,24 +111,58 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
     // Perform form submission logic here
     try {
         // Perform form submission logic here
+
+
+
+
+        const uploadedImageUrl = await uploadImageToCloudinary(eventDetails.eventPoster);
+        // console.log("Main Event Poster:",uploadedImageUrl);
+        for (let index = 0; index < subEvents.length; index++) {
+          try {
+            subEvents[index].subEventPoster = await uploadImageToCloudinary(subEvents[index].subEventPoster);
+            console.log("SubEvent Poster:",subEvents[index].subEventPoster);
+          } catch (error) {
+            console.error(`Error uploading image for sub-event ${index}:`, error);
+          }
+        }
         const formData = new FormData();
         formData.append('eventTitle', eventDetails.eventTitle);       
         formData.append('eventDescription', eventDetails.eventDescription);
         formData.append('eventVenue', eventDetails.eventVenue);
         formData.append('event_start_date', eventDetails.eventStartDate);
         formData.append('event_end_date', eventDetails.eventEndDate);
-        formData.append('eventPoster', eventDetails.eventPoster);
+        formData.append('eventPoster',uploadedImageUrl);
         formData.append('subEvents', JSON.stringify(subEvents));
+      // console.log(uploadImageToCloudinary(eventDetails.eventPoster));
+        // console.log(formData);
+        // Iterate over the FormData entries
+        for (let [key, value] of formData.entries()) {
+          console.log("hi");
+          console.log(`${key}: ${value}`);
+        }
+
 
         const headers = {
-          'Content-Type': 'multipart/form-data',
+          // 'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`,
         };
         
 
-        axios.post("http://localhost:8000/api/events/createEvent",formData,{headers})
+        // console.log(formData);
+
+        const finalFormData = {
+            eventTitle:eventDetails.eventTitle,
+            eventDescription: eventDetails.eventDescription,
+            eventVenue: eventDetails.eventVenue,
+            event_start_date: eventDetails.eventStartDate,
+            event_end_date: eventDetails.eventEndDate,
+            eventPoster: uploadedImageUrl,
+            subEvents: subEvents
+        }
+        console.log(finalFormData);
+        await axios.post("http://localhost:8000/api/events/createEvent",finalFormData,{headers})
         .then((response)=>{
-          console.log(response);
+          console.log(response.data);
         })
         .catch((err)=>{
           console.log(err);

@@ -102,6 +102,7 @@ function EventDetails() {
   };
 
   const handleSubmit = async () => {
+    console.log(
     try {
       if (newDialog) {
         const updatedSubEvents = [

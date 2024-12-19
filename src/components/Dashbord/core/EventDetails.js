@@ -19,6 +19,7 @@ function EventDetails() {
     subEventDescription: '',
     subEventDate: '',
     subEventVenue: '',
+    subEventPoster: '',
   });
   
 
@@ -44,15 +45,32 @@ function EventDetails() {
     setCurrentSubEvent(null);
   };
 
+  const uploadImageToCloudinary = async (photoUrl) => {
+    // console.log(eventDetails.eventPoster);
+    const uploadData = new FormData();
+    uploadData.append("file",photoUrl);
+    uploadData.append("upload_preset", "unsigned_upload");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dkzzeiqhh/image/upload",
+        uploadData
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      return null;
+    }
+  };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-  
+    const { name, value,files } = e.target;
     if (newDialog) {
-      setNewSubEvent((prev) => ({ ...prev, [name]: value }));
+      setNewSubEvent((prev) => ({ ...prev, [name]: files ? uploadImageToCloudinary(files[0]) : value,}));
     } else if (currentSubEvent) {
-      setCurrentSubEvent((prev) => ({ ...prev, [name]: value }));
+      setCurrentSubEvent((prev) => ({ ...prev, [name]: files ? uploadImageToCloudinary(files[0]) : value, }));
     } else {
-      setEditedEvent((prev) => ({ ...prev, [name]: value }));
+      setEditedEvent((prev) => ({ ...prev, [name]: files ? uploadImageToCloudinary(files[0]) : value, }));
     }
   };
   
@@ -222,6 +240,17 @@ function EventDetails() {
             fullWidth
             margin="normal"
           />
+          <Button variant="contained" component="label">
+                        Upload Poster
+                        <input
+                          type="file"
+                          name="eventPoster"
+                          accept="image/*"
+                          // value={currentSubEvent ? currentSubEvent.subEventPoster : editedEvent.eventPoster}
+                          onChange={handleChange}
+                          hidden
+                        />
+                      </Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog} color="primary">Cancel</Button>

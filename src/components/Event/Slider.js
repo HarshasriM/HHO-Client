@@ -27,11 +27,13 @@ const Slider = () => {
     document.querySelector('.slide').prepend(items[items.length - 1]);
   };
 
+  const events = [2,4,5,6,7];
+  
   return (
     <div>
     <div className="container-slider d-none d-lg-block">
       <div className="slide">
-        <div
+        {/* <div
           className="item"
           style={{ backgroundImage: 'url(https://i.ibb.co/qCkd9jS/img1.jpg)' }}
         >
@@ -90,7 +92,28 @@ const Slider = () => {
             </div>
             <Link to="/events/chaitra2k23" className='slider-button'>See More</Link>
           </div>
+        </div> */}  
+        {
+          events.map((event)=>{
+                  return(
+                        <div
+          className="item"
+          style={{ backgroundImage: 'url(https://i.ibb.co/jTQfmTq/img5.jpg)' }}
+        >
+          <div className="content">
+            <div className="name">Chaitra 2K23</div>
+            <div className="des">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, eum!
+            </div>
+            <Link to="/events/chaitra2k23" className='slider-button'>See More</Link>
+          </div>
         </div>
+                  )
+            }
+          )
+
+        }
+
       </div>
 
       <div className="button">

@@ -165,7 +165,7 @@ function DetailedEvent() {
       
   return (
    <>
-     <div className="event-banner-container">
+  <div className="event-banner-container">
   <div className="event-banner-content">
     <h1>{event.eventTitle}</h1>
     <p>{event.eventDescription}</p>

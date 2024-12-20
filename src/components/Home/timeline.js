@@ -181,7 +181,7 @@ const Timeline = () => {
                             <p>
                                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed commodi, itaque enim tempore voluptatum est aliquam quas, sint eligendi, culpa odio? Eligendi harum expedita quibusdam reiciendis in ipsum cumque illo!
                             </p>
-                            <span className='right-container-arrow accountarrow'></span>
+                            <span className='right-container-arrow accountarrow'>A</span>
                         </div>
                     </div>
                     <div className='member-card left-container'>
@@ -199,7 +199,8 @@ const Timeline = () => {
                         {/* <img src="logo192.png" alt='HR' /> */}
                         <i className="fa-solid fa-h" style={{color: "white"}}></i>
                         <div className='text-box hrcard'>
-                            <h2 className='hrtext'> HR </h2>
+                            <h2 className='hrtext'> 
+                                HR </h2>
                             <p>
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. At ipsam autem facere sunt earum officiis, nulla voluptas iure, adipisci ipsum necessitatibus numquam. Incidunt accusantium harum ratione, earum ex ut nobis.
                             </p>

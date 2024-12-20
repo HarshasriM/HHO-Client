@@ -1,5 +1,5 @@
-/* .event-banner-container {
-    height: 60vh;
+ .event-banner-container {
+    height: 86vh;
     width: 100vw;
     background-image: url('./people.jpg');
     background-size: cover;
@@ -95,7 +95,7 @@
 }
 
 .event-banner-container {
-    height: 70vh;
+    height: 86vh;
     width: 100vw;
     background-image: url('./people.jpg');
     background-size: cover;

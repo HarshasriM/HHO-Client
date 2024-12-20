@@ -82,12 +82,13 @@ function EventDetails() {
     if (files && files.length > 0) {
       const file = files[0];
       setSelectedFileName(file.name);
-      const uploadedUrl = await uploadImageToCloudinary(file);
+      const uploadedUrl = await uploadImageToCloudinary(files[0]);
       if (newDialog) {
         setNewSubEvent((prev) => ({ ...prev, [name]: uploadedUrl }));
       } else if (currentSubEvent) {
         setCurrentSubEvent((prev) => ({ ...prev, [name]: uploadedUrl }));
       } else {
+        console.log(uploadedUrl);
         setEditedEvent((prev) => ({ ...prev, [name]: uploadedUrl }));
       }
     } else {
@@ -141,6 +142,7 @@ function EventDetails() {
 
         setEditedEvent((prev) => ({ ...prev, subEvents: updatedSubEvents }));
       } else {
+        console.log(editedEvent);
         await axios.put(
           `http://localhost:8000/api/events/editEvent/${editedEvent._id}`,
           editedEvent

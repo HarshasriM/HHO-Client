@@ -123,3 +123,8 @@
     font-weight: 600;
     font-size: 18px;
 }
+.nav-link.active-nav-item {
+    color: #ff9900 !important;
+    background-color: white;
+    border-radius: 16px;
+  }

@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';  // Import Link from react-router-dom
+import { Link,useLocation } from 'react-router-dom';  // Import Link from react-router-dom
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -24,11 +24,14 @@ const drawerWidth = 0;
 const navItems = ['Home', 'Events', 'Transactions', 'Our Services', 'About Us'];
 // const isLoged = true;
 
+
 function DrawerAppBar(props) {
 
   const{token,setToken} = React.useContext(AppContext);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const location = useLocation();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -50,6 +53,10 @@ function DrawerAppBar(props) {
       default:
         return '/';
     }
+  };
+
+  const getNavItemClass = (item) => {
+    return location.pathname === getLinkForNavItem(item) ? 'active-nav-item' : '';
   };
 
   const drawer = (
@@ -107,7 +114,7 @@ function DrawerAppBar(props) {
           {/* Center: Navigation links only for larger screens */}
           <Box sx={{ display: { xs: 'none', sm: 'flex' }, flexGrow: 1, justifyContent: 'center' }}>
             {navItems.map((item) => (
-              <Link key={item} to={getLinkForNavItem(item)} className="nav-link" sx={{ color: '#fff', textDecoration: 'none', marginRight: '20px' }}>
+              <Link key={item} to={getLinkForNavItem(item)} className={`nav-link ${getNavItemClass(item)}`}  sx={{ color: '#fff', textDecoration: 'none', marginRight: '20px' }}>
                 {item}
               </Link>
             ))}

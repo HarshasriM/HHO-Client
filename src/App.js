@@ -35,6 +35,7 @@ import EventDetails from './components/Dashbord/core/EventDetails';
 import NewDonation from './components/Dashbord/Accountant/NewDonation';
 import AllDonations from './components/Dashbord/Accountant/AllDonations';
 import DetailedEvent from './components/Event/DetailedEvent';
+import NewUser from "./components/Dashbord/Admin/Users/NewUser";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -111,6 +112,10 @@ function App() {
   <Route 
     path="users" 
     element={<PrivateRole><AllUsers /></PrivateRole>} 
+  />
+  <Route 
+    path="users/new" 
+    element={<PrivateRole><NewUser /></PrivateRole>} 
   />
 
   {/* Core-Specific Routes */}

@@ -57,11 +57,11 @@ function AdminDashbord() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // React.useEffect(() => {
-  //   if (location.pathname === '/dashboard') {
-  //     navigate('/dashboard/new-testimonial', { replace: true });
-  //   }
-  // }, [location.pathname, navigate]);
+  React.useEffect(() => {
+    if (location.pathname === '/dashboard') {
+      navigate('/dashboard/new-testimonial', { replace: true });
+    }
+  }, [location.pathname, navigate]);
 
   const handleItemClick = (label) => {
     setOpenSubNav(openSubNav === label ? null : label);

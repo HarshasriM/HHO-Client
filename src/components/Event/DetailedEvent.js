@@ -1,168 +1,100 @@
-import React, { useState ,useRef,useEffect} from 'react'
+import React, { useState ,useRef,useEffect, useContext} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 // import PreEvents from './pre_events';
 import PreEvents from './PreEvents';
 import EventsGallery from './img_gallery';
 import EventCountdown from './EventCountdown';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { AppContext } from '../../context/Context';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 
 
 function DetailedEvent() {
-  const events = [
-    {
-      eventTitle: "Tech Summit 2024",
-      eventDescription: "A premier technology event showcasing the latest innovations and trends in tech.",
-      eventStartDate: "2024-05-15",
-      eventEndDate: "2024-05-17",
-      eventPoster: "tech-summit-poster.jpg",
-      eventVenue: "Silicon Valley Convention Center",
-      subEvents: [
-        {
-          subEventTitle: "AI Workshop",
-          subEventDescription: "This is going to be great thing ",
-          subEventVenue: "Room A1",
-          subEventDate: "2024-05-15",
-          subEventPoster:
-            "https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg",
-        },
-        {
-          subEventTitle: "Cybersecurity Panel",
-          subEventDescription: "This is going to be great thing",
-          subEventVenue: "Room B3",
-          subEventDate: "2024-05-16",
-          subEventPoster:
-            "https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg",
-        },
-        {
-          subEventTitle: "AI Workshop",
-          subEventDescription: "This is going to be great thing ",
-          subEventVenue: "Room A1",
-          subEventDate: "2024-05-15",
-          subEventPoster:
-            "https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg",
-        },
-        {
-          subEventTitle: "AI Workshop",
-          subEventDescription: "This is going to be great thing ",
-          subEventVenue: "Room A1",
-          subEventDate: "2024-05-15",
-          subEventPoster:
-            "https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg",
-        }
-        ,
-        {
-          subEventTitle: "AI Workshop",
-          subEventDescription: "This is going to be great thing ",
-          subEventVenue: "Room A1",
-          subEventDate: "2024-05-15",
-          subEventPoster:
-            "https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg",
-        },
-        {
-          subEventTitle: "AI Workshop",
-          subEventDescription: "This is going to be great thing in the future are you red",
-          subEventVenue: "Room A1",
-          subEventDate: "2024-05-15",
-          subEventPoster:
-            "https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg",
-        }
-        ,
-        {
-          subEventTitle: "AI Workshop",
-          subEventDescription: "This is going to be great thing ",
-          subEventVenue: "Room A1",
-          subEventDate: "2024-05-15",
-          subEventPoster:
-            "https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg",
-        },
-        {
-          subEventTitle: "AI Workshop",
-          subEventDescription: "This is going to be great thing ",
-          subEventVenue: "Room A1",
-          subEventDate: "2024-05-15",
-          subEventPoster:
-            "https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg",
-        }
-      ],
-    },
-    {
-      eventTitle: "Music Fiesta 2024",
-      eventDescription: "A grand celebration of music with performances by top artists from around the world.",
-      eventStartDate: "2024-06-10",
-      eventEndDate: "2024-06-12",
-      eventPoster: "music-fiesta-poster.jpg",
-      eventVenue: "Global Arena, New York",
-      subEvents: [
-        {
-          subEventTitle: "Rock Night",
-          subEventDescription: "",
-          subEventVenue: "Main Stage",
-          subEventDate: "2024-06-10",
-          subEventPoster: "",
-        },
-        {
-          subEventTitle: "Jazz Evening",
-          subEventDescription: "",
-          subEventVenue: "Jazz Hall",
-          subEventDate: "2024-06-11",
-          subEventPoster: "jazz-evening-poster.jpg",
-        },
-      ],
-    },
-    {
-      eventTitle: "Startup Expo 2024",
-      eventDescription: "An exclusive platform for startups to showcase their products and network with investors.",
-      eventStartDate: "2024-07-20",
-      eventEndDate: "2024-07-22",
-      eventPoster: "startup-expo-poster.jpg",
-      eventVenue: "Expo Center, San Francisco",
-      subEvents: [
-        {
-          subEventTitle: "Pitch Competition",
-          subEventDescription: "",
-          subEventVenue: "Hall 1",
-          subEventDate: "2024-07-20",
-          subEventPoster: "",
-        },
-        {
-          subEventTitle: "Networking Mixer",
-          subEventDescription: "",
-          subEventVenue: "Lounge Area",
-          subEventDate: "2024-07-21",
-          subEventPoster: "networking-mixer-poster.jpg",
-        },
-      ],
-    },
-  ];
-  
 
-      const [isVisible, setIsVisible] = useState(false);
-        const sectionRef = useRef(null);
+    const{allEvents} = useContext(AppContext);
+    const navigate  = useNavigate();
+    const location = useLocation();
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef(null);
+    const [events, setEvents] = useState(
+      JSON.parse(localStorage.getItem('events')) || []
+    );
+    
+    
+    const {eventId} = useParams();
+
+
       
-        useEffect(() => {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              const [entry] = entries;
-              setIsVisible(entry.isIntersecting);
-            },
-            { threshold: 0.35 }
-          );
       
+      useEffect(() => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const [entry] = entries;
+            setIsVisible(entry.isIntersecting);
+          },
+          { threshold: 0.35 }
+        );
+    
+        if (sectionRef.current) {
+          observer.observe(sectionRef.current);
+        }
+    
+        return () => {
           if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+            observer.unobserve(sectionRef.current);
           }
-      
-          return () => {
-            if (sectionRef.current) {
-              observer.unobserve(sectionRef.current);
-            }
-          };
-        }, []);
+        };
+      }, []);
 
 
-        const event = events[0];
+      // useEffect(()=>{
+
+      //   async function getEvents() {
+      //     try {
+      //       const response = await axios.get('http://localhost:8000/api/events');
+      //       const data = response.data;
+      //       console.log(data);
+      //       setEvents(data);
+      //       localStorage.setItem('events',JSON.stringify(data));
+      //     } catch (error) {
+      //       console.error('Error fetching data:', error);
+      //     }
+      //   }
+      //   getEvents();
       
+      // },[])
+
+        console.log(allEvents);
+        console.log(events);
+        console.log(eventId)
+       
+  
+    
+        
+        
+
+       
+ 
+
+        React.useEffect(() => {
+          if (location.pathname === `/events/${eventId}}`) {
+                navigate(`/events/${event.eventTitle.replace(/\s+/g, '-').toLowerCase()}`, { replace: true })
+          }
+          }, [location.pathname, navigate]
+        );
+ 
+      const event = events.find((e) => e._id.toString() === eventId || e.eventTitle.replace(/\s+/g, '-').toLowerCase() === eventId);
+      // const event = events[0];
+      console.log(event);
+      
+
+        
+      if(!event){
+        return <h1>Loading event details..</h1>
+      }
   return (
    <>
   <div className="event-banner-container">
@@ -172,7 +104,7 @@ function DetailedEvent() {
     <div className="event-info">
       <div className="event-date">
         <FontAwesomeIcon icon={faCalendarAlt} className="icon" />
-        <span>{event.eventStartDate}</span> to <span>{event.eventEndDate}</span>
+        <span>{event.event_start_date.split("T")[0]}</span> to <span>{event.event_end_date.split("T")[0]}</span>
       </div>
       <div className="event-location">
         <FontAwesomeIcon icon={faMapMarkerAlt} className="icon" />
@@ -186,7 +118,7 @@ function DetailedEvent() {
 </div>
 
     
-          <section ref={sectionRef} className={`chaitra-section ${isVisible ? 'animate' : ''}`}>
+   {/* <section ref={sectionRef} className={`chaitra-section ${isVisible ? 'animate' : ''}`}> */}
             <div className="container">
               <div className="row">
                 <div className="col-12 col-md-6 order-2 order-md-1">
@@ -199,12 +131,12 @@ function DetailedEvent() {
                 </div>
                 <div className="col-12 col-md-6 order-1 order-md-2">
                   <div className="logo">
-                    <img src="https://res.cloudinary.com/dnbeeynnu/image/upload/b_rgb:050500/c_pad,w_1000,h_750,ar_4:3/v1710766757/WhatsApp_Image_2024-03-17_at_12.05.32_PM_jwctjg.jpg" alt="Chaitra Logo"/>
+                    <img src={event.eventPoster} alt="Chaitra Logo"/>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          {/* </section> */}
     <br/>
       <PreEvents  preEvents={event.subEvents}/>
       <br />

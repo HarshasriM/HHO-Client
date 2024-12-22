@@ -66,7 +66,7 @@ function App() {
         <Route  path='/' element={<Home />}/>
         
         <Route path='/events' element={<Event />} />
-        <Route path="/events/:eventName" element={<DetailedEvent />} />
+        <Route path="/events/:eventId" element={<DetailedEvent />} />
         <Route path='/transactions' element={<Transactions />} />
         <Route path='/about' element={<About />} />
         <Route path='/services' element={<Services />} />

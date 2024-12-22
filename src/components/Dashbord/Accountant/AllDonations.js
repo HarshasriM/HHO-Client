@@ -104,7 +104,7 @@ const AllDonations = () => {
     };
 
     fetchDonations();
-  }, []);
+  }, [donations]);
 
   return (
     <Box

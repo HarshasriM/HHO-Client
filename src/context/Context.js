@@ -27,6 +27,25 @@ export const AppProvider = ({ children }) => {
   const[role,setRole] = useState(localStorage.getItem('role') || null);
   console.log(role);
 
+  const [allEvents, setAllEvents] = useState(
+    JSON.parse(localStorage.getItem('events')) || []
+  );
+
+
+  useEffect(() => {
+    async function getEvents() {
+      try {
+        const response = await axios.get('http://localhost:8000/api/events');
+        const data = response.data;
+        setAllEvents(data);
+        console.log(data);
+        localStorage.setItem('events', JSON.stringify(data));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    getEvents();
+  }, []);
 
   //getuserData 
   useEffect(()=>{
@@ -64,7 +83,7 @@ export const AppProvider = ({ children }) => {
     setOpen(false); // Close the Snackbar
   };
   return (
-    <AppContext.Provider value={{token,setToken,user,setUser,open,setOpen,handleClose,alertMsg,setAlertMsg,userData,setUserData,role,setRole,transactions , setTransactions,filteredTransactions, setFilteredTransactions,severity,setSeverity,errorOcc,setErrorOcc}}>
+    <AppContext.Provider value={{token,setToken,user,setUser,open,setOpen,handleClose,alertMsg,setAlertMsg,userData,setUserData,role,setRole,transactions , setTransactions,filteredTransactions, setFilteredTransactions,severity,setSeverity,errorOcc,setErrorOcc,allEvents,setAllEvents}}>
       {children}
     </AppContext.Provider>
   );

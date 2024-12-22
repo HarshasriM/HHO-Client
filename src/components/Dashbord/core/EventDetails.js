@@ -17,7 +17,8 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-
+import EventIcon from '@mui/icons-material/Event'; // For event date icon
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 function EventDetails() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -188,7 +189,18 @@ function EventDetails() {
   return (
     <div>
       <Grid container spacing={4}>
-        <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={8}>
+          <Card style={{width:"50vw",height:"69vh",borderRadius:"24px"}}>
+            <CardMedia
+              component="img"
+              height="100%"
+              width="100%"
+              image={editedEvent.eventPoster}
+              alt={editedEvent.eventTitle}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
           <Typography variant="h3" gutterBottom>
             {editedEvent.eventTitle}
           </Typography>
@@ -196,12 +208,13 @@ function EventDetails() {
             {editedEvent.eventDescription}
           </Typography>
           <Typography variant="body1" color="textSecondary" paragraph>
-            <strong>Event Dates:</strong> {editedEvent.event_start_date} to{' '}
-            {editedEvent.event_end_date}
-          </Typography>
-          <Typography variant="body1" color="textSecondary" paragraph>
-            <strong>Event Venue:</strong> {editedEvent.eventVenue}
-          </Typography>
+  <EventIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+  {editedEvent.event_start_date.split('T')[0]} to {editedEvent.event_end_date.split('T')[0]}
+</Typography>
+<Typography variant="body1" color="textSecondary" paragraph>
+  <LocationOnIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+  {editedEvent.eventVenue}
+</Typography>
           <IconButton color="primary" onClick={() => handleOpenDialog()}>
             <EditIcon />
           </IconButton>
@@ -214,75 +227,56 @@ function EventDetails() {
           </IconButton>
         </Grid>
 
-        <Grid item xs={12} md={4}>
-          <Card>
-            <CardMedia
-              component="img"
-              height="100%"
-              image={editedEvent.eventPoster}
-              alt={editedEvent.eventTitle}
-            />
-          </Card>
-        </Grid>
+        
       </Grid>
 
       <Typography variant="h4" gutterBottom style={{ marginTop: '30px' }}>
         Subevents
       </Typography>
-      <IconButton color="primary" onClick={() => handleNewDialog()}>
-        <EditIcon /> Add New
+      <IconButton color='primary' onClick={() => handleNewDialog()} style={{position:"fixed",top:"85vh",right:"4vw",width:"13vw",height:"10vh",borderRadius:"2vh",border:"1px solid black",backgroundColor:"orange",color:"white"}} >
+        <EditIcon /> <span>Add New</span>
       </IconButton>
       <Grid container spacing={4}>
-        {editedEvent.subEvents.map((subEvent, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="200"
-                image={subEvent.subEventPoster}
-                alt={subEvent.subEventTitle}
-              />
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  {subEvent.subEventTitle}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  paragraph
-                >
-                  {subEvent.subEventDescription}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  <strong>Date:</strong> {subEvent.subEventDate}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  <strong>Venue:</strong> {subEvent.subEventVenue}
-                </Typography>
-                <IconButton
-                  color="primary"
-                  onClick={() => handleOpenDialog(subEvent)}
-                >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  color="secondary"
-                  onClick={() => handleDeleteSubEvent(subEvent)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+      {editedEvent.subEvents.map((subEvent, index) => (
+  <Grid item xs={12} sm={6} md={4} key={index}>
+    <Card>
+      <CardMedia
+        component="img"
+        height="200"
+        image={subEvent.subEventPoster}
+        alt={subEvent.subEventTitle}
+      />
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          {subEvent.subEventTitle}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" paragraph>
+          {subEvent.subEventDescription}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" gutterBottom>
+          <EventIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+          {subEvent.subEventDate.split("T")[0]}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" gutterBottom>
+          <LocationOnIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+          {subEvent.subEventVenue}
+        </Typography>
+        <IconButton
+          color="primary"
+          onClick={() => handleOpenDialog(subEvent)}
+        >
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          color="secondary"
+          onClick={() => handleDeleteSubEvent(subEvent)}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </CardContent>
+    </Card>
+  </Grid>
+))}
       </Grid>
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
@@ -319,8 +313,8 @@ function EventDetails() {
             name={currentSubEvent ? 'subEventDate' : 'event_start_date'}
             value={
               currentSubEvent
-                ? currentSubEvent.subEventDate
-                : editedEvent.event_start_date
+                ? currentSubEvent.subEventDate.split('T')[0]
+                : editedEvent.event_start_date.split('T')[0]
             }
             onChange={handleChange}
             fullWidth
@@ -386,7 +380,7 @@ function EventDetails() {
           <TextField
             label="Date"
             name="subEventDate"
-            value={newSubEvent.subEventDate}
+            value={newSubEvent.subEventDate.split("T")[0]}
             onChange={handleChange}
             fullWidth
             margin="normal"

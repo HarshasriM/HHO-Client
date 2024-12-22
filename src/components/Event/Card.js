@@ -14,7 +14,7 @@ const Card = ({ subEvent }) => {
         textAlign: "center",
         gap: "12px",
         width: "300px", // Fixed width for the card
-        height: "320px", // Fixed height for the card
+        height: "auto", // Fixed height for the card
         overflow: "hidden", // Prevent overflow of content
       }}
     >
@@ -63,7 +63,7 @@ const Card = ({ subEvent }) => {
       >
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <FaCalendarAlt style={{ color: "#555" }} />
-          <span>{subEvent.subEventDate}</span>
+          <span>{subEvent.subEventDate.split("T")[0]}</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <FaMapMarkerAlt style={{ color: "#555" }} />

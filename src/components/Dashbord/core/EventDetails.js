@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -19,7 +19,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import EventIcon from '@mui/icons-material/Event'; // For event date icon
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import {AppContext} from '../../../context/Context';
 function EventDetails() {
+  const{setAlertMsg,setErrorOcc,setOpen} = useContext(AppContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { event } = location.state || {};
@@ -120,6 +122,8 @@ function EventDetails() {
           }
         );
 
+        console.log(updatedSubEvents);
+
         setEditedEvent((prev) => ({ ...prev, subEvents: updatedSubEvents }));
         setNewSubEvent({
           subEventTitle: '',
@@ -163,6 +167,10 @@ function EventDetails() {
         `http://localhost:8000/api/events/deleteEvent/${event._id}`
       );
       navigate('/dashboard/events');
+      setAlertMsg('Event deleted  Successfully');
+      setErrorOcc(false);
+      setOpen(true);
+
     } catch (error) {
       console.error('Error deleting event:', error);
     }

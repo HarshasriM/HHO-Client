@@ -79,13 +79,43 @@
 .about-mission-img:hover{
     opacity: 0.8;
 }
-@media screen and (max-width:800px)  {
+@media screen and (max-width:575px)  {
 
     .about-title{
-      font-size: 45px;
+      font-size: 30px;
+      text-align: center;
     }
-    .span{
-      font-size: 40px;
+    .about-title .span {
+      font-size: 32px;
+      padding: 8px  6px;
+
+    }
+    figure p{
+        font-size: 14px !important;
+        /* background-color: red; */
+        padding: 12px 18px;
+    }
+    figcaption cite{
+        font-size: 16px !important;
+    }
+    .about-history{
+        /* background-color: red; */
+        padding: 0.7rem 1.5rem;
+    }
+    .about-history .about-title{
+        font-size: 28px;
+    }
+    .our-mission{
+        /* background-color: red; */
+        padding: 0.4rem 0.6rem;
+        text-align:justify;
+        text-indent: 20px;
+    }
+    .about-history .about-title .span{
+        font-size: 30px;
+    }
+    .about-team{
+        margin-top: 2rem;
     }
     
-  } 
+} 

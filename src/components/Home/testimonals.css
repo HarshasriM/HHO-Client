@@ -154,3 +154,56 @@
     display: flex;
     scroll-behavior: smooth;
   } */
+
+
+
+@media screen and (max-width:575px)
+{
+
+  .client-info svg{
+    width: 30px !important;
+    height:30px Impo !important;
+  }
+
+  .testimonials{
+    padding: 24px 16px;
+  }
+  .testimonials .banner-title{
+    font-size: 28px;
+  }
+  .testimonials .banner-title .span{
+    margin-top: 3px;
+  }
+  .testimonials p{
+    font-size: 12px;
+  }
+  .testimonials-container{
+    width:100%;
+    margin:0px;
+    padding:2px 4px;
+  }
+  .testimonial-card{
+    /* background:red; */
+    height: 280px;
+    min-width:280px;
+  }
+  .testimonial-card .stars{
+      padding: 4px 0px 8px 20px;
+  }
+  .testimonial-card .quote-text{
+      padding: 0 5px;
+      font-size: 13px;
+  }
+  .client-info h3{
+    font-size: 14px;
+  }
+  .client-info p{
+    font-size: 14px;
+  }
+  .client-info svg{
+      width: 23px !important;
+      height:23px !important;
+  }
+
+
+}

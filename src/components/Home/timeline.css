@@ -1,264 +1,3 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-}
-
-:root {
-
-    --background-color: #faefde;
-
-    --main-color:       #ff0000;
-
-    --core-color:        #f06529;
-
-    --account-color: #fdd634;
-
-    --executive-color:    #00d8ff;
-
-    --hr-color:     #6caa48;
-
-
-
-}
-
-body {
-    background: var(--background-color);
-}
-
-.main h1 {
-    margin-top: 50px;
-    margin-bottom: 15px;
-    font-size: 50px;
-    color: rgb(255, 255, 255);
-    text-align: center;
-}
-
-.main h1 span {
-    color: black;
-}
-
-.timeline {
-    position: relative;
-    max-width: 1200px;
-    margin: 100px auto;
-}
-
-.member-card {
-    padding: 10px 50px;
-    position: relative;
-    width: 50%;
-    animation: movedown 1s linear forwards;
-    opacity: 0;
-}
-
-@keyframes movedown {
-
-    0% {
-        opacity: 1;
-        transform: translateY(-30px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-
-}
-
-.member-card:nth-child(1) {   animation-delay: 0s ;   }
-    
-.member-card:nth-child(2) {   animation-delay: 2s ;   }
-
-.member-card:nth-child(3) {   animation-delay: 3s ;   }
-
-.member-card:nth-child(4) {   animation-delay: 4s ;   }
-
-.member-card:nth-child(5) {   animation-delay: 5s ;   }
-
-.member-card:nth-child(6) {   animation-delay: 6s ;   }
-
-.member-card:nth-child(7) {   animation-delay: 7s ;   }
-
-
-.text-box {
-    padding: 20px 30px;
-    background: #fff;
-    position: relative;
-    border-radius: 6px;
-    font-size: 15px;
-}
-
-.coretext {
-    color: var(--core-color);
-}
-
-.accounttext {
-    color: var(--account-color);
-}
-
-
-.executivetext {
-    color: var(--executive-color);
-}
-
-.hrtext {
-    color: var(--hr-color);
-}
-
-
-
-.corecard {
-    border: 3px solid var(--core-color);
-}
-
-.accountcard {
-    border: 3px solid var(--account-color);
-}
-
-.executivecard {
-    border: 3px solid var(--executive-color);
-}
-
-.hrcard {
-    border: 3px solid var(--hr-color);
-}
-
-
-.left-container {
-    left: 0;
-}
-
-.right-container {
-    left: 50%;
-}
-
-.member-card img {
-    position: absolute;
-    width: 45px;
-    border-radius: 50%;
-    right: -20px;
-    top: 32px;
-    z-index: 10;
-}
-
-.right-container img {
-    left: -20px;
-}
-
-.timeline::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    height: 100%;
-    background: var(--main-color);
-    top: 0;
-    left: 50%;
-    margin-left: -3px;
-    z-index: -1;
-    animation: moveline 6s linear forwards;
-}
-
-@keyframes moveline {
-
-    0% {
-        height: 0;
-    }
-
-    100% {
-        height: 100%;
-    }
-}
-
-.text-box small {
-    display: inline-block;
-    margin-bottom: 15px;
-}
-
-.left-container-arrow {
-    height: 0;
-    width: 100px;
-    position: absolute;
-    top: 38px;
-    z-index: -1;
-    right: -15px;
-}
-
-
-.right-container-arrow {
-    height: 0;
-    width: 100px;
-    position: absolute;
-    top: 38px;
-    z-index: -1;
-    left: -15px;
-}
-
-.corearrow {
-    border: 5px solid var(--core-color);
-}
-
-.accountarrow {
-    border: 5px solid var(--account-color);
-}
-
-.executivearrow {
-    border: 5px solid var(--executive-color);
-
-}
-
-.hrarrow {
-    border: 5px solid var(--hr-color);
-}
-
-
-
-@media screen and (max-width: 600px) {
-
-    .timeline {
-        margin: 50px auto;
-    }
-
-    .timeline::after {
-        left: 31px;
-    }
-
-    .member-card {
-        width: 100%;
-        padding-left: 80px;
-        padding-right: 25px;
-    }
-
-    .text-box {
-        font-size: 13px;
-    }
-
-    .text-box small {
-        margin-bottom: 10px;
-    }
-
-    .right-container {
-        left: 0;
-    }
-
-    .right-container img,
-    .left-container img {
-        
-        left: 10px;
-    }
-
-    .left-container-arrow,
-    .right-container-arrow {
-        left: -15px;
-    }
-    
-} */
-
-
 
 @import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Playpen+Sans:wght@100..800&display=swap');
@@ -468,7 +207,7 @@ body {
     border: 5px solid var(--hr-color);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 575px) {
     .timeline {
         margin: 50px auto;
     }
@@ -477,11 +216,7 @@ body {
         left: 31px;
     }
 
-    .member-card {
-        width: 100%;
-        padding-left: 80px;
-        padding-right: 25px;
-    }
+  
 
     .right-container {
         left: 0;
@@ -498,5 +233,38 @@ body {
     .left-container-arrow,
     .right-container-arrow {
         left: -15px;
+        top:"8px";
     }
+
+  .background h2{
+    font-size: 28px;
+  }
+  .background h2 span{
+    font-size: 30px;
+  } 
+  .timeline-line{
+    width: 1px;
+  }
+  .member-card .fa-solid{
+    font-size: 16px;
+  }
+  .member-card .text-box{
+      padding: 2px 8px;
+  }
+  .hho-people{
+    font-size: 12px;
+    text-align: center;
+  }
+  .text-box p{
+    font-size: 13px;
+    text-align: justify;
+    text-indent: 10px;
+  }
+  .member-card{
+    padding-left: 62px;
+    width:100%;
+  }
+
+  
+
 }

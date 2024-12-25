@@ -94,7 +94,7 @@ function LoginPage() {
               <i className={showPassword ? 'ri-eye-line' : 'ri-eye-off-line'} id='login-eye' onClick={togglePasswordVisibility}></i>
             </div>
           </div>
-          <a href='#' className='login-forgot'>forget password?</a>
+          {/* <a href='#' className='login-forgot'>forget password?</a> */}
           <button className='login-btn' onClick={handleSubmit} >Login</button>
         </div>
       </form>

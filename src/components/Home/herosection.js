@@ -1,33 +1,32 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import postmark from 'postmark';
-import {ServerClient} from 'postmark';
+import { CircularProgress } from '@mui/material'; // Import CircularProgress from Material UI
 import "./herosection.css";
-import emailjs from 'emailjs-com';
 import axios from 'axios';
-import {AppContext} from '../../context/Context';
+import { AppContext } from '../../context/Context';
 
 export default function HeroSection() {
-  const{setAlertMsg,setErrorOcc,setOpen}= useContext(AppContext);
+  const { setAlertMsg, setErrorOcc, setOpen } = useContext(AppContext);
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state for the button
   const [formData, setFormData] = useState({
     name: "",
     id: "",
     year: "",
     title: "",
     description: "",
-    email:""
+    email: ""
   });
-
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const  handleSubmit = async(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when form is submitted
     try {
       const response = await fetch("http://localhost:8000/send-email", {
         method: "POST",
@@ -35,7 +34,6 @@ export default function HeroSection() {
         body: JSON.stringify(formData),
       });
       const result = await response.json();
-      // alert(result.message);
       setAlertMsg(result.message);
       setErrorOcc(false);
       setOpen(true);
@@ -45,15 +43,17 @@ export default function HeroSection() {
         year: "",
         title: "",
         description: "",
-        email:""  
-      })
+        email: ""
+      });
     } catch (error) {
       console.error("Error sending email:", error);
       setAlertMsg(error.message);
-      setErrorOcc(true);  
+      setErrorOcc(true);
       setOpen(true);
+    } finally {
+      setLoading(false); // Reset loading state after request completion
     }
-}
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -76,10 +76,6 @@ export default function HeroSection() {
       }
     };
   }, []);
-
-  
-
- 
 
   return (
     <div>
@@ -128,7 +124,7 @@ export default function HeroSection() {
             <p className="about-head-text text-center mt-md-5">
               HELPING HANDS ORGANISATION
             </p>
-            <p className="about-text">
+            <p className="about-text desc-about-hho">
               At Helping Hands Organization, we believe in the power of community and
               compassion. Our mission is to uplift lives through meaningful service,
               empowering individuals to make a positive impact in their communities.
@@ -141,7 +137,7 @@ export default function HeroSection() {
             </p>
             <div className="text-center">
               <Link to="/about">
-                <button className="btn about-button mt-md-5">Read More</button>
+                <button className="btn about-button mt-md-5 rm-btn">Read More</button>
               </Link>
             </div>
           </div>
@@ -153,81 +149,127 @@ export default function HeroSection() {
           <div className="modal-content">
             <h2 className="modal-title">Get Help</h2>
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Name:</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                />
+              <div className="form-row">
+                <div className="form-group">
+                  <div className="floating-label">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder=" "
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <label>Name</label>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="floating-label">
+                    <input
+                      type="text"
+                      name="id"
+                      placeholder=" "
+                      value={formData.id}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <label>ID</label>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="floating-label">
+                    <select
+                      name="year"
+                      value={formData.year}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select Year
+                      </option>
+                      <option value="P1">P1</option>
+                      <option value="P2">P2</option>
+                      <option value="E1">E1</option>
+                      <option value="E2">E2</option>
+                      <option value="E3">E3</option>
+                      <option value="E4">E4</option>
+                    </select>
+                    <label>Year</label>
+                  </div>
+                </div>
               </div>
+
               <div className="form-group">
-                <label>ID:</label>
-                <input
-                  type="text"
-                  name="id"
-                  value={formData.id}
-                  onChange={handleInputChange}
-                  required
-                />
+                <div className="floating-label">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder=" "
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <label>Email</label>
+                </div>
               </div>
+
               <div className="form-group">
-                <label>Year:</label>
-                <select
-                  name="year"
-                  value={formData.year}
-                  onChange={handleInputChange}
-                  required
+                <div className="floating-label">
+                  <input
+                    type="text"
+                    name="title"
+                    placeholder=" "
+                    value={formData.title}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <label>Title</label>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <div className="floating-label">
+                  <textarea
+                    name="description"
+                    placeholder=" "
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    required
+                  ></textarea>
+                  <label>Description</label>
+                </div>
+              </div>
+
+              <div className="form-actions">
+                <button
+                  type="submit"
+                  className="btn about-button"
+                  disabled={loading} // Disable button when loading
+                  style={{ position: "relative", width: "100px" }} // Fixed width for button
                 >
-                  <option value="">Select Year</option>
-                  <option value="P1">P1</option>
-                  <option value="P2">P2</option>
-                  <option value="E1">E1</option>
-                  <option value="E2">E2</option>
-                  <option value="E3">E3</option>
-                  <option value="E4">E4</option>
-                </select>
+                  {loading ? (
+                    <CircularProgress
+                      size={24}
+                      color="inherit"
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    />
+                  ) : (
+                    "Submit"
+                  )}
+                </button>
+                <button
+                  type="button"
+                  className="btn about-button"
+                  onClick={() => setShowModal(false)}
+                >
+                  Cancel
+                </button>
               </div>
-              <div className="form-group">
-                <label>Email:</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Title:</label>
-                <input
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Description:</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" className="btn about-button">Submit</button>
-              <button
-                type="button"
-                className="btn about-button"
-                onClick={() => setShowModal(false)}
-                style={{ marginLeft: "10px" }}
-              >
-                Cancel
-              </button>
             </form>
           </div>
         </div>

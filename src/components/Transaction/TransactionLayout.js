@@ -9,7 +9,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import { ThemeProvider, createTheme } from '@mui/material';
 import CountUp from 'react-countup';
-import { styled } from '@mui/system';
+import { fontSize, styled } from '@mui/system';
 import { Button } from '@mui/material';
 import { useMediaQuery } from '@mui/system';
 import TransactionCard from './TransactionCard';
@@ -136,6 +136,7 @@ export default function TransactionLayout() {
         display: { xs: 'block', md: 'flex' }, 
         minHeight: '100vh',
         backgroundColor: 'white' 
+        
       }}
     >
       {/* Left Tabs Panel */}
@@ -149,121 +150,167 @@ export default function TransactionLayout() {
           paddingTop: 2,
         }}
       >
-        <Typography variant="h5" align="center" sx={{ marginBottom: 2, fontWeight: 'bold' }}>
+        <Typography variant="h5" align="center" sx={{ marginBottom: 2, fontWeight: 'bold' 
+          ,fontSize:{xs:'28px',marginTop:'2rem'}
+        }}>
           Transactions
         </Typography>
         <Tabs
-          orientation={!isMobile ? 'vertical' : 'horizontal'}
-          value={activeTab}
-          onChange={handleTabChange}
-          TabIndicatorProps={{ style: { backgroundColor: '#fa9a34', width: 5 } }}
-          sx={{
-            '.MuiTab-root': {
-              color: 'black',
-              textTransform: 'none',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              transition: '0.5s',
-              borderBottom: '1px solid lightgray',
-              '&:hover': {
-                borderRadius: '5px',
-                color: 'gray',
-                opacity: '0.7',
-              },
-              '&.Mui-selected': {
-                color: 'white',
-                backgroundColor: '#fa9a34',
-              },
-            },
-          }}
-        >
-          <Tab icon={<AllInbox />} label="All" />
-          <Tab icon={<CreditScore />} label="Credits" />
-          <Tab icon={<MoneyOff />} label="Debits" />
-          <Tab icon={<VolunteerActivism />} label="Donate" />
-        </Tabs>
+  orientation={!isMobile ? 'vertical' : 'horizontal'}
+  value={activeTab}
+  onChange={handleTabChange}
+  TabIndicatorProps={{ style: { backgroundColor: '#fa9a34', width: 5 } }}
+  variant="fullWidth" // Ensures each tab takes equal width
+  sx={{
+    '.MuiTab-root': {
+      color: 'black',
+      textTransform: 'none',
+      fontSize: {
+        xs: '14px', // Smaller font size for mobile
+        sm: '16px', // Default font size for larger screens
+      },
+      fontWeight: 'bold',
+      padding: {
+        xs: '8px 12px', // Reduced padding for mobile
+        sm: '12px 16px', // Default padding for larger screens
+      },
+      transition: '0.5s',
+      borderBottom: {
+        xs: 'none', // Remove border for mobile view to avoid clutter
+        sm: '1px solid lightgray',
+      },
+      flexGrow: 1, // Makes tabs occupy equal width
+      '&:hover': {
+        borderRadius: '5px',
+        color: 'gray',
+        opacity: '0.7',
+      },
+      '&.Mui-selected': {
+        color: 'white',
+        backgroundColor: '#fa9a34',
+      },
+    },
+    '.MuiTab-iconWrapper': {
+      fontSize: {
+        xs: '20px', // Smaller icon size for mobile
+        sm: '24px', // Default icon size for larger screens
+      },
+    },
+  }}
+>
+  <Tab icon={<AllInbox />} label="All" />
+  <Tab icon={<CreditScore />} label="Credits" />
+  <Tab icon={<MoneyOff />} label="Debits" />
+  <Tab icon={<VolunteerActivism />} label="Donate" />
+</Tabs>
+
+
+
       </Box>
 
       {/* Right Scrollable Content */}
       <Box
-        sx={{
-          flexGrow: 1,
-          overflowY: 'auto',
-          padding: 3,
-          backgroundColor: 'white',
-          height: 'calc(100vh - 80px)',
-          WebkitOverflowScrolling: 'touch',
+  sx={{
+    flexGrow: 1,
+    overflowY: 'auto',
+    padding: {
+      xs: '12px 8px', // Reduced padding for mobile view
+      sm: 3,          // Default padding for larger screens
+    },
+    backgroundColor: 'white',
+    height: 'calc(100vh - 80px)',
+    WebkitOverflowScrolling: 'touch',
+  }}
+>
+  <ThemeProvider theme={customTheme}>
+    <div className="d-flex justify-content-between flex-column flex-md-row" style={{ margin: '20px', gap: '25px' }}>
+      <div className="d-flex align-content-start flex-column" style={{ gap: '10px' }}>
+        <ButtonType variant="contained">
+          Current Balance: &nbsp; <CountUp end={totalBalance} />
+        </ButtonType>
+        <ButtonType variant="contained">
+          Donated Amount: &nbsp;<CountUp end={donatedAmt} />
+        </ButtonType>
+      </div>
+      <div
+        className="d-flex justify-content-end"
+        style={{
+          gap: '30px',
+          flexWrap: 'wrap',
         }}
       >
-        <ThemeProvider theme={customTheme}>
-          <div className="d-flex justify-content-between flex-column flex-md-row" style={{ margin: '20px', gap: '25px' }}>
-            <div className="d-flex align-content-start flex-column" style={{ gap: '10px' }}>
-              <ButtonType variant="contained">
-                Current Balance: &nbsp; <CountUp end={totalBalance} />
-              </ButtonType>
-              <ButtonType variant="contained">
-                Donated Amount: &nbsp;<CountUp end={donatedAmt} />
-              </ButtonType>
-            </div>
-            <div className="d-flex justify-content-end" style={{ gap: '30px', flexWrap: 'wrap' }}>
-  <FormControl sx={{ width: '150px', minWidth: '200px' }}>
-    <InputLabel id="filter-select-label">Filter By</InputLabel>
-    <Select
-      labelId="filter-select-label"
-      id="filter-select"
-      value={filter}
-      onChange={(e) => {
-        setFilter(e.target.value);
-        setSearch(''); // Clear the search input when filter changes
-      }}
-      label="Filter By"
-    >
-      <MenuItem value="amount">Amount</MenuItem>
-      <MenuItem value="date">Date</MenuItem>
-      <MenuItem value="event">Events</MenuItem>
-    </Select>
-  </FormControl>
-  <TextField
-    id="outlined-basic"
-    label={filter === 'date' ? 'Select Date' : 'Search'}
-    variant="outlined"
-    type={filter === 'date' ? 'date' : 'text'}
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    InputLabelProps={filter === 'date' ? { shrink: true } : undefined}
-    sx={{
-      width: '150px', // Fixed width for the input field
-      minWidth: '200px', // Ensures readability on smaller screens
-    }}
-  />
-  <div>
-    {/* <ButtonType
-      variant="contained"
-      sx={{
-        padding: '13px',
-        borderRadius: '30px',
-        width: '120px', // Fixed width for the button
-      }}
-      onClick={() => console.log('Search submitted:', search)}
-    >
-      Submit
-    </ButtonType> */}
-  </div>
-</div>
+        <div
+          style={{
+            display: 'flex',
+            gap: '10px', // Adjust spacing between elements
+            width: '100%', // Use the full width of the parent container
+          }}
+        >
+          <FormControl
+            sx={{
+              flex: 1, // Flex-grow to distribute available space evenly
+              minWidth: '120px', // Minimum width for smaller screens
+            }}
+          >
+            <InputLabel id="filter-select-label">Filter By</InputLabel>
+            <Select
+              labelId="filter-select-label"
+              id="filter-select"
+              value={filter}
+              onChange={(e) => {
+                setFilter(e.target.value);
+                setSearch(''); // Clear the search input when filter changes
+              }}
+              label="Filter By"
+            >
+              <MenuItem value="amount">Amount</MenuItem>
+              <MenuItem value="date">Date</MenuItem>
+              <MenuItem value="event">Events</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            id="outlined-basic"
+            label={filter === 'date' ? 'Select Date' : 'Search'}
+            variant="outlined"
+            type={filter === 'date' ? 'date' : 'text'}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            InputLabelProps={filter === 'date' ? { shrink: true } : undefined}
+            sx={{
+              flex: 1, // Flex-grow to distribute available space evenly
+              minWidth: '120px', // Minimum width for smaller screens
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  </ThemeProvider>
 
+  <Fade in={fadeIn} timeout={300}>
+    <List>
+      {filteredTransactions?.length === 0
+        ? <Typography
+        variant="h6"
+        sx={{
+          textAlign: 'center',
+          fontSize: {
+            xs: '16px', // Smaller font size for mobile screens
+            sm: '20px', // Medium font size for tablets
+            md: '24px', // Larger font size for desktops
+          },
+          color: 'gray', // Neutral color for the message
+          fontFamily: '"Playpen Sans", cursive',
+        }}
+      >
+        No Transaction Found
+      </Typography>
+        : filteredTransactions?.map((transaction) => (
+            <TransactionCard transaction={transaction} key={transaction.id} />
+          ))}
+    </List>
+  </Fade>
+</Box>
 
-          </div>
-        </ThemeProvider>
-
-        <Fade in={fadeIn} timeout={300}>
-          <List>
-            {filteredTransactions?.length==0? 
-            "No Transaction Found" : filteredTransactions?.map((transaction) => (
-              <TransactionCard transaction={transaction} key={transaction.id} />
-            ))}
-          </List>
-        </Fade>
-      </Box>
     </Box>
   );
 }

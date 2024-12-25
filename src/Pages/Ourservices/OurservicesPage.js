@@ -12,6 +12,7 @@ function OurservicesPage() {
     <>
       <ServiceBanner/>
       <Activities/>
+      <br/>
       <Donations/>
     </>
   )

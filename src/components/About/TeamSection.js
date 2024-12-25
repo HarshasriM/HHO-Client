@@ -43,7 +43,8 @@ function Team() {
                     //         </div>
                     //     </div>
                     //</div>
-                    <div style={{ color: "darkorange",height:"60vh" }} key={index}>
+                    <>
+                    <div style={{ color: "darkorange",height:"60vh" }} key={index} className='par-profile'>
                         <h5 style={{ marginBottom: "15px" }} className='role mt-5 about-content'>{item.role}</h5>
                         <div className='profile-card'>
                             <div className='img'>
@@ -60,7 +61,10 @@ function Team() {
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
+                    
+                    </>
 
                 )
             })

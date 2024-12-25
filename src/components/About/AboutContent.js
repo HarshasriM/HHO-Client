@@ -28,10 +28,10 @@ function AboutContent() {
           </div>
           <div className='col col-12 col-md-6'>
             <h1 className='about-title' >Our<span className='span'> Mission</span></h1>
-            <p className='about-content mt-3'>At Helping Hands Organization (HHO), our mission is to unite students in supporting those in need. We strive to assist individuals facing emergencies, particularly those with medical challenges, financial difficulties, or urgent needs. By fostering a sense of compassion and teamwork, we aim to create a community where everyone can lend a hand, ensuring that no one faces their struggles alone.</p>
+            <p className='about-content mt-3 our-mission'>At Helping Hands Organization (HHO), our mission is to unite students in supporting those in need. We strive to assist individuals facing emergencies, particularly those with medical challenges, financial difficulties, or urgent needs. By fostering a sense of compassion and teamwork, we aim to create a community where everyone can lend a hand, ensuring that no one faces their struggles alone.</p>
             <br />
             <h1 className='about-title' >Our<span className='span'> vision</span></h1>
-            <p className='about-content mt-3'>
+            <p className='about-content mt-3 our-mission'>
               We believe that while someone cannot help everyone, everyone can help someone. Our vision is to create a caring and united community within RK Valley, where students actively work together to make a positive impact. We aspire to expand HHO’s reach and support, turning our efforts from a small stream into a powerful wave of change, helping not only our university but society as a whole.</p>
           </div>
         </div>

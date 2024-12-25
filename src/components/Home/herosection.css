@@ -248,10 +248,8 @@
   }
   
 } 
-  
-
 .modal-overlay {
-  position:fixed;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -259,8 +257,9 @@
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* z-index: 100; */
+  align-items: flex-start;
+  z-index: 1;
+  padding-top: 90px; /* Adjust for navbar height */
 }
 
 .modal-content {
@@ -269,27 +268,198 @@
   border-radius: 8px;
   max-width: 500px;
   width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .modal-title {
   font-size: 24px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-.form-group {
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
   margin-bottom: 15px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+input,
+textarea,
+select {
   width: 100%;
   padding: 10px;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@media (max-width: 575px) {
+  .form-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .modal-content{
+    width: 95%;
+  }
+}
+
+
+
+
+
+/* Mobile scrreen widt */
+@media screen and (max-width: 575px) {
+
+  .banner-container {
+    /* background-color: red; */
+    flex-direction: column;
+    padding:0px;
+  }
+  .banner-content{
+    max-width: 100%;
+    padding: 10px;
+  }
+  .banner-title{
+    font-size: 31px;
+    text-align: center;
+  }
+  .banner-title .span{
+    font-size: 32px;
+  }
+  .banner-subtitle{
+    font-size:16px;
+  }
+  .banner-button {
+    /* margin-top: 20px; */
+    padding: 1px 2px;
+    font-size: 0.7rem;
+    color: white;
+    background-color: #007bff;
+  }
+  
+  .about-button{
+    margin-left: 0px !important;
+    padding: 4px 8px;
+    margin-right: 5px;
+  }
+  .about-head{
+    font-size: 28px;
+  }
+  .about-head-text{
+    font-size: 12px;
+  }
+  .desc-about-hho{
+    font-size: 10px !important;
+    text-align: justify !important;
+    text-indent: 20px !important;
+    text-align-last: center !important;
+  }
+  .rm-btn{
+    margin-top: -10px;
+    margin-bottom: 4px;
+    padding: 2xp 4px ;
+  }
+
+ 
+}
+
+
+.floating-label {
+  position: relative;
+  margin-top: 15px; /* Reduced gap */
+}
+
+.floating-label input,
+.floating-label select,
+.floating-label textarea {
+  width: 100%;
+  padding: 10px 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+}
+
+.floating-label label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  color: #aaa;
+  font-size: 16px;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: all 0.2s ease-out;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label,
+.floating-label textarea:focus + label,
+.floating-label textarea:not(:placeholder-shown) + label,
+.floating-label select:focus + label,
+.floating-label select:not(:placeholder-shown) + label {
+  top: 0;
+  left: 5px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .floating-label {
+    margin-top: 10px; /* Further reduce gap between label and input */
+  }
+
+  .floating-label input,
+  .floating-label select,
+  .floating-label textarea {
+    padding: 8px 5px;
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+
+  .floating-label label {
+    font-size: 14px; /* Adjust label font size for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-label {
+    margin-top: 8px; /* Reduce gap even further on very small screens */
+  }
+
+  .floating-label input,
+  .floating-label select,
+  .floating-label textarea {
+    padding: 6px 5px;
+    font-size: 14px; /* Adjust font size for very small screens */
+  }
+
+  .floating-label label {
+    font-size: 12px; /* Further adjust label font size */
+  }
 }

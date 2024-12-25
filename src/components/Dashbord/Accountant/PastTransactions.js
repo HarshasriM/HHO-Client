@@ -5,6 +5,12 @@ import { Card, CardContent, Grid, IconButton, TextField, MenuItem, Select, FormC
 import DescriptionIcon from '@mui/icons-material/Description';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
+import {
+  CreditScore,
+  VolunteerActivism,
+  Handshake,
+  MoneyOff
+} from '@mui/icons-material';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import SavingsIcon from '@mui/icons-material/Savings';
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,7 +25,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { blue } from '@mui/material/colors';
-import TransactionCard from '../../Transaction/TransactionCard';
+import TransactionCard from './TransactionCard';
 
 function PastTransactions() {
   const {
@@ -39,6 +45,7 @@ function PastTransactions() {
   const { token } = useContext(AppContext);
 
   const[loading,setLoading] = useState(false);
+  const[delLoading,setDelLoading] = useState(false);
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [transactionId, setTransactionId] = useState(null);
@@ -113,11 +120,11 @@ function PastTransactions() {
   const getTransactionIcon = (type) => {
     switch (type) {
       case 'credit':
-        return <CreditCardIcon sx={{ color: 'green' }} />;
+        return <CreditScore sx={{ color: 'green' }} />;
       case 'debit':
-        return <LocalAtmIcon sx={{ color: 'red' }} />;
+        return <MoneyOff sx={{ color: 'red' }} />;
       case 'donation':
-        return <SavingsIcon sx={{ color: 'blue' }} />;
+        return <VolunteerActivism sx={{ color: 'blue' }} />;
       default:
         return null;
     }
@@ -143,7 +150,7 @@ function PastTransactions() {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     };
-    setLoading(true);
+    setDelLoading(true);
     setTimeout(async()=>{
 
     try {
@@ -176,7 +183,7 @@ function PastTransactions() {
     } finally {
       setOpenDeleteModal(false); // Close modal after delete action
     }
-    setLoading(false);
+    setDelLoading(false);
     },3000);
   };
 
@@ -309,147 +316,10 @@ function PastTransactions() {
             No transactions available 
           </Typography>
         ) : (
-        //   <Grid container spacing={2}>
-        //   {filteredTransactions.map((transaction) => (
-        //     <Grid item xs={12} key={transaction.id}>
-        //       <Box
-        //         sx={{
-        //           display: 'flex',
-        //           alignItems: 'center',
-        //           boxShadow: 3,
-        //           borderRadius: 2,
-        //           padding: 2,
-        //           backgroundColor: '#f9f9f9',
-        //           transition: 'transform 0.3s',
-        //           '&:hover': {
-        //             transform: 'scale(1.02)',
-        //           },
-        //         }}
-        //       >
-        //         {/* Main Content (Amount, Type, Date, and Description) */}
-        //         <Box
-        //           sx={{
-        //             flex: 1,
-        //             display: 'flex',
-        //             flexDirection: 'row',
-        //           }}
-        //         >
-        //           {/* Left Box: Amount, Transaction Type, and Date */}
-        //           <Box
-        //             sx={{
-        //               flex: 1,
-        //               display: 'flex',
-        //               flexDirection: 'column',
-        //               alignItems: 'flex-start',
-        //               mr: 2,
-        //             }}
-        //           >
-        //             <Typography variant="body1" sx={{ fontSize: '1.5rem', color: '#3f51b5', fontWeight: 'bold' }}>
-        //               ₹{transaction.amount}
-        //             </Typography>
-        //             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-        //               {getTransactionIcon(transaction.transaction_type)}
-        //               <Typography variant="body1" sx={{ ml: 0.5, color: '#555' }}>
-        //                 {transaction.transaction_type.charAt(0).toUpperCase() + transaction.transaction_type.slice(1)}
-        //               </Typography>
-        //             </Box>
-        //             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-        //               <DateRangeIcon sx={{ fontSize: 20, color: '#888' }} />
-        //               <Typography variant="body2" sx={{ ml: 0.5, color: 'black' }}>
-        //                 {new Date(transaction.date).toLocaleDateString()}
-        //               </Typography>
-        //             </Box>
-        //           </Box>
-        
-        //           {/* Center Box: Description */}
-        //           <Box
-        //             sx={{
-        //               backgroundColor: '#f1f1f1',
-        //               borderRadius: '8px',
-        //               padding: '8px',
-        //               flex: 2,
-        //               color: '#333',
-        //               fontSize: '0.9rem',
-        //               lineHeight: '1.5',
-        //               maxHeight: '50px',
-        //               overflow: 'hidden',
-        //               textOverflow: 'ellipsis',
-        //               ml: 2,
-        //             }}
-        //           >
-        //             <Typography variant="body2">{transaction.purpose}</Typography>
-        //           </Box>
-        //         </Box>
-        
-        //         {/* Action Buttons (Visible by default) */}
-        //         <Box
-        //           sx={{
-        //             display: 'flex',
-        //             flexDirection: 'row',
-        //             ml: 2,
-        //           }}
-        //         >
-        //           <Box
-        //             sx={{
-        //               display: 'flex',
-        //               justifyContent: 'center',
-        //               alignItems: 'center',
-        //               backgroundColor: '#3f51b5',
-        //               borderRadius: '50%',
-        //               width: '40px',
-        //               height: '40px',
-        //               color: '#fff',
-        //               cursor: 'pointer',
-        //               transition: 'background-color 0.2s',
-        //               '&:hover': { backgroundColor: '#2c3e9b' },
-        //               mr: 1,
-        //             }}
-        //             onClick={() => handleEdit(transaction)}
-        //           >
-        //             <EditIcon sx={{ fontSize: '1.25rem' }} />
-        //           </Box>
-        //           <Box
-        //             sx={{
-        //               display: 'flex',
-        //               justifyContent: 'center',
-        //               alignItems: 'center',
-        //               backgroundColor: '#f50057',
-        //               borderRadius: '50%',
-        //               width: '40px',
-        //               height: '40px',
-        //               color: '#fff',
-        //               cursor: 'pointer',
-        //               transition: 'background-color 0.2s',
-        //               '&:hover': { backgroundColor: '#c51162' },
-        //             }}
-        //             onClick={() => handleDeleteClick(transaction._id)}
-        //           >
-        //             <DeleteIcon sx={{ fontSize: '1.25rem' }} />
-        //           </Box>
-        //         </Box>
-        //       </Box>
-        //     </Grid>
-        //   ))}
-        // </Grid>
-
-        
+ 
           filteredTransactions.map((transaction, index) => {
-              return <TransactionCard transaction={transaction} />
+              return <TransactionCard transaction={transaction}  onEdit={handleEdit} onDelete={handleDeleteClick}/>
           })
-        
-        
-        
-
-
-        
-
-        
-
-        
-
-        
-        
-
         )}
       </Box>
 
@@ -482,7 +352,7 @@ function PastTransactions() {
       Cancel
     </Button>
     <Button onClick={() => handleDelete(transactionId)} sx={{ backgroundColor: '#FF5722', color: '#FFFFFF' }}>
-      {loading ? <CircularProgress color="white"  size={24} /> : "Delete"}
+      {delLoading ? <CircularProgress color="white"  size={24} /> : "Delete"}
     </Button>
   </DialogActions>
 </Dialog>

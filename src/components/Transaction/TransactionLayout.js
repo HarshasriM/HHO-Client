@@ -70,7 +70,7 @@ const customTheme = createTheme({
 });
 
 export default function TransactionLayout() {
-  const { token,setAlertMsg,setErrorOcc,setOpen } = useContext(AppContext);
+  const { token,setAlertMsg,setErrorOcc,setOpen ,totalBalance,donatedAmt} = useContext(AppContext);
   const [activeTab, setActiveTab] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);
   const [transactions, setTransactions] = useState([]);
@@ -199,10 +199,10 @@ export default function TransactionLayout() {
           <div className="d-flex justify-content-between flex-column flex-md-row" style={{ margin: '20px', gap: '25px' }}>
             <div className="d-flex align-content-start flex-column" style={{ gap: '10px' }}>
               <ButtonType variant="contained">
-                Current Balance: &nbsp; <CountUp end={300000} />
+                Current Balance: &nbsp; <CountUp end={totalBalance} />
               </ButtonType>
               <ButtonType variant="contained">
-                Donated Amount: &nbsp;<CountUp end={500000} />
+                Donated Amount: &nbsp;<CountUp end={donatedAmt} />
               </ButtonType>
             </div>
             <div className="d-flex justify-content-end" style={{ gap: '30px', flexWrap: 'wrap' }}>

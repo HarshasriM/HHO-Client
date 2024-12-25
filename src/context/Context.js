@@ -19,6 +19,8 @@ export const AppProvider = ({ children }) => {
   const[alertMsg,setAlertMsg] = useState("");
   const[errorOcc,setErrorOcc] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const[totalBalance,setTotalBalance] = useState(0);
+  const[donatedAmt,setDonatedAmt] = useState(0);
 
   const [filteredTransactions, setFilteredTransactions] = useState(transactions);
   
@@ -75,6 +77,25 @@ export const AppProvider = ({ children }) => {
     getUserData()
   },[token])
 
+  useEffect(() => {
+    const getMoney = async()=>{
+        try {
+          const response = await axios.get('http://localhost:8000/get-money');
+          const data = response.data;
+          console.log("amount: ",data.money[0].amount);
+          // localStorage.setItem('totalBalance', data.money[0].amount);
+          setTotalBalance(data.money[0].amount);
+          setDonatedAmt(data.money[0].donated_amount)
+          console.log("Donated: ",data.money[0].donated_amount);
+        } catch (error) {
+          console.log(error.message);
+        }
+    }
+    getMoney();
+  }, [totalBalance]);
+
+
+
   // Function to close the Snackbar
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -83,7 +104,7 @@ export const AppProvider = ({ children }) => {
     setOpen(false); // Close the Snackbar
   };
   return (
-    <AppContext.Provider value={{token,setToken,user,setUser,open,setOpen,handleClose,alertMsg,setAlertMsg,userData,setUserData,role,setRole,transactions , setTransactions,filteredTransactions, setFilteredTransactions,severity,setSeverity,errorOcc,setErrorOcc,allEvents,setAllEvents}}>
+    <AppContext.Provider value={{donatedAmt,setDonatedAmt,token,setToken,user,setUser,open,setOpen,handleClose,alertMsg,setAlertMsg,userData,setUserData,role,setRole,transactions , setTransactions,filteredTransactions, setFilteredTransactions,severity,setSeverity,errorOcc,setErrorOcc,allEvents,setAllEvents,totalBalance,setTotalBalance}}>
       {children}
     </AppContext.Provider>
   );

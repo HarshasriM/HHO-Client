@@ -9,6 +9,12 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AppContext } from '../../../context/Context';
+import {
+  CreditScore,
+  VolunteerActivism,
+  Handshake,
+  MoneyOff
+} from '@mui/icons-material';
 const theme = createTheme({
   palette: {
     primary: {
@@ -25,9 +31,9 @@ const theme = createTheme({
 });
 
 const transactionTypes = [
-  { value: 'credit', label: 'Credit', icon: <CreditCardIcon sx={{ color: '#FF5722' }} /> },
-  { value: 'debit', label: 'Debit', icon: <LocalAtmIcon sx={{ color: '#FF5722' }} /> },
-  { value: 'donation', label: 'Donation', icon: <SavingsIcon sx={{ color: '#FF5722' }} /> },
+  { value: 'credit', label: 'Credit', icon: <CreditScore sx={{ color: '#FF5722' }} /> },
+  { value: 'debit', label: 'Debit', icon: <MoneyOff sx={{ color: '#FF5722' }} /> },
+  { value: 'donation', label: 'Donation', icon: <VolunteerActivism sx={{ color: '#FF5722' }} /> },
 ];
 
 function NewTransaction() {
@@ -37,15 +43,27 @@ function NewTransaction() {
   const [date, setDate] = React.useState(new Date().toISOString().split('T')[0]);
   const [loading, setLoading] = React.useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [totalBalance, setTotalBalance] = React.useState(10000);
+  // const [totalBalance, setTotalBalance] = React.useState(10000);
 
-  const { token, setAlertMsg, setOpen, setErrorOcc, transactions, setTransactions } = React.useContext(AppContext);
+  const { token, setAlertMsg, setOpen, setErrorOcc, transactions, setTransactions,setTotalBalance,totalBalance,donatedAmt,setDonatedAmt } = React.useContext(AppContext);
 
   const handleAmountChange = (e) => setAmount(e.target.value);
   const handleTransactionTypeChange = (e) => setTransactionType(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
   const handleDateChange = (e) => setDate(e.target.value);
 
+
+  const updateMoney = async(money,donated)=>{
+    console.log("Money:",money);
+    console.log("donated:",donated);
+    try {
+      console.log(money);
+      const  res = await axios.post('http://localhost:8000/update-money', { amount: money,donated_amount:donated });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+}
   const handleSubmit = () => {
     if (!amount || !description || !date || !transactionType) {
       setAlertMsg("Please fill all the fields");
@@ -71,7 +89,11 @@ function NewTransaction() {
         };
 
         if (transactionType === "credit") {
-          setTotalBalance(totalBalance + Number(amount));
+          console.log(totalBalance+Number(amount));
+          updateMoney(totalBalance+Number(amount),donatedAmt);
+          setTotalBalance(totalBalance+Number(amount));
+          // localStorage.setItem('totalBalance',totalBalance);
+          // console.log(totalBalance);
         } else {
           if (totalBalance - Number(amount) < 0) {
             setAlertMsg("Insufficient Balance");
@@ -80,7 +102,18 @@ function NewTransaction() {
             setLoading(false);
             return;
           }
-          setTotalBalance(totalBalance - Number(amount));
+          if(transactionType === "donation"){
+            console.log("dnoated...")
+              updateMoney(totalBalance - Number(amount),donatedAmt+Number(amount));
+              setDonatedAmt(donatedAmt+Number(amount));
+          }
+          else
+          {
+            updateMoney(totalBalance-Number(amount),donatedAmt);
+            setTotalBalance(totalBalance - Number(amount));
+          }
+          // localStorage.setItem('totalBalance', totalBalance - Number(amount));
+        
         }
 
         const response = await axios.post('http://localhost:8000/api/transactions/add-transaction', transactionData, { headers });
@@ -107,6 +140,8 @@ function NewTransaction() {
       }
     }, 3000); // 3-second delay
   };
+
+ 
 
   return (
     <ThemeProvider theme={theme}>

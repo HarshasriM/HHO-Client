@@ -1,10 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import postmark from 'postmark';
 import {ServerClient} from 'postmark';
 import "./herosection.css";
+import emailjs from 'emailjs-com';
+import axios from 'axios';
+import {AppContext} from '../../context/Context';
 
 export default function HeroSection() {
+  const{setAlertMsg,setErrorOcc,setOpen}= useContext(AppContext);
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +18,42 @@ export default function HeroSection() {
     year: "",
     title: "",
     description: "",
+    email:""
   });
+
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const  handleSubmit = async(e)=>{
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8000/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json();
+      // alert(result.message);
+      setAlertMsg(result.message);
+      setErrorOcc(false);
+      setOpen(true);
+      setFormData({
+        name: "",
+        id: "",
+        year: "",
+        title: "",
+        description: "",
+        email:""  
+      })
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setAlertMsg(error.message);
+      setErrorOcc(true);  
+      setOpen(true);
+    }
+}
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -38,52 +77,9 @@ export default function HeroSection() {
     };
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Postmark client setup
-    const client = new ServerClient('7ffd85f0-695c-492b-b288-1079402a1568'); // Replace with your Postmark API key
-
-    // Email data
-    const emailData = {
-      from: 'your-email@example.com',  // Sender's email address (must be verified in Postmark)
-      to: 'recipient-email@example.com', // Recipient's email address
-      subject: 'Help Request from ' + formData.name,
-      htmlBody: `
-        <h1>Help Request</h1>
-        <p><strong>Name:</strong> ${formData.name}</p>
-        <p><strong>ID:</strong> ${formData.id}</p>
-        <p><strong>Year:</strong> ${formData.year}</p>
-        <p><strong>Title:</strong> ${formData.title}</p>
-        <p><strong>Description:</strong> ${formData.description}</p>
-      `,
-      textBody: `
-        Help Request
-        Name: ${formData.name}
-        ID: ${formData.id}
-        Year: ${formData.year}
-        Title: ${formData.title}
-        Description: ${formData.description}
-      `,
-    };
-
-    // Send email via Postmark
-    client.sendEmail(emailData)
-      .then(() => {
-        alert("Your request has been sent successfully!");
-        setFormData({ name: "", id: "", year: "", title: "", description: "" });
-        setShowModal(false);
-      })
-      .catch((error) => {
-        console.error("Error sending email:", error);
-        alert("Failed to send your request. Please try again.");
-      });
-  };
+ 
 
   return (
     <div>
@@ -193,6 +189,16 @@ export default function HeroSection() {
                   <option value="E3">E3</option>
                   <option value="E4">E4</option>
                 </select>
+              </div>
+              <div className="form-group">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label>Title:</label>

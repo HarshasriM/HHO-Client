@@ -13,6 +13,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import {VolunteerActivism} from '@mui/icons-material';
 
 const NAV_ITEMS = [
   {
@@ -25,7 +26,7 @@ const NAV_ITEMS = [
   },
   {
     label:'Donations',
-    icon:<AccountBalanceIcon />,
+    icon:<VolunteerActivism />,
     subItems:[
       {
         label:'New Donation', route:'/dashboard/new-donation'

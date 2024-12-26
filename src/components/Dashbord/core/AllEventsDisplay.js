@@ -37,7 +37,7 @@ function AllEventsDisplay() {
       <Grid container spacing={2}>
         {events.map((event, index) => (
           <Grid item xs={12} md={6} lg={4} key={index}>
-            <Card>
+            <Card style={{ borderRadius: '16px', height: '100%' }}>
               {/* Image with title overlay */}
               <CardMedia
                 component="img"

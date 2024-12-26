@@ -72,7 +72,7 @@ export default function Footer(){
                 </div>
                 <div className="col-12 text-center">
                     <hr className="footer-hrule" />
-                    <p className="footer-section-copyright"><i className="fa-regular fa-copyright"></i> Copyright Text</p>
+                    <p className="footer-section-copyright"><i className="fa-regular fa-copyright"></i> All Rights reserved by HHO of RGUKT-IIIT, RKV</p>
                 </div>
             </div>
         </div>

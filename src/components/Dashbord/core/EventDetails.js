@@ -14,10 +14,12 @@ import {
   TextField,
   IconButton,
 } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import EventIcon from '@mui/icons-material/Event'; // For event date icon
+import AddIcon from '@mui/icons-material/Add';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {AppContext} from '../../../context/Context';
 function EventDetails() {
@@ -196,19 +198,18 @@ function EventDetails() {
 
   return (
     <div>
-      <Grid container spacing={4}>
-      <Grid item xs={12} md={8}>
-          <Card style={{width:"50vw",height:"69vh",borderRadius:"24px"}}>
+      <Grid container spacing={4} alignItems="center" justifyContent="center">
+        <Grid item xs={12} md={6} lg={7}>
+          <Card style={{ width: '100%', height: 'auto', borderRadius: '24px' }}>
             <CardMedia
               component="img"
-              height="100%"
-              width="100%"
               image={editedEvent.eventPoster}
               alt={editedEvent.eventTitle}
+              style={{ borderRadius: '24px' }}
             />
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="h3" gutterBottom>
             {editedEvent.eventTitle}
           </Typography>
@@ -216,74 +217,93 @@ function EventDetails() {
             {editedEvent.eventDescription}
           </Typography>
           <Typography variant="body1" color="textSecondary" paragraph>
-  <EventIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
-  {editedEvent.event_start_date.split('T')[0]} to {editedEvent.event_end_date.split('T')[0]}
-</Typography>
-<Typography variant="body1" color="textSecondary" paragraph>
-  <LocationOnIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
-  {editedEvent.eventVenue}
-</Typography>
-          <IconButton color="primary" onClick={() => handleOpenDialog()}>
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            color="secondary"
-            onClick={handleDeleteEvent}
-            style={{ marginLeft: '10px' }}
-          >
-            <DeleteIcon />
-          </IconButton>
+            <EventIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+            {editedEvent.event_start_date.split('T')[0]} to {editedEvent.event_end_date.split('T')[0]}
+          </Typography>
+          <Typography variant="body1" color="textSecondary" paragraph>
+            <LocationOnIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+            {editedEvent.eventVenue}
+          </Typography>
+          <div>
+            <IconButton color="primary" onClick={() => handleOpenDialog()}>
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              color="secondary"
+              onClick={handleDeleteEvent}
+              style={{ marginLeft: '10px' }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
         </Grid>
-
-        
       </Grid>
 
       <Typography variant="h4" gutterBottom style={{ marginTop: '30px' }}>
         Subevents
       </Typography>
-      <IconButton color='primary' onClick={() => handleNewDialog()} style={{position:"fixed",top:"85vh",right:"4vw",width:"13vw",height:"10vh",borderRadius:"2vh",border:"1px solid black",backgroundColor:"orange",color:"white"}} >
-        <EditIcon /> <span>Add New</span>
+      <Tooltip title="Add New Subevent" placement="top" arrow>
+      <IconButton
+        color="primary"
+        onClick={() => handleNewDialog()}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
+          backgroundColor: 'orange',
+          color: 'white',
+        }}
+      >
+        <AddIcon/>
       </IconButton>
-      <Grid container spacing={4}>
-      {editedEvent.subEvents.map((subEvent, index) => (
-  <Grid item xs={12} sm={6} md={4} key={index}>
-    <Card>
-      <CardMedia
-        component="img"
-        height="200"
-        image={subEvent.subEventPoster}
-        alt={subEvent.subEventTitle}
-      />
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          {subEvent.subEventTitle}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" paragraph>
-          {subEvent.subEventDescription}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" gutterBottom>
-          <EventIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
-          {subEvent.subEventDate.split("T")[0]}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" gutterBottom>
-          <LocationOnIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
-          {subEvent.subEventVenue}
-        </Typography>
-        <IconButton
-          color="primary"
-          onClick={() => handleOpenDialog(subEvent)}
-        >
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          color="secondary"
-          onClick={() => handleDeleteSubEvent(subEvent)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </CardContent>
-    </Card>
-  </Grid>
+      </Tooltip>
+
+      <Grid container spacing={3}>
+  {editedEvent.subEvents.map((subEvent, index) => (
+    <Grid item xs={12} sm={6} md={4} key={index}>
+      <Card style={{ borderRadius: '16px', height: '100%' }}>
+        <CardMedia
+          component="img"
+          height="200"
+          image={subEvent.subEventPoster}
+          alt={subEvent.subEventTitle}
+        />
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            {subEvent.subEventTitle}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" paragraph>
+            {subEvent.subEventDescription}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" gutterBottom>
+            <EventIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+            {subEvent.subEventDate.split('T')[0]}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" gutterBottom>
+            <LocationOnIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+            {subEvent.subEventVenue}
+          </Typography>
+          <div>
+            <IconButton
+              color="primary"
+              onClick={() => handleOpenDialog(subEvent)}
+            >
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              color="secondary"
+              onClick={() => handleDeleteSubEvent(subEvent)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        </CardContent>
+      </Card>
+    </Grid>
 ))}
       </Grid>
 
@@ -431,8 +451,3 @@ function EventDetails() {
 }
 
 export default EventDetails;
-
-
-
-
-

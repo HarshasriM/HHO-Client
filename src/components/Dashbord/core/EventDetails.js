@@ -75,6 +75,9 @@ function EventDetails() {
         'https://api.cloudinary.com/v1_1/dkzzeiqhh/image/upload',
         uploadData
       );
+      setAlertMsg("Image is uploaded successfully");
+      setErrorOcc(false);
+      setOpen(true);
       return response.data.secure_url;
     } catch (error) {
       console.error('Image upload failed:', error);
@@ -134,6 +137,9 @@ function EventDetails() {
           subEventVenue: '',
           subEventPoster: '',
         });
+        setAlertMsg('Sub-Event Added Successfully');
+        setErrorOcc(false);
+        setOpen(true);
       } else if (currentSubEvent) {
         const updatedSubEvents = editedEvent.subEvents.map((subEvent) =>
           subEvent._id === currentSubEvent._id ? currentSubEvent : subEvent
@@ -148,12 +154,18 @@ function EventDetails() {
         );
 
         setEditedEvent((prev) => ({ ...prev, subEvents: updatedSubEvents }));
+        setAlertMsg('Sub-Event Updated Successfully');
+        setErrorOcc(false);
+        setOpen(true);
       } else {
         console.log(editedEvent);
         await axios.put(
           `http://localhost:8000/api/events/editEvent/${editedEvent._id}`,
           editedEvent
         );
+        setAlertMsg('Event Updated Successfully');
+        setErrorOcc(false);
+        setOpen(true);
       }
 
       handleCloseDialog();
@@ -170,7 +182,7 @@ function EventDetails() {
       );
       navigate('/dashboard/events');
       setAlertMsg('Event deleted  Successfully');
-      setErrorOcc(false);
+      setErrorOcc(true);
       setOpen(true);
 
     } catch (error) {
@@ -191,6 +203,9 @@ function EventDetails() {
         }
       );
       setEditedEvent((prev) => ({ ...prev, subEvents: updatedSubEvents }));
+      setAlertMsg('Sub-Event deleted  Successfully');
+      setErrorOcc(true);
+      setOpen(true);
     } catch (error) {
       console.error('Error deleting subevent:', error);
     }
@@ -199,7 +214,7 @@ function EventDetails() {
   return (
     <div>
       <Grid container spacing={4} alignItems="center" justifyContent="center">
-        <Grid item xs={12} md={6} lg={7}>
+        <Grid item xs={12} md={5} lg={6}>
           <Card style={{ width: '100%', height: 'auto', borderRadius: '24px' }}>
             <CardMedia
               component="img"
@@ -263,48 +278,53 @@ function EventDetails() {
       </Tooltip>
 
       <Grid container spacing={3}>
-  {editedEvent.subEvents.map((subEvent, index) => (
-    <Grid item xs={12} sm={6} md={4} key={index}>
-      <Card style={{ borderRadius: '16px', height: '100%' }}>
-        <CardMedia
-          component="img"
-          height="200"
-          image={subEvent.subEventPoster}
-          alt={subEvent.subEventTitle}
-        />
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            {subEvent.subEventTitle}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" paragraph>
-            {subEvent.subEventDescription}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" gutterBottom>
-            <EventIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
-            {subEvent.subEventDate.split('T')[0]}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" gutterBottom>
-            <LocationOnIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
-            {subEvent.subEventVenue}
-          </Typography>
-          <div>
-            <IconButton
-              color="primary"
-              onClick={() => handleOpenDialog(subEvent)}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              color="secondary"
-              onClick={() => handleDeleteSubEvent(subEvent)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </div>
-        </CardContent>
-      </Card>
-    </Grid>
-))}
+      {editedEvent.subEvents.length === 0 ? (
+        <Typography variant="h6" color="textSecondary" style={{marginLeft:'26px', marginTop:'8px'}}>
+          No Subevents available
+        </Typography>
+      ) : (
+      editedEvent.subEvents.map((subEvent, index) => (
+        <Grid item xs={12} sm={6} md={4} key={index}>
+          <Card style={{ borderRadius: '16px', height: '100%' }}>
+            <CardMedia
+              component="img"
+              height="200"
+              image={subEvent.subEventPoster}
+              alt={subEvent.subEventTitle}
+            />
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                {subEvent.subEventTitle}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" paragraph>
+                {subEvent.subEventDescription}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" gutterBottom>
+                <EventIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+                {subEvent.subEventDate.split('T')[0]}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" gutterBottom>
+                <LocationOnIcon style={{ verticalAlign: 'middle', marginRight: 8 }} />
+                {subEvent.subEventVenue}
+              </Typography>
+              <div>
+                <IconButton
+                  color="primary"
+                  onClick={() => handleOpenDialog(subEvent)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  color="secondary"
+                  onClick={() => handleDeleteSubEvent(subEvent)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      )))}
       </Grid>
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
@@ -322,6 +342,7 @@ function EventDetails() {
             }
             onChange={handleChange}
             fullWidth
+            required
             margin="normal"
           />
           <TextField
@@ -334,6 +355,7 @@ function EventDetails() {
             }
             onChange={handleChange}
             fullWidth
+            required
             margin="normal"
           />
           <TextField
@@ -346,6 +368,7 @@ function EventDetails() {
             }
             onChange={handleChange}
             fullWidth
+            required
             margin="normal"
           />
           <TextField
@@ -358,6 +381,7 @@ function EventDetails() {
             }
             onChange={handleChange}
             fullWidth
+            required
             margin="normal"
           />
           <Button variant="contained" component="label">
@@ -368,6 +392,7 @@ function EventDetails() {
               accept="image/*"
               onChange={handleChange}
               hidden
+              required
             />
           </Button>
           {selectedFileName && (
@@ -395,6 +420,7 @@ function EventDetails() {
             value={newSubEvent.subEventTitle}
             onChange={handleChange}
             fullWidth
+            required
             margin="normal"
           />
           <TextField
@@ -403,6 +429,7 @@ function EventDetails() {
             value={newSubEvent.subEventDescription}
             onChange={handleChange}
             fullWidth
+            required
             margin="normal"
           />
           <TextField
@@ -411,6 +438,7 @@ function EventDetails() {
             value={newSubEvent.subEventDate.split("T")[0]}
             onChange={handleChange}
             fullWidth
+            required
             margin="normal"
           />
           <TextField
@@ -419,6 +447,7 @@ function EventDetails() {
             value={newSubEvent.subEventVenue}
             onChange={handleChange}
             fullWidth
+            required
             margin="normal"
           />
           <Button variant="contained" component="label">
@@ -429,6 +458,7 @@ function EventDetails() {
               accept="image/*"
               onChange={handleChange}
               hidden
+              required
             />
           </Button>
           {selectedFileName && (
@@ -436,6 +466,7 @@ function EventDetails() {
               Selected File: {selectedFileName}
             </Typography>
           )}
+          <Typography variant="body2" style={{marginTop:'8px'}}> Note: Wait until image is uploaded</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseNewDialog} color="primary">

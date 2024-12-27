@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import {
   Box,
   Typography,
@@ -32,6 +33,7 @@ const DonationCard = ({ donation, onEdit, onDelete }) => {
     date: new Date(date).toISOString().split("T")[0],
     amt,
   });
+  const[filename,setFilename] = useState("");
   const [loadingEdit, setLoadingEdit] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
 
@@ -52,12 +54,16 @@ const DonationCard = ({ donation, onEdit, onDelete }) => {
     setEditDonation((prev) => ({ ...prev, [name]: value }));
   };
 
+  
   // Handle Image Change
-  const handleImageChange = (e) => {
+  const handleImageChange = async(e) => {
     const file = e.target.files[0];
+    setFilename(file);
+    // fileName = file;
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setEditDonation((prev) => ({ ...prev, photo: imageUrl }));
+      // const uploadimageUrl = await uploadImageToCloudinary();
+      setEditDonation((prev) => ({ ...prev,photo:imageUrl}));
     }
   };
 
@@ -65,7 +71,7 @@ const DonationCard = ({ donation, onEdit, onDelete }) => {
   const handleEditSave = async () => {
     setLoadingEdit(true);
     try {
-      await onEdit(editDonation, donation._id);
+      await onEdit({...editDonation,photo:filename}, donation._id);
     } finally {
       setLoadingEdit(false);
       setOpenEditModal(false);
@@ -142,7 +148,7 @@ const DonationCard = ({ donation, onEdit, onDelete }) => {
               marginBottom: 1,
             }}
           >
-            Donated to: {name}
+            Donated to: <span sx={{color:'orange'}} className="nameofdonor">{name}</span>
           </Typography>
           <Typography
             variant="body2"
@@ -181,26 +187,74 @@ const DonationCard = ({ donation, onEdit, onDelete }) => {
 
       {/* Delete Confirmation Modal */}
       <Dialog
-        open={openDeleteModal}
-        onClose={() => setOpenDeleteModal(false)}
-      >
-        <DialogTitle>Confirm Deletion</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this donation?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDeleteModal(false)}>Cancel</Button>
-          <Button onClick={handleDelete} sx={{ color: "#FF5722" }}>
-            {loadingDelete ? (
-              <CircularProgress size={24} sx={{ color: "#FF5722" }} />
-            ) : (
-              "Delete"
-            )}
-          </Button>
-        </DialogActions>
-      </Dialog>
+  open={openDeleteModal}
+  onClose={() => setOpenDeleteModal(false)}
+  sx={{
+    '& .MuiDialogTitle-root': {
+      backgroundColor: '#FF5722', // Orange background for title
+      color: '#FFFFFF', // White text for title
+      fontWeight: 'bold', // Bold text
+      fontSize: { xs: '1rem', sm: '1.5rem' }, // Larger font size
+      textAlign: 'center', // Center-align text
+    },
+    '& .MuiDialogActions-root': {
+      justifyContent: 'space-between', // Space between buttons
+      padding: '16px', // Add padding to actions
+    },
+    '& .MuiDialog-paper': {
+      borderRadius: '12px', // Rounded corners for the dialog box
+    },
+    '& .MuiDialogContent-root': {
+      padding: '16px', // Add padding to content
+      fontSize:{xs:"0.4rem",sm:"1rem"}
+
+    },
+  }}
+>
+  <DialogTitle>Confirm Deletion</DialogTitle>
+  <DialogContent>
+    <DialogContentText sx={{ fontSize: '1rem', color: '#757575' }}>
+      Are you sure you want to delete this donation?
+    </DialogContentText>
+  </DialogContent>
+  <DialogActions>
+    <Button
+      onClick={() => setOpenDeleteModal(false)}
+      sx={{
+        color: '#FFFFFF',
+        backgroundColor: '#757575',
+        '&:hover': {
+          backgroundColor: '#5C5C5C',
+        },
+        padding:{ xs: '4px 8px', sm: '8px 16px' },
+        borderRadius: '8px',
+        fontWeight: 'bold',
+      }}
+    >
+      Cancel
+    </Button>
+    <Button
+      onClick={handleDelete}
+      sx={{
+        color: '#FFFFFF',
+        backgroundColor: '#FF5722',
+        '&:hover': {
+          backgroundColor: '#E64A19',
+        },
+        padding: { xs: '4px 8px', sm: '8px 16px' },
+        borderRadius: '8px',
+        fontWeight: 'bold',
+      }}
+    >
+      {loadingDelete ? (
+        <CircularProgress size={24} sx={{ color: '#FFFFFF' }} />
+      ) : (
+        'Delete'
+      )}
+    </Button>
+  </DialogActions>
+</Dialog>
+
 
       {/* Edit Modal */}
       <Dialog
@@ -208,6 +262,25 @@ const DonationCard = ({ donation, onEdit, onDelete }) => {
         onClose={() => setOpenEditModal(false)}
         fullWidth
         maxWidth="sm"
+        sx={{
+          '& .MuiDialogTitle-root': {
+            backgroundColor: '#FF5722', // Orange background for title
+            color: '#FFFFFF', // White text for title
+            fontWeight: 'bold', // Bold text
+            fontSize: { xs: '1rem', sm: '1.5rem' }, // Larger font size
+            textAlign: 'center', // Center-align text
+          },
+          '& .MuiDialogActions-root': {
+            justifyContent: 'space-between', // Space between buttons
+            padding: '16px', // Add padding to actions
+          },
+          '& .MuiDialog-paper': {
+            borderRadius: '12px', // Rounded corners for the dialog box
+          },
+          '& .MuiDialogContent-root': {
+            padding: '16px', // Add padding to content
+          },
+        }}
       >
         <DialogTitle>Edit Donation</DialogTitle>
         <DialogContent>
@@ -282,8 +355,26 @@ const DonationCard = ({ donation, onEdit, onDelete }) => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenEditModal(false)}>Cancel</Button>
-          <Button onClick={handleEditSave} sx={{ color: "#FF5722" }}>
+          <Button onClick={() => setOpenEditModal(false)}  sx={{
+        color: '#FFFFFF',
+        backgroundColor: '#757575',
+        '&:hover': {
+          backgroundColor: '#5C5C5C',
+        },
+        padding:{ xs: '4px 8px', sm: '8px 16px' },
+        borderRadius: '8px',
+        fontWeight: 'bold',
+      }}>Cancel</Button>
+          <Button onClick={handleEditSave}  sx={{
+        color: '#FFFFFF',
+        backgroundColor: '#FF5722',
+        '&:hover': {
+          backgroundColor: '#E64A19',
+        },
+        padding: { xs: '4px 8px', sm: '8px 16px' },
+        borderRadius: '8px',
+        fontWeight: 'bold',
+      }}>
             {loadingEdit ? (
               <CircularProgress size={24} sx={{ color: "#FF5722" }} />
             ) : (

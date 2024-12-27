@@ -9,6 +9,7 @@ const AllDonations = () => {
   const [donations, setDonations] = useState([]);
   const [editLoading, setEditLoading] = useState({});
   const [deleteLoading, setDeleteLoading] = useState({});
+  const[execute,setExecute] = useState(false);
 
   const uploadImageToCloudinary = async (previousphoto) => {
     const uploadData = new FormData();
@@ -27,9 +28,12 @@ const AllDonations = () => {
     }
   };
 
+ 
+
   const handleEdit = async (editDonation, id) => {
     setEditLoading((prev) => ({ ...prev, [id]: true })); // Start loading for this donation
     console.log("Edit donation with ID:", id);
+    console.log(editDonation);
 
     try {
       if (editDonation.photo instanceof File) {
@@ -65,6 +69,7 @@ const AllDonations = () => {
     } finally {
       setEditLoading((prev) => ({ ...prev, [id]: false })); // Stop loading
     }
+    setExecute(!execute);
   };
 
   const handleDelete = async (id) => {
@@ -91,6 +96,7 @@ const AllDonations = () => {
     } finally {
       setDeleteLoading((prev) => ({ ...prev, [id]: false })); // Stop loading
     }
+    setExecute(!execute);
   };
 
   useEffect(() => {
@@ -104,7 +110,7 @@ const AllDonations = () => {
     };
 
     fetchDonations();
-  }, [donations]);
+  }, [execute]);
 
   return (
     <Box
@@ -115,7 +121,7 @@ const AllDonations = () => {
       }}
     >
      <Typography
-               variant="h3"
+               variant="h4"
                sx={{
                  color: "#FF5722",
                  fontWeight: "bold",

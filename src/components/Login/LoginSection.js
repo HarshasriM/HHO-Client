@@ -65,6 +65,7 @@ function LoginPage() {
         // Handle errors here if the request fails
         const errorMsg = error.response?.data?.message || "Login failed due to a server error.";
         setAlertMsg(errorMsg);
+        setErrorOcc(true);
         setOpen(true);
         console.error('Error logging in:', error);
       }

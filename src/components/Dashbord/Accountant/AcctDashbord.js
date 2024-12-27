@@ -14,6 +14,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import {VolunteerActivism} from '@mui/icons-material';
+import './Accountant.css';
 
 const NAV_ITEMS = [
   {
@@ -121,8 +122,9 @@ function AcctDashbord() {
                             backgroundColor: '#e0e0e0',
                           },
                         }}
+
                       >
-                        <ListItemText primary={subItem.label} />
+                        <ListItemText className="sub-item" primary={subItem.label} />
                       </ListItem>
                     ))}
                   </List>

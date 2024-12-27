@@ -146,6 +146,7 @@ function NewDonation() {
           boxShadow: 2,
           border: "1px solid #FF5722",
           margin: "20px auto",
+          width:isMobile?'95%':"800px"
         }}
       >
         <Typography

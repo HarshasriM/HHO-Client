@@ -144,15 +144,22 @@ a{
        /* Optional: ensure the image covers the area without stretching */
     }
   }
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 575px) {
     .image {
       display: none;
        /* Optional: ensure the image covers the area without stretching */
     }
     .login-form{
         border:2px solid #fa9a34;
-        box-shadow: 2px 2px 2px 2px #fa9a34;
-        padding: 10px;
+        /* box-shadow: 2px 2px 2px 2px #fa9a34; */
+        /* padding: 10px; */
+        margin: auto 10px;
+        padding:45px 10px;
+    }
+    .login{
+        height: 60vh;
+        margin-top: 50px;
+        margin-bottom: 20px;
     }
   }
   

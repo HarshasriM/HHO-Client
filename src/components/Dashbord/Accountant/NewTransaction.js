@@ -45,6 +45,7 @@ function NewTransaction() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   // const [totalBalance, setTotalBalance] = React.useState(10000);
 
+
   const { token, setAlertMsg, setOpen, setErrorOcc, transactions, setTransactions,setTotalBalance,totalBalance,donatedAmt,setDonatedAmt } = React.useContext(AppContext);
 
   const handleAmountChange = (e) => setAmount(e.target.value);
@@ -144,191 +145,156 @@ function NewTransaction() {
  
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
+   <ThemeProvider theme={theme}>
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      py: isMobile ? 2 : 4, // Reduced padding for mobile
+      px: isMobile ? 1 : 2, // Reduced padding for mobile
+      maxWidth: isMobile ? '95%' : '600px',
+      backgroundColor: '#FFFFFF',
+      borderRadius: 2, // Slightly less rounded for mobile
+      boxShadow: 2,
+      border: '1px solid #FF5722',
+      margin: '10px auto', // Reduced margin for mobile
+      alignItems: 'center',
+    }}
+  >
+    <Typography
+      variant="h5"
+      sx={{
+        textAlign: 'center',
+        color: '#FF5722',
+        fontWeight: 'bold',
+        marginBottom: '8px',
+        fontSize: isMobile ? '1rem' : '1.5rem', // Adjusted font size
+      }}
+    >
+      New Transaction
+    </Typography>
+
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? 2 : 3,
+        width: '100%',
+      }}
+    >
+      <TextField
+        label="Amount"
+        value={amount}
+        onChange={handleAmountChange}
+        fullWidth
+        type="number"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <CurrencyRupeeIcon sx={{ color: '#FF5722' }} />
+            </InputAdornment>
+          ),
+        }}
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          py: 4,
-          px: 2, // Increased padding
-          maxWidth: isMobile ? '98%' : '600px',
-          backgroundColor: '#FFFFFF', // White background for the form
-          borderRadius: 3, // Rounded corners
-          boxShadow: 2,
-          border: '1px solid #FF5722', // Orange border
-          margin: '20px auto', // Center the form horizontally
-          alignItems: 'center', // Center the form contents
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': { borderColor: '#FF5722' },
+            '&:hover fieldset': { borderColor: '#FF5722' },
+            '&.Mui-focused fieldset': { borderColor: '#FF5722' },
+            height: isMobile ? '40px' : '56px', // Reduced height for mobile
+          },
+          '& input': { color: '#000000', fontSize: isMobile ? '0.8rem' : '1rem' },
+          '& label': { color: '#000000', fontSize: isMobile ? '0.75rem' : '1rem' },
+        }}
+      />
+
+      <TextField
+        select
+        label="Transaction Type"
+        value={transactionType}
+        onChange={handleTransactionTypeChange}
+        fullWidth
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': { borderColor: '#FF5722' },
+            '&:hover fieldset': { borderColor: '#FF5722' },
+            '&.Mui-focused fieldset': { borderColor: '#FF5722' },
+            height: isMobile ? '40px' : '56px', // Reduced height for mobile
+          },
+          '& input': { color: '#000000', fontSize: isMobile ? '0.8rem' : '1rem' },
+          '& label': { color: '#000000', fontSize: isMobile ? '0.75rem' : '1rem' },
         }}
       >
-        <Typography variant="h5" sx={{ textAlign: 'center', color: '#FF5722', fontWeight: 'bold',marginBottom: '10px' }}>
-          New Transaction
-        </Typography>
+        {transactionTypes.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            <Box display="flex" alignItems="center">
+              {option.icon}
+              <Typography sx={{ ml: 1, color: '#000000', fontWeight: 'medium', fontSize: isMobile ? '0.8rem' : '1rem' }}>
+                {option.label}
+              </Typography>
+            </Box>
+          </MenuItem>
+        ))}
+      </TextField>
+    </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            gap: isMobile ? 3 : 2,
-            width: '100%', // Ensure the inner Box takes the full width
-          }}
-        >
-          <TextField
-            label="Amount"
-            value={amount}
-            onChange={handleAmountChange}
-            fullWidth
-            type="number"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CurrencyRupeeIcon sx={{ color: '#FF5722' }} />
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: '#FF5722', // Orange border
-                },
-                '&:hover fieldset': {
-                  borderColor: '#FF5722', // Orange border on hover
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#FF5722', // Orange border when focused
-                },
-                color: '#000000', // Black text color
-              },
-              '& input': {
-                color: '#000000', // Black text color for the input
-              },
-              '& label': {
-                color: '#000000', // Black text color for the label
-              },
-            }}
-          />
+    <TextField
+      label="Description"
+      value={description}
+      onChange={handleDescriptionChange}
+      fullWidth
+      multiline
+      rows={isMobile ? 3 : 4} // Adjusted rows for mobile
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': { borderColor: '#FF5722' },
+          '&:hover fieldset': { borderColor: '#FF5722' },
+          '&.Mui-focused fieldset': { borderColor: '#FF5722' },
+        },
+        '& textarea': { color: '#000000', fontSize: isMobile ? '0.8rem' : '1rem' },
+        '& label': { color: '#000000', fontSize: isMobile ? '0.75rem' : '1rem' },
+      }}
+    />
 
-          <TextField
-            select
-            label="Transaction Type"
-            value={transactionType}
-            onChange={handleTransactionTypeChange}
-            fullWidth
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: '#FF5722', // Orange border
-                },
-                '&:hover fieldset': {
-                  borderColor: '#FF5722', // Orange border on hover
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#FF5722', // Orange border when focused
-                },
-                color: '#000000', // Black text color
-              },
-              '& input': {
-                color: '#000000', // Black text color for the select input
-              },
-              '& label': {
-                color: '#000000', // Black text color for the label
-              },
-            }}
-          >
-            {transactionTypes.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                <Box display="flex" alignItems="center">
-                  {option.icon}
-                  <Typography sx={{ ml: 1, color: '#000000', fontWeight: 'medium' }}>{option.label}</Typography>
-                </Box>
-              </MenuItem>
-            ))}
-          </TextField>
-        </Box>
+    <TextField
+      label="Date"
+      type="date"
+      value={date}
+      onChange={handleDateChange}
+      fullWidth
+      InputLabelProps={{ shrink: true }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': { borderColor: '#FF5722' },
+          '&:hover fieldset': { borderColor: '#FF5722' },
+          '&.Mui-focused fieldset': { borderColor: '#FF5722' },
+          height: isMobile ? '40px' : '56px', // Reduced height for mobile
+        },
+        '& input': { color: '#000000', fontSize: isMobile ? '0.8rem' : '1rem' },
+        '& label': { color: '#000000', fontSize: isMobile ? '0.75rem' : '1rem' },
+      }}
+    />
 
-        <TextField
-          label="Description"
-          value={description}
-          onChange={handleDescriptionChange}
-          fullWidth
-          multiline
-          rows={4}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: '#FF5722', // Orange border
-              },
-              '&:hover fieldset': {
-                borderColor: '#FF5722', // Orange border on hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#FF5722', // Orange border when focused
-              },
-              color: '#000000', // Black text color
-            },
-            '& input': {
-              color: '#000000', // Black text color for the input
-            },
-            '& textarea': {
-              color: '#000000', // Black text color for the textarea
-            },
-            '& label': {
-              color: '#000000', // Black text color for the label
-            },
-          }}
-        />
+    <Button
+      variant="contained"
+      sx={{
+        backgroundColor: '#FF5722',
+        color: '#FFFFFF',
+        '&:hover': { backgroundColor: '#E64A19' },
+        width: '100%',
+        padding: isMobile ? '8px' : '12px', // Reduced padding for mobile
+        borderRadius: 2,
+        fontWeight: 'bold',
+        fontSize: isMobile ? '0.8rem' : '1rem', // Adjusted font size
+      }}
+      onClick={handleSubmit}
+      disabled={loading}
+    >
+      {loading ? <CircularProgress size={20} sx={{ color: '#FFFFFF' }} /> : 'Submit'}
+    </Button>
+  </Box>
+</ThemeProvider>
 
-        <TextField
-          label="Date"
-          type="date"
-          value={date}
-          onChange={handleDateChange}
-          fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: '#FF5722', // Orange border
-              },
-              '&:hover fieldset': {
-                borderColor: '#FF5722', // Orange border on hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#FF5722', // Orange border when focused
-              },
-              color: '#000000', // Black text color
-            },
-            '& input': {
-              color: '#000000', // Black text color for the input
-            },
-            '& label': {
-              color: '#000000', // Black text color for the label
-            },
-          }}
-        />
-
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: '#FF5722', // Orange background
-            color: '#FFFFFF', // White text
-            '&:hover': {
-              backgroundColor: '#E64A19', // Darker orange on hover
-            },
-            width: '100%',
-            padding: '12px', // Increase padding for the button
-            borderRadius: 3, // Rounded corners
-            fontWeight: 'bold', // Bold text
-          }}
-          onClick={handleSubmit}
-          disabled={loading} // Disable button while loading
-        >
-          {loading ? <CircularProgress size={24} sx={{ color: '#FFFFFF' }} /> : 'Submit'}
-        </Button>
-      </Box>
-    </ThemeProvider>
   );
 }
 

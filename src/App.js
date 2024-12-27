@@ -132,6 +132,7 @@ function App() {
   
 </Route>
         <Route path='/profile' element={<PrivateRoute><ProfileContainer /></PrivateRoute>} />
+        {/* <Route path='/profile' element={<ProfileContainer />} /> */}
         {/* <Route path='/chaitra' element={<Chaitra />} ></Route> */}
         <Route path='*' element={<Home />} />
       </Routes>

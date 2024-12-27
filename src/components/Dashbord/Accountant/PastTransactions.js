@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Card, CardContent, Grid, IconButton, TextField, MenuItem, Select, FormControl, InputLabel, Button, Divider ,CircularProgress} from '@mui/material';
+import { Card, CardContent, Grid, IconButton, TextField, MenuItem, Select, FormControl, InputLabel, Button, Divider ,CircularProgress,useMediaQuery} from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   CreditScore,
   VolunteerActivism,
@@ -46,6 +47,7 @@ function PastTransactions() {
 
   const[loading,setLoading] = useState(false);
   const[delLoading,setDelLoading] = useState(false);
+  const[editLoading,setEditLoading]=useState(false);
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [transactionId, setTransactionId] = useState(null);
@@ -195,7 +197,7 @@ function PastTransactions() {
     console.log("token"+token+"in hu");
     // console.log("Id"+);
 
-    setLoading(true);
+    setEditLoading(true);
     setTimeout(async()=>{
       try {
         const response =  await axios.put(`http://localhost:8000/api/transactions/update-transaction/${transactionId}`, editData, { headers });
@@ -221,36 +223,50 @@ function PastTransactions() {
         setErrorOcc(true);
         setOpen(true);
       }
-      setLoading(false);
+      setEditLoading(false);
     },3000);
 
     
   };
-
+  const isMobile = useMediaQuery('(max-width:600px)'); // Check for mobile view
   return (
     <>
-      <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
-        <FormControl variant="outlined" sx={{ minWidth: 120, mr: 2, height: '56px' }}>
-          <InputLabel id="search-type-label">Search By</InputLabel>
-          <Select
-            labelId="search-type-label"
-            value={searchType}
-            onChange={(e) => {
-              setSearchType(e.target.value);
-              setSearchTerm('');
-              setSelectedDate('');
-              setTransactionType('');
-            }}
-            label="Search By"
+       <Box sx={{ mb: 3 }}>
+      <Grid
+        container
+        spacing={isMobile ? 1 : 2}
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        {/* Search Type Input */}
+        <Grid item xs={isMobile ? 4 : 3}>
+          <FormControl
+            variant="outlined"
+            fullWidth
             sx={{ height: '56px' }}
           >
-            <MenuItem value="amount">Amount</MenuItem>
-            <MenuItem value="type">Transaction Type</MenuItem>
-            <MenuItem value="date">Date</MenuItem>
-          </Select>
-        </FormControl>
+            <InputLabel id="search-type-label">Search By</InputLabel>
+            <Select
+              labelId="search-type-label"
+              value={searchType}
+              onChange={(e) => {
+                setSearchType(e.target.value);
+                setSearchTerm('');
+                setSelectedDate('');
+                setTransactionType('');
+              }}
+              label="Search By"
+              sx={{ fontSize: isMobile ? '0.8rem' : '1rem' }}
+            >
+              <MenuItem value="amount">Amount</MenuItem>
+              <MenuItem value="type">Transaction Type</MenuItem>
+              <MenuItem value="date">Date</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
 
-        <Box sx={{ width: '200px', mr: 2 }}>
+        {/* Conditional Input Field */}
+        <Grid item xs={isMobile ? 6 : 7}>
           {searchType === 'date' ? (
             <TextField
               label="Select Date"
@@ -260,16 +276,30 @@ function PastTransactions() {
               InputLabelProps={{
                 shrink: true,
               }}
-              sx={{ width: '100%' }}
+              fullWidth
+              sx={{
+                fontSize: isMobile ? '0.8rem' : '1rem',
+              }}
+              InputProps={{
+                style: { fontSize: isMobile ? '0.8rem' : '1rem' },
+              }}
             />
           ) : searchType === 'type' ? (
-            <FormControl variant="outlined" sx={{ width: '100%' }}>
-              <InputLabel id="transaction-type-label">Transaction Type</InputLabel>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel
+                id="transaction-type-label"
+                sx={{ fontSize: isMobile ? '0.8rem' : '1rem' }}
+              >
+                Transaction Type
+              </InputLabel>
               <Select
                 labelId="transaction-type-label"
                 value={transactionType}
                 onChange={(e) => setTransactionType(e.target.value)}
                 label="Transaction Type"
+                sx={{
+                  fontSize: isMobile ? '0.8rem' : '1rem',
+                }}
               >
                 <MenuItem value="credit">Credit</MenuItem>
                 <MenuItem value="debit">Debit</MenuItem>
@@ -282,33 +312,53 @@ function PastTransactions() {
               variant="outlined"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              sx={{ width: '100%' }}
+              fullWidth
+              sx={{
+                fontSize: isMobile ? '0.8rem' : '1rem',
+              }}
+              InputProps={{
+                style: { fontSize: isMobile ? '0.8rem' : '1rem' },
+              }}
             />
           )}
-        </Box>
-        
-        <Button
-  variant="contained"
-  onClick={handleSearch}
-  sx={{
-    height: '56px',
-    minWidth: 120,
-    backgroundColor: 'orange',
-    color: 'white',
-    fontWeight: 'bold',
-    border: 'none',
-    outline: 'none',
-    '&:hover': {
-      backgroundColor: '#FF9800', // Optionally change background color on hover
-      border: 'none', // Remove border on hover
-      outline: 'none', // Remove outline on hover
-    },
-  }}
->
-  {loading ? <CircularProgress size={24} /> : 'Search'}
-</Button>
+        </Grid>
 
-      </Box>
+        {/* Search Button */}
+        <Grid item xs={isMobile ? 2 : 2}>
+          <Button
+            variant="contained"
+            onClick={handleSearch}
+            fullWidth
+            sx={{
+              height: isMobile?'48px':'56px',
+              backgroundColor: 'orange',
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: isMobile ? '0.8rem' : '1rem',
+              border: 'none',
+              outline: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              '&:hover': {
+                backgroundColor: '#FF9800',
+                border: 'none',
+                outline: 'none',
+              },
+            }}
+          >
+            {loading ? (
+              <CircularProgress size={24} />
+            ) : isMobile ? (
+              <SearchIcon />
+            ) : (
+              'Search'
+            )}
+          </Button>
+        </Grid>
+      </Grid>
+    </Box>
+
 
       <Box sx={{ mt: 3 }}>
         {filteredTransactions.length === 0 ? (
@@ -339,11 +389,14 @@ function PastTransactions() {
     '& .MuiDialogActions-root': {
       backgroundColor: '#FFFFFF', // White background for actions
     },
+    '& .MuiDialog-paper': {
+      borderRadius: '12px', // Set border radius for the dialog box
+    },
   }}
 >
   <DialogTitle>Confirm Action</DialogTitle>
   <DialogContent>
-    <DialogContentText sx={{marginTop:"10px"}}>
+    <DialogContentText sx={{ marginTop: '10px' }}>
       Are you sure you want to delete this transaction?
     </DialogContentText>
   </DialogContent>
@@ -352,10 +405,11 @@ function PastTransactions() {
       Cancel
     </Button>
     <Button onClick={() => handleDelete(transactionId)} sx={{ backgroundColor: '#FF5722', color: '#FFFFFF' }}>
-      {delLoading ? <CircularProgress color="white"  size={24} /> : "Delete"}
+      {delLoading ? <CircularProgress color="white" size={24} /> : 'Delete'}
     </Button>
   </DialogActions>
 </Dialog>
+
 
 
 
@@ -366,19 +420,30 @@ function PastTransactions() {
   onClose={() => setOpenEditModal(false)}
   sx={{
     '& .MuiDialogTitle-root': {
-      backgroundColor: '#FF5722', // Orange background for title
-      color: '#FFFFFF', // White text for title
+      backgroundColor: '#FF5722',
+      color: '#FFFFFF',
+      fontSize: '1.25rem',
+      textAlign: 'center',
+      padding: '16px 8px', // Reduced padding
     },
     '& .MuiDialogContent-root': {
-      backgroundColor: '#FFFFFF', // White background for content
-      color: '#000000', // Black text for content
+      backgroundColor: '#FFFFFF',
+      color: '#000000',
+      padding: {sm:'6px 12px',md:'16px 24px'}// Reduced padding
     },
     '& .MuiDialogActions-root': {
-      backgroundColor: '#FFFFFF', // White background for actions
-    },borderRadius:"24px"
+      backgroundColor: '#FFFFFF',
+      padding: '8px', // Reduced padding
+    },
+    '& .MuiDialog-paper': {
+      borderRadius: '12px',
+      maxWidth: { sm: '90%', md: '500px' },
+      margin: '0 auto',
+    },
+    // Reduced padding
   }}
 >
-  <DialogTitle>{transactionId ? "Edit Transaction" : "Add Transaction"}</DialogTitle>
+  <DialogTitle sx={{ fontSize: '1.25rem', textAlign: 'center', padding: '8px' }}>{transactionId ? "Edit Transaction" : "Add Transaction"}</DialogTitle>
   <DialogContent>
     <TextField
       label="Amount"
@@ -387,25 +452,38 @@ function PastTransactions() {
       onChange={(e) => setEditData({ ...editData, amount: e.target.value })}
       fullWidth
       margin="normal"
-      variant="outlined" // Ensure the outlined style
-      InputProps={{ sx: { borderColor: '#FF5722' } }} // Orange border color
+      variant="outlined"
+      InputProps={{
+        sx: {
+          padding: '0px', // Reduced padding
+        },
+      }}
     />
     <TextField
       label="Date"
       type="date"
-      value={editData.date.split('T')[0]} // Format to date input
+      value={editData.date.split('T')[0]}
       onChange={(e) => setEditData({ ...editData, date: e.target.value })}
       fullWidth
       margin="normal"
-      variant="outlined" // Ensure the outlined style
-      InputProps={{ sx: { borderColor: '#FF5722' } }} // Orange border color
+      variant="outlined"
+      InputProps={{
+        sx: {
+          padding: '0px', // Reduced padding
+        },
+      }}
     />
     <FormControl fullWidth margin="normal" variant="outlined">
       <InputLabel>Transaction Type</InputLabel>
       <Select
         value={editData.transaction_type}
         onChange={(e) => setEditData({ ...editData, transaction_type: e.target.value })}
-        sx={{ borderColor: '#FF5722' }} // Orange border color for Select
+        sx={{
+          padding: '8px', // Reduced padding
+          '& .MuiSelect-select': {
+            padding: '4px 8px', // Reduced padding for select dropdown
+          },
+        }}
       >
         <MenuItem value="credit">Credit</MenuItem>
         <MenuItem value="debit">Debit</MenuItem>
@@ -418,19 +496,44 @@ function PastTransactions() {
       onChange={(e) => setEditData({ ...editData, purpose: e.target.value })}
       fullWidth
       margin="normal"
-      variant="outlined" // Ensure the outlined style
-      InputProps={{ sx: { borderColor: '#FF5722' } }} // Orange border color
+      variant="outlined"
+      multiline
+      rows={3}
+      InputProps={{
+        sx: {
+          padding: '8px', // Reduced padding
+        },
+      }}
     />
   </DialogContent>
   <DialogActions>
-    <Button onClick={() => setOpenEditModal(false)} sx={{ color: '#FF5722', border: 'none', outline: 'none' }}>
+    <Button
+      onClick={() => setOpenEditModal(false)}
+      sx={{
+        color: '#FF5722',
+        fontSize: '0.875rem',
+        padding: '4px 8px', // Reduced padding
+      }}
+    >
       Cancel
     </Button>
-    <Button onClick={handleUpdate} sx={{ backgroundColor: '#FF5722', color: '#FFFFFF', border: 'none', outline: 'none' }}>
-    {loading ? <CircularProgress size={24} /> : 'Update'}
+    <Button
+      onClick={handleUpdate}
+      sx={{
+        backgroundColor: '#FF5722',
+        color: '#FFFFFF',
+        fontSize: '0.875rem',
+        padding: '4px 8px', // Reduced padding
+      }}
+    >
+      {editLoading ? <CircularProgress size={20} sx={{ color: '#FFFFFF' }} /> : 'Update'}
     </Button>
   </DialogActions>
 </Dialog>
+
+
+
+
 
     </>
   );

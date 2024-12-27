@@ -117,6 +117,7 @@ const ProfileBanner = () => {
             fontFamily: '"Playpen Sans", cursive',
             fontSize: { xs: "20px", md: "50px" }, // Responsive font size
           }}
+          className="hho-profile"
         >
           HHO
         </Typography>
@@ -128,6 +129,7 @@ const ProfileBanner = () => {
             fontSize: { xs: "15px", md: "30px" }, // Responsive font size
             marginBottom: { xs: "20px", md: "0px" }, // Add margin bottom for mobile
           }} 
+          className="welcome-profile"
         >
           Welcome {"Core"}
         </Typography>

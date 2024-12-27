@@ -7,6 +7,7 @@ import {
   Divider,
   IconButton,
   Box,
+  useMediaQuery,
 } from '@mui/material';
 import {
   CreditScore,
@@ -20,6 +21,8 @@ import {
 } from '@mui/icons-material';
 
 function TransactionCard({ transaction, onEdit, onDelete }) {
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
   const getCardColor = (type) => {
     switch (type) {
       case 'donate':
@@ -41,7 +44,7 @@ function TransactionCard({ transaction, onEdit, onDelete }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: 2,
+            padding: isMobile ? 1 : 2,
           }}
         >
           {/* Left Content */}
@@ -56,13 +59,16 @@ function TransactionCard({ transaction, onEdit, onDelete }) {
             <Avatar
               sx={{
                 bgcolor: getCardColor(transaction.transaction_type),
-                marginRight: 2,
-                flexShrink: 0,
+                marginRight: isMobile ? 1 : 2,
+                width: isMobile ? 30 : 40,
+                height: isMobile ? 30 : 40,
               }}
             >
-              {transaction.transaction_type === 'credit' && <CreditScore />}
-              {transaction.transaction_type === 'debit' && <MoneyOff />}
-              {transaction.transaction_type === 'donation' && <VolunteerActivism />}
+              {transaction.transaction_type === 'credit' && <CreditScore fontSize={isMobile ? 'small' : 'medium'} />}
+              {transaction.transaction_type === 'debit' && <MoneyOff fontSize={isMobile ? 'small' : 'medium'} />}
+              {transaction.transaction_type === 'donation' && (
+                <VolunteerActivism fontSize={isMobile ? 'small' : 'medium'} />
+              )}
             </Avatar>
 
             {/* Transaction Details */}
@@ -71,16 +77,23 @@ function TransactionCard({ transaction, onEdit, onDelete }) {
                 primary={`${transaction.transaction_type}ed On`}
                 secondary={transaction.purpose}
                 primaryTypographyProps={{
-                  sx: { fontFamily: '"Playpen Sans", cursive', fontSize: '16px' },
+                  sx: {
+                    fontFamily: '"Playpen Sans", cursive',
+                    fontSize: isMobile ? '12px' : '16px',
+                  },
                 }}
                 secondaryTypographyProps={{
-                  sx: { fontFamily: '"Playpen Sans", cursive', fontSize: '14px', color: 'gray' },
+                  sx: {
+                    fontFamily: '"Playpen Sans", cursive',
+                    fontSize: isMobile ? '10px' : '14px',
+                    color: 'gray',
+                  },
                 }}
               />
               <Typography
                 sx={{
                   fontFamily: '"Playpen Sans", cursive',
-                  fontSize: '13px',
+                  fontSize: isMobile ? '10px' : '13px',
                   marginTop: 1,
                   color: 'gray',
                 }}
@@ -97,12 +110,13 @@ function TransactionCard({ transaction, onEdit, onDelete }) {
                 fontWeight: 'bold',
                 fontFamily: '"Playpen Sans", cursive',
                 marginLeft: 2,
+                fontSize: isMobile ? '12px' : '16px',
               }}
             >
               ₹{transaction.amount}
-              {transaction.transaction_type === 'credit' && <AddCircle />}
-              {transaction.transaction_type === 'debit' && <RemoveCircle />}
-              {transaction.transaction_type === 'donation' && <Handshake />}
+              {transaction.transaction_type === 'credit' && <AddCircle fontSize={isMobile ? 'small' : 'medium'} />}
+              {transaction.transaction_type === 'debit' && <RemoveCircle fontSize={isMobile ? 'small' : 'medium'} />}
+              {transaction.transaction_type === 'donation' && <Handshake fontSize={isMobile ? 'small' : 'medium'} />}
             </Typography>
           </Box>
 
@@ -121,20 +135,24 @@ function TransactionCard({ transaction, onEdit, onDelete }) {
                 backgroundColor: '#f1f1f1',
                 '&:hover': { backgroundColor: '#e0e0e0' },
                 marginBottom: 1,
+                width: isMobile ? 28 : 40,
+                height: isMobile ? 28 : 40,
               }}
               onClick={() => onEdit(transaction)}
             >
-              <Edit />
+              <Edit fontSize={isMobile ? 'small' : 'medium'} />
             </IconButton>
             <IconButton
               color="secondary"
               sx={{
                 backgroundColor: '#f1f1f1',
                 '&:hover': { backgroundColor: '#e0e0e0' },
+                width: isMobile ? 28 : 40,
+                height: isMobile ? 28 : 40,
               }}
               onClick={() => onDelete(transaction._id)}
             >
-              <Delete />
+              <Delete fontSize={isMobile ? 'small' : 'medium'} />
             </IconButton>
           </Box>
         </ListItem>

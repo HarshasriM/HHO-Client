@@ -17,7 +17,7 @@ import axios from 'axios';
 
 function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) {
 
-      const{token} = useContext(AppContext);
+  const{setAlertMsg,setErrorOcc,setOpen,token} = useContext(AppContext);
   const [eventDetails, setEventDetails] = useState({
     eventTitle: '',
     eventDescription:  '',
@@ -96,6 +96,9 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
         "https://api.cloudinary.com/v1_1/dkzzeiqhh/image/upload",
         uploadData
       );
+      // setAlertMsg("Image uploaded sucessfully");
+      // setErrorOcc(false);
+      // setOpen(true);
       return response.data.secure_url;
     } catch (error) {
       console.error("Image upload failed:", error);
@@ -111,10 +114,6 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
     // Perform form submission logic here
     try {
         // Perform form submission logic here
-
-
-
-
         const uploadedImageUrl = await uploadImageToCloudinary(eventDetails.eventPoster);
         // console.log("Main Event Poster:",uploadedImageUrl);
         for (let index = 0; index < subEvents.length; index++) {
@@ -141,12 +140,10 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
           console.log(`${key}: ${value}`);
         }
 
-
         const headers = {
           // 'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`,
         };
-        
 
         // console.log(formData);
 
@@ -172,6 +169,9 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
             eventPoster: null,
           })
           setSubEvents([]);
+          setAlertMsg("Event Added Successfully");
+          setErrorOcc(false);
+          setOpen(true);
         })
         .catch((err)=>{
           console.log(err);

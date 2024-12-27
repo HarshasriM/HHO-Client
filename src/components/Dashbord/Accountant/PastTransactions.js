@@ -83,6 +83,19 @@ function PastTransactions() {
     getTransactions();
   }, [searchType]);
 
+  const getTransactionTypeText = (type) => {
+    switch (type) {
+      case 'credit':
+        return 'Credited From';
+      case 'debit':
+        return 'Debited To';
+      case 'donation':
+        return 'Donated To';
+      default:
+        return 'Transaction';
+    }
+  };
+
   const handleSearch = () => {
     let filtered = transactions;
 
@@ -377,34 +390,73 @@ function PastTransactions() {
       <Dialog
   open={openDeleteModal}
   onClose={() => setOpenDeleteModal(false)}
+  // sx={{
+  //   '& .MuiDialogTitle-root': {
+  //     backgroundColor: '#FF5722', // Orange background for title
+  //     color: '#FFFFFF', // White text for title
+  //   },
+  //   '& .MuiDialogContent-root': {
+  //     backgroundColor: '#FFFFFF', // White background for content
+  //     color: '#000000', // Black text for content
+  //   },
+  //   '& .MuiDialogActions-root': {
+  //     backgroundColor: '#FFFFFF', // White background for actions
+  //   },
+  //   '& .MuiDialog-paper': {
+  //     borderRadius: '12px', // Set border radius for the dialog box
+  //   },
+  // }}
   sx={{
     '& .MuiDialogTitle-root': {
       backgroundColor: '#FF5722', // Orange background for title
       color: '#FFFFFF', // White text for title
-    },
-    '& .MuiDialogContent-root': {
-      backgroundColor: '#FFFFFF', // White background for content
-      color: '#000000', // Black text for content
+      fontWeight: 'bold', // Bold text
+      fontSize: { xs: '1rem', sm: '1.5rem' }, // Larger font size
+      textAlign: 'center', // Center-align text
     },
     '& .MuiDialogActions-root': {
-      backgroundColor: '#FFFFFF', // White background for actions
+      justifyContent: 'space-between', // Space between buttons
+      padding: '16px', // Add padding to actions
     },
     '& .MuiDialog-paper': {
-      borderRadius: '12px', // Set border radius for the dialog box
+      borderRadius: '12px', // Rounded corners for the dialog box
+    },
+    '& .MuiDialogContent-root': {
+      padding: '16px', // Add padding to content
+      fontSize:{xs:"0.4rem",sm:"1rem"}
+
     },
   }}
 >
   <DialogTitle>Confirm Action</DialogTitle>
   <DialogContent>
-    <DialogContentText sx={{ marginTop: '10px' }}>
+    <DialogContentText sx={{ fontSize:{sm:'0.87rem',md:'1rem'}, color: '#757575' }}>
       Are you sure you want to delete this transaction?
     </DialogContentText>
   </DialogContent>
   <DialogActions>
-    <Button onClick={() => setOpenDeleteModal(false)} color="primary" sx={{ color: '#FF5722' }}>
+    <Button onClick={() => setOpenDeleteModal(false)} sx={{
+        color: '#FFFFFF',
+        backgroundColor: '#757575',
+        '&:hover': {
+          backgroundColor: '#5C5C5C',
+        },
+        padding:{ xs: '4px 8px', sm: '8px 16px' },
+        borderRadius: '8px',
+        fontWeight: 'bold',
+      }}>
       Cancel
     </Button>
-    <Button onClick={() => handleDelete(transactionId)} sx={{ backgroundColor: '#FF5722', color: '#FFFFFF' }}>
+    <Button onClick={() => handleDelete(transactionId)} sx={{
+        color: '#FFFFFF',
+        backgroundColor: '#FF5722',
+        '&:hover': {
+          backgroundColor: '#E64A19',
+        },
+        padding: { xs: '4px 8px', sm: '8px 16px' },
+        borderRadius: '8px',
+        fontWeight: 'bold',
+      }}>
       {delLoading ? <CircularProgress color="white" size={24} /> : 'Delete'}
     </Button>
   </DialogActions>

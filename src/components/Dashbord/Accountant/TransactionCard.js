@@ -36,6 +36,18 @@ function TransactionCard({ transaction, onEdit, onDelete }) {
     }
   };
 
+  const getTransactionTypeText = (type) => {
+    switch (type) {
+      case 'credit':
+        return 'Credited From';
+      case 'debit':
+        return 'Debited To';
+      case 'donation':
+        return 'Donated To';
+      default:
+        return 'Transaction';
+    }
+  };
   return (
     <>
       <React.Fragment key={transaction._id}>
@@ -74,7 +86,7 @@ function TransactionCard({ transaction, onEdit, onDelete }) {
             {/* Transaction Details */}
             <Box sx={{ flex: 1 }}>
               <ListItemText
-                primary={`${transaction.transaction_type}ed On`}
+                primary={`${getTransactionTypeText(transaction.transaction_type)} `}
                 secondary={transaction.purpose}
                 primaryTypographyProps={{
                   sx: {
@@ -111,6 +123,7 @@ function TransactionCard({ transaction, onEdit, onDelete }) {
                 fontFamily: '"Playpen Sans", cursive',
                 marginLeft: 2,
                 fontSize: isMobile ? '12px' : '16px',
+                
               }}
             >
               ₹{transaction.amount}

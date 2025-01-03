@@ -329,10 +329,17 @@ function EventDetails() {
 
       <Dialog open={openDialog} onClose={handleCloseDialog} 
         PaperProps={{
-          style: { border: '3px solid rgb(240, 182, 23)', borderRadius: '10px', /*background: 'linear-gradient(to right, orange, yellow)'*/ }
+          style: { borderRadius: '10px', /*background: 'linear-gradient(to right, orange, yellow)'*/ }
         }}
       >
-        <DialogTitle>
+        <DialogTitle
+          style={{
+            textAlign: 'center',
+            backgroundColor: 'orange', // Choose your preferred color
+            padding: '10px',
+            fontWeight: 'bold',
+          }}
+        >
           {currentSubEvent ? 'Edit Subevent' : 'Edit Event'}
         </DialogTitle>
         <DialogContent>
@@ -461,11 +468,11 @@ function EventDetails() {
             </Typography>
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} style={{backgroundColor: 'red', color: 'white', fontWeight: 'bold'}}>
+        <DialogActions style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Button onClick={handleCloseDialog} style={{backgroundColor: 'gray', color: 'white', fontWeight: 'bold', marginLeft:'15px', marginBottom:'5px'}}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} style={{ backgroundColor: 'green', color: 'white', fontWeight: 'bold' }}>
+          <Button onClick={handleSubmit} style={{ backgroundColor: 'green', color: 'white', fontWeight: 'bold', marginRight:'15px', marginBottom:'5px' }}>
             Save
           </Button>
         </DialogActions>
@@ -473,10 +480,17 @@ function EventDetails() {
 
       <Dialog open={newDialog} onClose={handleCloseNewDialog} 
         PaperProps={{
-          style: { border: '3px solid rgb(247, 198, 37)', borderRadius: '10px' }
+          style: { borderRadius: '10px' }
         }}
       >
-        <DialogTitle>Add Subevent</DialogTitle>
+        <DialogTitle
+          style={{
+            textAlign: 'center',
+            backgroundColor: 'orange', // Choose your preferred color
+            padding: '10px',
+            fontWeight: 'bold',
+          }}
+        >Add Subevent</DialogTitle>
         <DialogContent>
           <TextField
             label="Title"
@@ -566,7 +580,7 @@ function EventDetails() {
               },
             }}
           />
-          <Button variant="contained" component="label" style={{backgroundColor: 'orange', color: '#fff', fontWeight:'bold'}}>
+          <Button variant="contained" component="label" style={{backgroundColor: 'orange', color: 'white', fontWeight:'bold'}}>
             Upload Poster
             <input
               type="file"
@@ -584,11 +598,11 @@ function EventDetails() {
           )}
           <Typography variant="body2" style={{marginTop:'8px'}}> Note: Wait until image is uploaded</Typography>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseNewDialog} style={{backgroundColor: 'red', color: 'white', fontWeight: 'bold'}}>
+        <DialogActions style={{display:'flex', justifyContent:'space-between'}}>
+          <Button onClick={handleCloseNewDialog} style={{backgroundColor: 'gray', color: 'white', fontWeight: 'bold', marginLeft:'15px', marginBottom:'5px'}}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} style={{backgroundColor: 'green', color: 'white', fontWeight: 'bold'}}>
+          <Button onClick={handleSubmit} style={{backgroundColor: 'green', color: 'white', fontWeight: 'bold', marginLeft:'15px', marginBottom:'5px'}}>
             Save
           </Button>
         </DialogActions>

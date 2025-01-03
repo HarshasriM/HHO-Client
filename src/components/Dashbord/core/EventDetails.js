@@ -327,7 +327,11 @@ function EventDetails() {
       )))}
       </Grid>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
+      <Dialog open={openDialog} onClose={handleCloseDialog} 
+        PaperProps={{
+          style: { border: '3px solid rgb(240, 182, 23)', borderRadius: '10px', /*background: 'linear-gradient(to right, orange, yellow)'*/ }
+        }}
+      >
         <DialogTitle>
           {currentSubEvent ? 'Edit Subevent' : 'Edit Event'}
         </DialogTitle>
@@ -344,6 +348,22 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                // '& fieldset': {
+                //   borderColor: 'orange', // Default border color
+                // },
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Description"
@@ -357,6 +377,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Date"
@@ -370,6 +403,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Venue"
@@ -380,11 +426,25 @@ function EventDetails() {
                 : editedEvent.eventVenue
             }
             onChange={handleChange}
+            style={{borderColor:'yellow'}}
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
-          <Button variant="contained" component="label">
+          <Button variant="contained" component="label" style={{backgroundColor: 'orange', color: '#fff', fontWeight:'bold'}}>
             Upload Poster
             <input
               type="file"
@@ -402,16 +462,20 @@ function EventDetails() {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
+          <Button onClick={handleCloseDialog} style={{backgroundColor: 'red', color: 'white', fontWeight: 'bold'}}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={handleSubmit} style={{ backgroundColor: 'green', color: 'white', fontWeight: 'bold' }}>
             Save
           </Button>
         </DialogActions>
       </Dialog>
 
-      <Dialog open={newDialog} onClose={handleCloseNewDialog}>
+      <Dialog open={newDialog} onClose={handleCloseNewDialog} 
+        PaperProps={{
+          style: { border: '3px solid rgb(247, 198, 37)', borderRadius: '10px' }
+        }}
+      >
         <DialogTitle>Add Subevent</DialogTitle>
         <DialogContent>
           <TextField
@@ -422,6 +486,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Description"
@@ -431,6 +508,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Date"
@@ -440,6 +530,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Venue"
@@ -449,8 +552,21 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
-          <Button variant="contained" component="label">
+          <Button variant="contained" component="label" style={{backgroundColor: 'orange', color: '#fff', fontWeight:'bold'}}>
             Upload Poster
             <input
               type="file"
@@ -469,10 +585,10 @@ function EventDetails() {
           <Typography variant="body2" style={{marginTop:'8px'}}> Note: Wait until image is uploaded</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseNewDialog} color="primary">
+          <Button onClick={handleCloseNewDialog} style={{backgroundColor: 'red', color: 'white', fontWeight: 'bold'}}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={handleSubmit} style={{backgroundColor: 'green', color: 'white', fontWeight: 'bold'}}>
             Save
           </Button>
         </DialogActions>

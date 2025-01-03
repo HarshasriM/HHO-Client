@@ -335,7 +335,7 @@ function EventDetails() {
         <DialogTitle
           style={{
             textAlign: 'center',
-            backgroundColor: 'orange', // Choose your preferred color
+            backgroundColor: 'rgb(255, 177, 75)', // Choose your preferred color
             padding: '10px',
             fontWeight: 'bold',
           }}
@@ -451,7 +451,7 @@ function EventDetails() {
               },
             }}
           />
-          <Button variant="contained" component="label" style={{backgroundColor: 'orange', color: '#fff', fontWeight:'bold'}}>
+          <Button variant="contained" component="label" style={{backgroundColor: 'rgb(255, 168, 53)', color: '#fff', fontWeight:'bold'}}>
             Upload Poster
             <input
               type="file"
@@ -486,7 +486,7 @@ function EventDetails() {
         <DialogTitle
           style={{
             textAlign: 'center',
-            backgroundColor: 'orange', // Choose your preferred color
+            backgroundColor: 'rgb(255, 177, 75)', // Choose your preferred color
             padding: '10px',
             fontWeight: 'bold',
           }}
@@ -580,7 +580,7 @@ function EventDetails() {
               },
             }}
           />
-          <Button variant="contained" component="label" style={{backgroundColor: 'orange', color: 'white', fontWeight:'bold'}}>
+          <Button variant="contained" component="label" style={{backgroundColor: 'rgb(255, 167, 51)', color: 'white', fontWeight:'bold'}}>
             Upload Poster
             <input
               type="file"
@@ -602,7 +602,7 @@ function EventDetails() {
           <Button onClick={handleCloseNewDialog} style={{backgroundColor: 'gray', color: 'white', fontWeight: 'bold', marginLeft:'15px', marginBottom:'5px'}}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} style={{backgroundColor: 'green', color: 'white', fontWeight: 'bold', marginLeft:'15px', marginBottom:'5px'}}>
+          <Button onClick={handleSubmit} style={{backgroundColor: 'green', color: 'white', fontWeight: 'bold', marginRight:'15px', marginBottom:'5px'}}>
             Save
           </Button>
         </DialogActions>

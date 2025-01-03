@@ -196,7 +196,14 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
             boxShadow: 2,
           }}
         >
-          <Typography variant="h5" mb={2} align="center">
+          <Typography variant="h5" mb={2} align="center"
+            style={{
+              textAlign: 'center',
+              backgroundColor: 'rgb(255, 177, 75)',
+              padding: '10px',
+              fontWeight: 'bold',
+            }}
+          >
             Add New Event
           </Typography>
 
@@ -209,6 +216,19 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
                 value={eventDetails.eventTitle}   
                 onChange={handleInputChange}
                 required
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: 'black', // Hover state color
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'orange', // Focused state color
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: 'orange', // Focused label color
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -219,6 +239,19 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
                 value={eventDetails.eventVenue}
                 onChange={handleInputChange}
                 required
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: 'black', // Hover state color
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'orange', // Focused state color
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: 'orange', // Focused label color
+                  },
+                }}
               />
             </Grid>
           </Grid>
@@ -233,7 +266,19 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
             required
             multiline
             rows={3} // Single-line description
-        
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <br />
           <br />
@@ -248,6 +293,19 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
                 onChange={handleInputChange}
                 InputLabelProps={{ shrink: true }}
                 required
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: 'black', // Hover state color
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'orange', // Focused state color
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: 'orange', // Focused label color
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -260,12 +318,25 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
                 onChange={handleInputChange}
                 InputLabelProps={{ shrink: true }}
                 required
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: 'black', // Hover state color
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'orange', // Focused state color
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: 'orange', // Focused label color
+                  },
+                }}
               />
             </Grid>
           </Grid>
 
           <Box display="flex" alignItems="center" mt={2}>
-            <Button variant="contained" component="label">
+            <Button variant="contained" component="label" style={{backgroundColor: 'orange', color: 'black'}}>
               Upload Poster
               <input
                 type="file"
@@ -290,7 +361,7 @@ function EventForm({subEventDetails,subEvents,setSubEventDetails,setSubEvents}) 
             </Button>
           )}
           <Box display="flex" justifyContent="center" mt={3}>
-            <Button type="submit" variant="contained" color="primary">
+            <Button type="submit" variant="contained" style={{color:'white', backgroundColor:'green', fontWeight:'bold'}}>
               Add Event
             </Button>
           </Box>

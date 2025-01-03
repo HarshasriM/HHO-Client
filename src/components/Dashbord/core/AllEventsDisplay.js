@@ -70,7 +70,7 @@ function AllEventsDisplay() {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ marginTop: '10px' }}
+                  style={{ marginTop: '10px', backgroundColor:'rgb(255, 167, 52)', fontWeight:'bold', borderRadius:'10px' }}
                   onClick={() => handleViewMore(event)} // Navigate to event details page using window.location.href
                 >
                   View More

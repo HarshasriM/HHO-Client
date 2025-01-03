@@ -214,7 +214,7 @@ function EventDetails() {
   return (
     <div>
       <Grid container spacing={4} alignItems="center" justifyContent="center">
-        <Grid item xs={12} md={5} lg={6}>
+        <Grid item xs={11} md={5} lg={6}>
           <Card style={{ width: '100%', height: 'auto', borderRadius: '24px' }}>
             <CardMedia
               component="img"
@@ -224,7 +224,7 @@ function EventDetails() {
             />
           </Card>
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={11} md={6} lg={4} style={{marginLeft:'10px', marginRight:'10px'}}>
           <Typography variant="h4" gutterBottom>
             {editedEvent.eventTitle}
           </Typography>
@@ -254,7 +254,7 @@ function EventDetails() {
         </Grid>
       </Grid>
 
-      <Typography variant="h4" gutterBottom style={{ marginTop: '30px' }}>
+      <Typography variant="h4" gutterBottom style={{ marginTop: '30px', fontWeight:'bold', marginLeft:'5px', textAlign:'center' }}>
         Subevents
       </Typography>
       <Tooltip title="Add New Subevent" placement="top" arrow>
@@ -285,7 +285,7 @@ function EventDetails() {
       ) : (
       editedEvent.subEvents.map((subEvent, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
-          <Card style={{ borderRadius: '16px', height: '100%' }}>
+          <Card style={{ borderRadius: '16px', height: '100%', marginLeft:'10px', marginRight:'10px' }}>
             <CardMedia
               component="img"
               height="200"

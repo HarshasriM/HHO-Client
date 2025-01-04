@@ -118,6 +118,7 @@ const AllDonations = () => {
         padding: 4,
         maxWidth: "1200px",
         margin: "0 auto",
+        height:'100%'
       }}
     >
      <Typography

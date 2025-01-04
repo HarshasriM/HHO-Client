@@ -174,14 +174,14 @@ function PastTransactions() {
       const response = await axios.delete(`http://localhost:8000/api/transactions/delete-transaction/${id}`, { headers });
       if (response.data) {
 
-        const getTransactions = async () => {
-          const response = await axios.get('http://localhost:8000/api/transactions/get-all-transactions', { headers });
-          setTransactions(response.data);
-          setFilteredTransactions(response.data);
+        // const getTransactions = async () => {
+        //   const response = await axios.get('http://localhost:8000/api/transactions/get-all-transactions', { headers });
+        //   setTransactions(response.data);
+        //   setFilteredTransactions(response.data);
 
-        };
+        // };
     
-        getTransactions();
+        // getTransactions();
         // handleSearch();
         setAlertMsg("Deleted Successfully");
         setErrorOcc(false);

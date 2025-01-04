@@ -82,108 +82,109 @@ const DonationCard = ({ donation, onEdit, onDelete }) => {
     <>
       {/* Card */}
       <Card
-        sx={{
-          maxWidth: 600,
-          margin: "20px auto",
-          boxShadow: 3,
-          borderRadius: 2,
-          border: "1px solid #FF5722",
-        }}
+  sx={{
+    maxWidth: "100%", // Ensures the card has a maximum width
+    width: "100%", // Allows the card to adapt to the grid item's width
+    margin: "auto", // Centers the card within the grid item
+    boxShadow: 3,
+    borderRadius: 2,
+  }}
+>
+  {/* Image Section with Edit and Delete Icons */}
+  <Box sx={{ position: "relative", width: "100%" }}>
+    <CardMedia component="img" height="100%" image={photo} alt={title} />
+    <Box
+      sx={{
+        position: "absolute",
+        top: 10,
+        right: 10,
+        display: "flex",
+        gap: 1,
+      }}
+    >
+      <IconButton
+        sx={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
+        onClick={() => setOpenEditModal(true)}
+        disabled={loadingEdit || loadingDelete}
       >
-        {/* Image Section with Edit and Delete Icons */}
-        <Box sx={{ position: "relative" }}>
-          <CardMedia component="img" height="200" image={photo} alt={title} />
-          <Box
-            sx={{
-              position: "absolute",
-              top: 10,
-              right: 10,
-              display: "flex",
-              gap: 1,
-            }}
-          >
-            <IconButton
-              sx={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
-              onClick={() => setOpenEditModal(true)}
-              disabled={loadingEdit || loadingDelete}
-            >
-              {loadingEdit ? (
-                <CircularProgress size={24} sx={{ color: "#FF5722" }} />
-              ) : (
-                <EditIcon sx={{ color: "#FF5722" }} />
-              )}
-            </IconButton>
-            <IconButton
-              sx={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
-              onClick={() => setOpenDeleteModal(true)}
-              disabled={loadingEdit || loadingDelete}
-            >
-              {loadingDelete ? (
-                <CircularProgress size={24} sx={{ color: "#FF5722" }} />
-              ) : (
-                <DeleteIcon sx={{ color: "#FF5722" }} />
-              )}
-            </IconButton>
-          </Box>
-        </Box>
+        {loadingEdit ? (
+          <CircularProgress size={24} sx={{ color: "#FF5722" }} />
+        ) : (
+          <EditIcon sx={{ color: "#FF5722" }} />
+        )}
+      </IconButton>
+      <IconButton
+        sx={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
+        onClick={() => setOpenDeleteModal(true)}
+        disabled={loadingEdit || loadingDelete}
+      >
+        {loadingDelete ? (
+          <CircularProgress size={24} sx={{ color: "#FF5722" }} />
+        ) : (
+          <DeleteIcon sx={{ color: "#FF5722" }} />
+        )}
+      </IconButton>
+    </Box>
+  </Box>
 
-        {/* Content Section */}
-        <CardContent>
-          <Typography
-            variant="h6"
-            sx={{
-              color: "#FF5722",
-              fontWeight: "bold",
-              marginBottom: 1,
-              minHeight: "32px",
-            }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{
-              color: "#757575",
-              fontWeight: "medium",
-              marginBottom: 1,
-            }}
-          >
-            Donated to: <span sx={{color:'orange'}} className="nameofdonor">{name}</span>
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#757575",
-              marginTop: 1,
-              marginBottom: 2,
-              minHeight: "48px",
-            }}
-          >
-            {description}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: 1,
-            }}
-          >
-            <Typography
-              variant="body2"
-              sx={{ color: "#FF5722", fontWeight: "bold" }}
-            >
-              ₹{amt}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: "#757575", fontWeight: "medium" }}
-            >
-              {new Date(date).toLocaleDateString()}
-            </Typography>
-          </Box>
-        </CardContent>
-      </Card>
+  {/* Content Section */}
+  <CardContent>
+    <Typography
+      variant="h6"
+      sx={{
+        color: "#FF5722",
+        fontWeight: "bold",
+        marginBottom: 1,
+        minHeight: "32px",
+      }}
+    >
+      {title}
+    </Typography>
+    <Typography
+      variant="subtitle1"
+      sx={{
+        color: "#757575",
+        fontWeight: "medium",
+        marginBottom: 1,
+      }}
+    >
+      Donated to: <span sx={{ color: "orange" }} className="nameofdonor">{name}</span>
+    </Typography>
+    <Typography
+      variant="body2"
+      sx={{
+        color: "#757575",
+        marginTop: 1,
+        marginBottom: 2,
+        minHeight: "48px",
+      }}
+    >
+      {description}
+    </Typography>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: 1,
+      }}
+    >
+      <Typography
+        variant="body2"
+        sx={{ color: "#FF5722", fontWeight: "bold" }}
+      >
+        ₹{amt}
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "#757575", fontWeight: "medium" }}
+      >
+        {new Date(date).toLocaleDateString()}
+      </Typography>
+    </Box>
+  </CardContent>
+</Card>
+
 
       {/* Delete Confirmation Modal */}
       <Dialog

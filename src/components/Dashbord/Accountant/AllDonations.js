@@ -114,36 +114,49 @@ const AllDonations = () => {
 
   return (
     <Box
+    sx={{
+      padding: 4,
+      maxWidth: "100%",
+      margin: "0 auto",
+    }}
+  >
+    <Typography
+      variant="h4"
       sx={{
-        padding: 4,
-        maxWidth: "1200px",
-        margin: "0 auto",
+        color: "#FF5722",
+        fontWeight: "bold",
+        textAlign: "center",
       }}
     >
-     <Typography
-               variant="h4"
-               sx={{
-                 color: "#FF5722",
-                 fontWeight: "bold",
-                 textAlign: "center",
-               }}
-             >
-                Donation Lists
-             </Typography>
-      <Grid container spacing={3}>
-        {donations.map((donation) => (
-          <Grid item xs={12} sm={6} md={4} key={donation._id}>
-            <DonationCard
-              donation={donation}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              editLoading={editLoading[donation._id] || false}
-              deleteLoading={deleteLoading[donation._id] || false}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+      Donation Lists
+    </Typography>
+      <br />
+    <Grid 
+      container 
+      spacing={3} 
+      justifyContent="center" // Center grid items horizontally
+      alignItems="flex-start" // Align items from the top
+    >
+      {donations.map((donation) => (
+        <Grid 
+          item 
+          xs={12} // Full width on extra-small screens
+          sm={6}  // Half width on small screens (2 cards per row)
+          md={4}  // 3 cards per row on medium screens
+          key={donation._id}
+        >
+          <DonationCard
+            donation={donation}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            editLoading={editLoading[donation._id] || false}
+            deleteLoading={deleteLoading[donation._id] || false}
+          />
+        </Grid>
+      ))}
+    </Grid>
+  </Box>
+  
   );
 };
 

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, CardMedia, CardContent, Typography, Button, Grid } from '@mui/material';
 import { LocationOn, CalendarToday } from '@mui/icons-material'; // Import icons
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../../context/Context';
 
 function AllEventsDisplay() {
   const [events, setEvents] = useState([]);
@@ -10,7 +11,7 @@ function AllEventsDisplay() {
   // Fetch events using axios
   useEffect(() => {
     axios
-      .get('http://localhost:8000/api/events') // Replace with your backend API
+      .get(`${apiUrl}/api/events`) // Replace with your backend API
       .then((response) => {
         setEvents(response.data);
         console.log(response.data);
@@ -19,7 +20,7 @@ function AllEventsDisplay() {
         console.error('Error fetching events:', error);
       });
   }, []);
-
+  const {apiUrl} = useContext(AppContext);
   // Helper to format the date to YYYY-MM-DD
   const formatDate = (dateTime) => {
     const date = new Date(dateTime);
@@ -37,7 +38,7 @@ function AllEventsDisplay() {
       <Grid container spacing={2}>
         {events.map((event, index) => (
           <Grid item xs={12} md={6} lg={4} key={index}>
-            <Card style={{ borderRadius: '16px', height: '100%' }}>
+            <Card style={{ borderRadius: '16px', height: '100%', marginLeft:'10px', marginRight:'10px' }}>
               {/* Image with title overlay */}
               <CardMedia
                 component="img"
@@ -70,7 +71,7 @@ function AllEventsDisplay() {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ marginTop: '10px' }}
+                  style={{ marginTop: '10px', backgroundColor:'rgb(255, 167, 52)', fontWeight:'bold', borderRadius:'10px' }}
                   onClick={() => handleViewMore(event)} // Navigate to event details page using window.location.href
                 >
                   View More

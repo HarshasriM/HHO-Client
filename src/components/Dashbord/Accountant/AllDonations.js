@@ -5,7 +5,7 @@ import axios from "axios";
 import { AppContext } from "../../../context/Context";
 
 const AllDonations = () => {
-  const { token, setAlertMsg, setErrorOcc, setOpen } = useContext(AppContext);
+  const { token, setAlertMsg, setErrorOcc, setOpen,apiUrl } = useContext(AppContext);
   const [donations, setDonations] = useState([]);
   const [editLoading, setEditLoading] = useState({});
   const [deleteLoading, setDeleteLoading] = useState({});
@@ -51,7 +51,7 @@ const AllDonations = () => {
         };
       }
 
-      await axios.put(`http://localhost:8000/api/donations/update/${id}`, editDonation, {
+      await axios.put(`${apiUrl}/api/donations/update/${id}`, editDonation, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -77,7 +77,8 @@ const AllDonations = () => {
     console.log("Delete donation with ID:", id);
 
     try {
-      await axios.delete(`http://localhost:8000/api/donations/delete/${id}`, {
+      console.log(`${apiUrl}/api/donations/delete/${id}`);
+      await axios.delete(`${apiUrl}/api/donations/delete/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -89,6 +90,7 @@ const AllDonations = () => {
       setOpen(true);
       setDonations((prev) => prev.filter((donation) => donation._id !== id)); // Update the UI
     } catch (error) {
+      console.log(error);
       console.error("Error while deleting:", error.message);
       setAlertMsg("Error while Deleting..");
       setErrorOcc(true);
@@ -102,7 +104,7 @@ const AllDonations = () => {
   useEffect(() => {
     const fetchDonations = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/donations/getall");
+        const response = await axios.get(`${apiUrl}/api/donations/getall`);
         setDonations(response.data);
       } catch (error) {
         console.error("Error fetching donations:", error);
@@ -115,7 +117,7 @@ const AllDonations = () => {
   return (
     <Box
     sx={{
-      padding: 4,
+      padding: 2,
       maxWidth: "100%",
       margin: "0 auto",
     }}
@@ -123,9 +125,12 @@ const AllDonations = () => {
     <Typography
       variant="h4"
       sx={{
-        color: "#FF5722",
-        fontWeight: "bold",
-        textAlign: "center",
+        padding: 4,
+        maxWidth: "1200px",
+        margin: "0 auto",
+        height:'auto',
+        textAlign:'center',
+        color:'orange'
       }}
     >
       Donation Lists

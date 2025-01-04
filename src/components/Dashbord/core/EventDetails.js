@@ -23,7 +23,7 @@ import AddIcon from '@mui/icons-material/Add';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {AppContext} from '../../../context/Context';
 function EventDetails() {
-  const{setAlertMsg,setErrorOcc,setOpen} = useContext(AppContext);
+  const{setAlertMsg,setErrorOcc,setOpen,apiUrl} = useContext(AppContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { event } = location.state || {};
@@ -120,7 +120,7 @@ function EventDetails() {
         ];
 
         await axios.put(
-          `http://localhost:8000/api/events/editEvent/${editedEvent._id}`,
+          `${apiUrl}/api/events/editEvent/${editedEvent._id}`,
           {
             ...editedEvent,
             subEvents: updatedSubEvents,
@@ -146,7 +146,7 @@ function EventDetails() {
         );
 
         await axios.put(
-          `http://localhost:8000/api/events/editEvent/${editedEvent._id}`,
+          `${apiUrl}/api/events/editEvent/${editedEvent._id}`,
           {
             ...editedEvent,
             subEvents: updatedSubEvents,
@@ -160,7 +160,7 @@ function EventDetails() {
       } else {
         console.log(editedEvent);
         await axios.put(
-          `http://localhost:8000/api/events/editEvent/${editedEvent._id}`,
+          `${apiUrl}/api/events/editEvent/${editedEvent._id}`,
           editedEvent
         );
         setAlertMsg('Event Updated Successfully');
@@ -178,7 +178,7 @@ function EventDetails() {
   const handleDeleteEvent = async () => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/events/deleteEvent/${event._id}`
+        `${apiUrl}/api/events/deleteEvent/${event._id}`
       );
       navigate('/dashboard/events');
       setAlertMsg('Event deleted  Successfully');
@@ -196,7 +196,7 @@ function EventDetails() {
         (se) => se._id !== subEvent._id
       );
       await axios.put(
-        `http://localhost:8000/api/events/editEvent/${event._id}`,
+        `${apiUrl}/api/events/editEvent/${event._id}`,
         {
           ...editedEvent,
           subEvents: updatedSubEvents,
@@ -214,7 +214,7 @@ function EventDetails() {
   return (
     <div>
       <Grid container spacing={4} alignItems="center" justifyContent="center">
-        <Grid item xs={12} md={5} lg={6}>
+        <Grid item xs={11} md={5} lg={6}>
           <Card style={{ width: '100%', height: 'auto', borderRadius: '24px' }}>
             <CardMedia
               component="img"
@@ -224,8 +224,8 @@ function EventDetails() {
             />
           </Card>
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Typography variant="h3" gutterBottom>
+        <Grid item xs={11} md={6} lg={4} style={{marginLeft:'10px', marginRight:'10px'}}>
+          <Typography variant="h4" gutterBottom>
             {editedEvent.eventTitle}
           </Typography>
           <Typography variant="h6" color="textSecondary" paragraph>
@@ -254,7 +254,7 @@ function EventDetails() {
         </Grid>
       </Grid>
 
-      <Typography variant="h4" gutterBottom style={{ marginTop: '30px' }}>
+      <Typography variant="h4" gutterBottom style={{ marginTop: '30px', fontWeight:'bold', marginLeft:'5px', textAlign:'center' }}>
         Subevents
       </Typography>
       <Tooltip title="Add New Subevent" placement="top" arrow>
@@ -285,7 +285,7 @@ function EventDetails() {
       ) : (
       editedEvent.subEvents.map((subEvent, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
-          <Card style={{ borderRadius: '16px', height: '100%' }}>
+          <Card style={{ borderRadius: '16px', height: '100%', marginLeft:'10px', marginRight:'10px' }}>
             <CardMedia
               component="img"
               height="200"
@@ -327,8 +327,19 @@ function EventDetails() {
       )))}
       </Grid>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>
+      <Dialog open={openDialog} onClose={handleCloseDialog} 
+        PaperProps={{
+          style: { borderRadius: '10px', /*background: 'linear-gradient(to right, orange, yellow)'*/ }
+        }}
+      >
+        <DialogTitle
+          style={{
+            textAlign: 'center',
+            backgroundColor: 'rgb(255, 177, 75)', // Choose your preferred color
+            padding: '10px',
+            fontWeight: 'bold',
+          }}
+        >
           {currentSubEvent ? 'Edit Subevent' : 'Edit Event'}
         </DialogTitle>
         <DialogContent>
@@ -344,6 +355,22 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                // '& fieldset': {
+                //   borderColor: 'orange', // Default border color
+                // },
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Description"
@@ -357,6 +384,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Date"
@@ -370,6 +410,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Venue"
@@ -380,11 +433,25 @@ function EventDetails() {
                 : editedEvent.eventVenue
             }
             onChange={handleChange}
+            style={{borderColor:'yellow'}}
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
-          <Button variant="contained" component="label">
+          <Button variant="contained" component="label" style={{backgroundColor: 'rgb(255, 168, 53)', color: '#fff', fontWeight:'bold'}}>
             Upload Poster
             <input
               type="file"
@@ -401,18 +468,29 @@ function EventDetails() {
             </Typography>
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
+        <DialogActions style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Button onClick={handleCloseDialog} style={{backgroundColor: 'gray', color: 'white', fontWeight: 'bold', marginLeft:'15px', marginBottom:'5px'}}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={handleSubmit} style={{ backgroundColor: 'green', color: 'white', fontWeight: 'bold', marginRight:'15px', marginBottom:'5px' }}>
             Save
           </Button>
         </DialogActions>
       </Dialog>
 
-      <Dialog open={newDialog} onClose={handleCloseNewDialog}>
-        <DialogTitle>Add Subevent</DialogTitle>
+      <Dialog open={newDialog} onClose={handleCloseNewDialog} 
+        PaperProps={{
+          style: { borderRadius: '10px' }
+        }}
+      >
+        <DialogTitle
+          style={{
+            textAlign: 'center',
+            backgroundColor: 'rgb(255, 177, 75)', // Choose your preferred color
+            padding: '10px',
+            fontWeight: 'bold',
+          }}
+        >Add Subevent</DialogTitle>
         <DialogContent>
           <TextField
             label="Title"
@@ -422,6 +500,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Description"
@@ -431,6 +522,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Date"
@@ -440,6 +544,19 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
           <TextField
             label="Venue"
@@ -449,8 +566,21 @@ function EventDetails() {
             fullWidth
             required
             margin="normal"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: 'black', // Hover state color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'orange', // Focused state color
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'orange', // Focused label color
+              },
+            }}
           />
-          <Button variant="contained" component="label">
+          <Button variant="contained" component="label" style={{backgroundColor: 'rgb(255, 167, 51)', color: 'white', fontWeight:'bold'}}>
             Upload Poster
             <input
               type="file"
@@ -468,11 +598,11 @@ function EventDetails() {
           )}
           <Typography variant="body2" style={{marginTop:'8px'}}> Note: Wait until image is uploaded</Typography>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseNewDialog} color="primary">
+        <DialogActions style={{display:'flex', justifyContent:'space-between'}}>
+          <Button onClick={handleCloseNewDialog} style={{backgroundColor: 'gray', color: 'white', fontWeight: 'bold', marginLeft:'15px', marginBottom:'5px'}}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={handleSubmit} style={{backgroundColor: 'green', color: 'white', fontWeight: 'bold', marginRight:'15px', marginBottom:'5px'}}>
             Save
           </Button>
         </DialogActions>

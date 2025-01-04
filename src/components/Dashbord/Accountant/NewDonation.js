@@ -28,7 +28,7 @@ const theme = createTheme({
 });
 
 function NewDonation() {
-  const{token} = useContext(AppContext);
+  const{token,apiUrl} = useContext(AppContext);
   const [formData, setFormData] = useState({
     name: "",
     title: "",
@@ -94,6 +94,7 @@ function NewDonation() {
         }
         console.log("Form Data:", finalFormData);
         console.log("hi prasad");
+        console.log(`${apiUrl}/api/donations/create`);
 
         const headers = {
           "Content-Type": "application/json",
@@ -101,7 +102,7 @@ function NewDonation() {
         };
         await axios
           .post(
-            "http://localhost:8000/api/donations/create",
+            `${apiUrl}/api/donations/create`,
             finalFormData,
             { headers }
           )
@@ -123,8 +124,12 @@ function NewDonation() {
           })
           .catch((e) =>
              {  
-              console.log("hiiii")
-              console.log(e)});
+              console.log("hiiii");
+              console.log(e)
+              console.log("hiiii");
+
+          });
+
       } else {
         console.error("Failed to upload image.");
       }

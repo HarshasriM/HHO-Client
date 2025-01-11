@@ -106,17 +106,37 @@ import { AppContext } from '../../context/Context';
 
 
 const Card = ({ imageSrc, title, description,eventId,event }) => (
-  <div className="event-card mb-3">
-    <img src={imageSrc} alt={title} />
-    <div className="info">
-      <h1>{title}</h1>
-      <p>{description}</p>
-      <Link to={`/events/${eventId}`} className="event-card-button"  state={{id:eventId}}>
-        Read More
-      </Link>
+  // <div className="event-card m-3">
+  //   <img src={imageSrc} alt={title} />
+  //   <div className="info">
+  //     <h1>{title}</h1>
+  //     <p>{description}</p>
+  //     <Link to={`/events/${eventId}`} className="event-card-button"  state={{id:eventId}}>
+  //       Read More
+  //     </Link>
 
-    </div>
+  //   </div>
+  // </div>
+  <div className="event-card m-3">
+  <img src={imageSrc} alt={title} />
+  <div className="title-overlay">
+    <h1 className="title">{title}</h1>
   </div>
+  <div className="info">
+    <h1>{title}</h1>
+    <p>{description}</p>
+    <Link
+      to={`/events/${eventId}`}
+      className="event-card-button"
+      state={{ id: eventId }}
+    >
+      Read More
+    </Link>
+  </div>
+</div>
+
+
+  
 );
 
 function PastEvents(){
@@ -137,12 +157,12 @@ function PastEvents(){
   return (
   <>
     <h2 className="event-name p-5 text-center">Past <span className="span-el">Events</span></h2>
-    <div className="container">
+    <div>
       <div className="wrapper">
         <div className="row">
     
           {recentPastEvents.map((event, index) => (
-            <div className="col-12 col-lg-3">
+            <div className="col-6 col-md-3 mb-4">
             <Card
               imageSrc={event.eventPoster}
               title={event.eventTitle}

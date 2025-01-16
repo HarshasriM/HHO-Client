@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './footer.css';
 export default function Footer(){
     return (
@@ -33,10 +34,10 @@ export default function Footer(){
                     <div className="d-flex flex-column justify-content-end mt-5">
                         <div className="m-auto mt-5">
                             <h1 className="footer-section-head ml-0">Quick Links</h1>
-                                <a href="" className="footer-section-bottom-text mr-5">About Us</a><br/>
-                                <a href="" className="footer-section-bottom-text mr-5">History</a><br/>
-                                <a href="" className="footer-section-bottom-text mr-5">Events</a><br/>
-                                <a href="" className="footer-section-bottom-text mr-5">Transactions</a><br/>
+                                <Link to="/about" className="footer-section-bottom-text mr-5">About Us</Link><br/>
+                                <Link to="/" className="footer-section-bottom-text mr-5">History</Link><br/>
+                                <Link to="/events" className="footer-section-bottom-text mr-5">Events</Link><br/>
+                                <Link to="/transactions" className="footer-section-bottom-text mr-5">Transactions</Link><br/>
                         </div>
                     </div>
                 </div>
@@ -44,10 +45,10 @@ export default function Footer(){
                     <div className="d-flex flex-column justify-content-end mt-5">
                         <div className="m-auto mt-5">
                             <h1 className="footer-section-head ml-0">Quick Links</h1>
-                                <a href="" className="footer-section-bottom-text mr-5">Our Services</a><br/>
-                                <a href="" className="footer-section-bottom-text mr-5">Activities and Initiatives</a><br/>
-                                <a href="" className="footer-section-bottom-text mr-5">Our Team</a><br/>
-                                <a href="" className="footer-section-bottom-text mr-5">Contact Us</a><br/>
+                                <Link to="/services" className="footer-section-bottom-text mr-5">Our Services</Link><br/>
+                                <Link to="/about" className="footer-section-bottom-text mr-5">Activities and Initiatives</Link><br/>
+                                <Link to="/about" className="footer-section-bottom-text mr-5">Our Team</Link><br/>
+                                <Link to="/contact" className="footer-section-bottom-text mr-5">Contact Us</Link><br/>
                         </div>
                     </div>
                 </div>

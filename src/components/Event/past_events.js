@@ -162,7 +162,7 @@ function PastEvents(){
         <div className="row">
     
           {recentPastEvents.map((event, index) => (
-            <div className="col-6 col-md-3 mb-4">
+            <div className="col-12 col-md-3 mb-4">
             <Card
               imageSrc={event.eventPoster}
               title={event.eventTitle}

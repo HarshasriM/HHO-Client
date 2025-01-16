@@ -1,178 +1,97 @@
-* {
-    box-sizing: border-box;
+/* Parallax background image for each slide */
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh-80px);
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+/* Content Container for Full Height and Left Alignment */
+.mySwiper {
+  width: 100%;
+  height: calc(100vh-80px); /* Default height for desktop */
+  display: flex;
+  justify-content: flex-start; /* Align slides to the left */
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Slide styling with rectangular shape */
+.swiper-slide {
+  position: relative;
+  width: 100vw; /* Make each slide take up 100% of the screen width */
+  height: calc(100vh-80px); /* Default height for desktop */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 0.6s ease; /* Add smooth transition for slide movement */
+}
+
+/* Adjust height for mobile devices */
+@media (max-width: 768px) {
+  .mySwiper {
+    height: 60vh; /* Set appropriate height for mobile */
   }
-  
-  .container-slider {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100vw;
-    height: 86vh; /* Fixed height */
-    background: #f5f5f5;
-    overflow: hidden; /* Ensures content stays within fixed height */
-    position: relative;
+
+  .swiper-slide {
+    height: 60vh; /* Adjust each slide height for mobile */
   }
-  
-  .container-slider .slide .item {
-    width: 200px;
-    height: 300px; /* Fixed height for items */
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    border-radius: 20px;
-    background-position: center center;
-    background-size: cover;
-    display: inline-block;
-    transition: 0.5s;
-    overflow: hidden; /* Crops content inside */
-  }
-  
-  .slide .item:nth-child(1),
-  .slide .item:nth-child(2) {
-    top: 0;
-    left: 0;
-    transform: translate(0, 0);
-    border-radius: 0;
-    width: 100%;
-    height: 100%; /* Ensure full height of container */
-  }
-  
-  .slide .item:nth-child(3) {
-    left: 50%;
-  }
-  .slide .item:nth-child(4) {
-    left: calc(50% + 220px);
-  }
-  .slide .item:nth-child(5) {
-    left: calc(50% + 440px);
-  }
-  
-  /* Set opacity to 0 for additional images */
-  .slide .item:nth-child(n + 6) {
-    left: calc(50% + 660px);
-    opacity: 0;
-  }
-  
-  .item .content {
-    position: absolute;
-    top: 50%;
-    left: 100px;
-    width: 460px;
-    text-align: left;
-    color: #ff7b00;
-    transform: translate(0, -50%);
-    font-family: system-ui;
-    display: none;
-    background-color: rgb(255, 231, 186);
-    padding: 70px;
-    border-radius: 50%;
-  }
-  
-  .slide .item:nth-child(2) .content {
-    display: block;
-  }
-  
-  .content .name {
-    font-size: 40px;
-    text-transform: uppercase;
-    font-weight: bold;
-    opacity: 0;
-    animation: animate 1s ease-in-out 1 forwards;
-  }
-  
-  .content .des {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: animate 1s ease-in-out 0.3s 1 forwards;
-  }
-  
-  .slider-button,
-  .button-mob {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    opacity: 0;
-    color: black;
-    border-radius: 8px;
-    background-color: whitesmoke;
-    animation: animate 1s ease-in-out 0.6s 1 forwards;
-    transition: transform 0.3s ease;
-  }
-  
-  .slider-button:hover,
-  .button-mob:hover {
-    border: solid 2px #e4e4e4;
-    color: black;
-    text-decoration: none;
-    border-width: 1px;
-    transition: transform 0.3s ease;
-  }
-  
-  .button {
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    bottom: 20px;
-  }
-  
-  .button button {
-    width: 40px;
-    height: 35px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    margin: 0 5px;
-    border: 1px solid #000;
-    transition: 0.3s;
-  }
-  
-  .button button:hover {
-    background: #ababab;
-    color: #fff;
-  }
-  
-  .content-mob {
-    background-color: rgb(255, 231, 186);
+
+  .slide-content {
+    width: 80%; /* Adjust the width of the content for mobile */
+    margin: 0;
     padding: 20px;
-    height: 180px;
   }
-  
-  .name-mob {
-    font-size: 20px;
-    text-transform: uppercase;
-    font-weight: bold;
-    opacity: 0;
-    animation: animate 1s ease-in-out 1 forwards;
-  }
-  
-  .des-mob {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: animate 1s ease-in-out 0.3s 1 forwards;
-  }
-  
-  .button-mob {
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    opacity: 0;
-    animation: animate 1s ease-in-out 0.6s 1 forwards;
-  }
-  
-  @keyframes animate {
-    from {
-      opacity: 0;
-      transform: translate(0, 100px);
-      filter: blur(33px);
-    }
-  
-    to {
-      opacity: 1;
-      transform: translate(0);
-      filter: blur(0);
-    }
-  }
-  
+}
+
+/* Content Box for Text */
+.slide-content {
+  position: relative;
+  text-align: left; /* Align text to the left */
+  color: white;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark background for text readability */
+  border-radius: 8px;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Transition effects for content */
+  opacity: 0.9; /* Slight transparency for a smooth look */
+  width: 250px; /* Limit the width of the content */
+  margin: 8vw;
+}
+
+
+/* Heading Styles */
+.slide-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* Description Styles */
+.slide-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Button Styles */
+.slide-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #ff6200; /* Button color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button Hover Effect */
+.slide-button:hover {
+  background-color: #ff4500; /* Change color on hover */
+}

@@ -364,9 +364,9 @@ textarea {
   }
   
   .about-button{
-    margin-left: 0px !important;
+    margin-left: 5px !important;
     padding: 4px 8px;
-    margin-right: 5px;
+    margin-right: 5px !important;
   }
   .about-head{
     font-size: 28px;
@@ -375,7 +375,7 @@ textarea {
     font-size: 12px;
   }
   .desc-about-hho{
-    font-size: 10px !important;
+    font-size: 14px !important;
     text-align: justify !important;
     text-indent: 20px !important;
     text-align-last: center !important;

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
-import { Box, Typography, Card, CardContent, CardMedia, IconButton, responsiveFontSizes} from '@mui/material';
+import { Box, Typography, Card, CardContent, CardMedia, IconButton} from '@mui/material';
 import { useEffect,useState,useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react'; // Import Swiper components
-import { Navigation, Autoplay,EffectFade } from 'swiper/modules'; // Import Swiper modules
+import { Navigation, Autoplay } from 'swiper/modules'; // Import Swiper modules
 
 import 'swiper/css'; // Core Swiper styles
 import 'swiper/css/pagination'; // Pagination styles
@@ -12,6 +12,7 @@ import 'swiper/css/navigation'; // Navigation styles
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { AppContext } from '../../context/Context';
+import ActivitiesSkeleton from '../Skeletons/ActivitiesSkeleton';
 
 
 
@@ -20,6 +21,7 @@ const Activities = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const {apiUrl} = useContext(AppContext);
+  const [loading,setLoading] = useState(true)
     useEffect(()=>{
       setTimeout(() => {
         if (prevRef.current && nextRef.current) {
@@ -35,13 +37,23 @@ const Activities = () => {
             try {
                 const res = await axios.get(`${apiUrl}/api/activities/getAll`);
                 setActivities(res.data.data);
+                const timer = setTimeout(() => {
+                  setLoading(false);
+                }, 3000); // Adjust loading time as needed
+                return () => clearTimeout(timer);
             } catch (error) {
                 console.log("Error fetching activities:", error);
+                const timer = setTimeout(() => {
+                  setLoading(false);
+                }, 3000); // Adjust loading time as needed
+                return () => clearTimeout(timer);
             }
         }
         fetchActivities();
     },[])
-
+  if(loading){
+      return <ActivitiesSkeleton/>;
+  }
   return (
     <Box sx={{ padding: { xs: '20px', md: '50px' }, textAlign: 'center', position: 'relative' }}>
       {/* Heading */}

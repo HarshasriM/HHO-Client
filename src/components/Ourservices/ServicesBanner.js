@@ -1,7 +1,41 @@
 import React from 'react';
+import { useState,useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import './ServicesBanner.css';
+import Skeleton from 'react-loading-skeleton';
 const ServiceBanner = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000); // Adjust loading time as needed
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="about-section">
+      <div className="about-banner">
+        <div className="text-center">
+          <h1 className="about-title">
+            <Skeleton width={500} height={100} />
+          </h1>
+          <figure className="text-center">
+            <blockquote className="blockquote">
+              <p className="about-content">
+                <Skeleton count={2} />
+              </p>
+            </blockquote>
+            <figcaption className="blockquote-footer">
+              <Skeleton width={450} />
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+    );
+  }
   return (
     
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh", backgroundColor: "white" }}>

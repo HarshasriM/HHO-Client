@@ -9,7 +9,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import { ThemeProvider, createTheme } from '@mui/material';
 import CountUp from 'react-countup';
-import { fontSize, styled } from '@mui/system';
+import {  styled } from '@mui/system';
 import { Button } from '@mui/material';
 import { useMediaQuery } from '@mui/system';
 import TransactionCard from './TransactionCard';
@@ -20,6 +20,16 @@ const ButtonType = styled(Button)(({ theme }) => ({
   padding: "3px 10px",
   fontSize: "15px",
   color: "white",
+  border: "none",
+  fontFamily:"Playpen Sans",
+  "&:focus": {
+    outline: "none",
+    border: "none",
+  },
+  "&:active": {
+    outline: "none",
+    border: "none",
+  },
 }));
 
 const customTheme = createTheme({
@@ -42,6 +52,7 @@ const customTheme = createTheme({
           '&.Mui-focused fieldset': {
             borderColor: '#fa9a34',
           },
+          fontFamily:"Playpen Sans",
         },
       },
     },
@@ -67,6 +78,7 @@ const customTheme = createTheme({
       },
     },
   },
+  fontFamily:"Playpen Sans",
 });
 
 export default function TransactionLayout() {
@@ -150,8 +162,8 @@ export default function TransactionLayout() {
           paddingTop: 2,
         }}
       >
-        <Typography variant="h5" align="center" sx={{ marginBottom: 2, fontWeight: 'bold' 
-          ,fontSize:{xs:'28px',marginTop:'2rem'}
+        <Typography variant="h5" align="center" sx={{ marginBottom: 3, fontWeight: '700' 
+          ,fontSize:{xs:'30px',marginTop:'2rem'},fontFamily:"Playpen Sans",
         }}>
           Transactions
         </Typography>
@@ -161,40 +173,28 @@ export default function TransactionLayout() {
   onChange={handleTabChange}
   TabIndicatorProps={{ style: { backgroundColor: '#fa9a34', width: 5 } }}
   variant="fullWidth" // Ensures each tab takes equal width
-  sx={{
-    '.MuiTab-root': {
-      color: 'black',
-      textTransform: 'none',
-      fontSize: {
-        xs: '14px', // Smaller font size for mobile
-        sm: '16px', // Default font size for larger screens
-      },
-      fontWeight: 'bold',
-      padding: {
-        xs: '8px 12px', // Reduced padding for mobile
-        sm: '12px 16px', // Default padding for larger screens
-      },
-      transition: '0.5s',
-      borderBottom: {
-        xs: 'none', // Remove border for mobile view to avoid clutter
-        sm: '1px solid lightgray',
-      },
-      flexGrow: 1, // Makes tabs occupy equal width
-      '&:hover': {
-        borderRadius: '5px',
-        color: 'gray',
-        opacity: '0.7',
-      },
-      '&.Mui-selected': {
-        color: 'white',
-        backgroundColor: '#fa9a34',
-      },
-    },
-    '.MuiTab-iconWrapper': {
-      fontSize: {
-        xs: '20px', // Smaller icon size for mobile
-        sm: '24px', // Default icon size for larger screens
-      },
+    sx={{
+          '.MuiTab-root': {
+            color: 'black',
+            textTransform: 'none',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            transition: '0.5s',
+            borderBottom: '1px solid lightgray',
+            '&:hover': {
+              borderRadius: '5px',
+              color: 'gray',
+              opacity: '0.7',
+            },
+            '&.Mui-selected': {
+              textDecoration:"none",
+              border:"none",
+              outline:"none",
+              color:"white",
+              backgroundColor: "#fa9a34",
+            },
+            fontFamily:"Playpen Sans",
+            
     },
   }}
 >
@@ -250,6 +250,7 @@ export default function TransactionLayout() {
             sx={{
               flex: 1, // Flex-grow to distribute available space evenly
               minWidth: '120px', // Minimum width for smaller screens
+              
             }}
           >
             <InputLabel id="filter-select-label">Filter By</InputLabel>

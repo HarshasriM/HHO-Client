@@ -5,7 +5,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Playpen Sans",cursive;
     box-sizing: border-box;
     scroll-behavior: smooth;
 }
@@ -246,7 +246,7 @@ body {
     width: 1px;
   }
   .member-card .fa-solid{
-    font-size: 16px;
+    font-size: 18px;
   }
   .member-card .text-box{
       padding: 2px 8px;
@@ -264,7 +264,12 @@ body {
     padding-left: 62px;
     width:100%;
   }
-
+  .member-card-content{
+    word-spacing: 1px;
+  }
   
 
+}
+.member-card-content{
+    font-family: "Playpen Sans",cursive;
 }

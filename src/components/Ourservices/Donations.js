@@ -5,9 +5,11 @@ import { Typography } from '@mui/material';
 import LeftImageCard from './LeftImageCard';
 import RightImageCard from './RightImageCard';
 import { useMediaQuery } from '@mui/material';
+import DonationsSkeleton from '../Skeletons/DonationsSkeleton';
 function Donations() {
     const isMobile = useMediaQuery('(max-width:800px)');
-    const [donations,setDonations] = useState([])
+    const [donations,setDonations] = useState([]);
+    const [loading,setLoading] = useState(true);
     // useEffect(() => {
     //     fetch('/donations.json')
     //       .then((response) => response.json())
@@ -25,8 +27,18 @@ function Donations() {
                 const sortedDonations = data.sort((a, b) => new Date(b.date) - new Date(a.date));
                 // Set only the top 4 most recent donations
                 setDonations(sortedDonations.slice(0, 4));
+                const timer = setTimeout(() => {
+                    setLoading(false);
+                  }, 3000); // Adjust loading time as needed
+                  return () => clearTimeout(timer);
             })
-            .catch((error) => console.log('Error fetching donations:', error));
+            .catch((error) => {
+                console.log('Error fetching donations:', error)
+                const timer = setTimeout(() => {
+                    setLoading(false);
+                  }, 3000); // Adjust loading time as needed
+                  return () => clearTimeout(timer);
+            });
     }, []);
     
 
@@ -41,6 +53,9 @@ function Donations() {
         return acc;
       }, []);
     console.log(rows)
+    if(loading){
+        return <DonationsSkeleton/>;
+    }
     return (
         <div style={{backgroundColor:"whitesmoke",padding:"10px 0px",margin:"0px 0px 10px 0px"}} >
         <div style={{margin:isMobile?"20px":"50px",}} >

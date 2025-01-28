@@ -1,5 +1,8 @@
-import logo from './logo.svg';
+
+import logo from './logo.svg'
+
 import { Circles } from "react-loader-spinner";
+
 import './App.css';
 import React, {useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
@@ -37,6 +40,8 @@ import NewDonation from './components/Dashbord/Accountant/NewDonation';
 import AllDonations from './components/Dashbord/Accountant/AllDonations';
 import DetailedEvent from './components/Event/DetailedEvent';
 import NewUser from "./components/Dashbord/Admin/Users/NewUser";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });

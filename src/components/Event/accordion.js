@@ -26,7 +26,8 @@ const AccordionMenu = () => {
 
   return (
     <div className="accordion-container p-3">
-      <h2 className='event-name mt-3 mb-3 text-center'>Things to be <span className='span-el'>Known</span></h2>
+      {/* <h2 className='event-name mt-3 mb-3 text-center'>Things to be <span className='span-el'>Known</span></h2> */}
+      <h2 className='banner-title text-center mt-5'> Things to be<span className='span'> Known </span> </h2>
       {questions.map((question, index) => (
         <div className="accordion" key={index}>
           <button

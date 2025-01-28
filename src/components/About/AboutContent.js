@@ -1,8 +1,21 @@
 import React from 'react'
 import "./AboutContent.css"
-
+import { useState,useEffect } from 'react';
+import AboutContentSkeleton from '../Skeletons/AboutContentSkeleton';
 
 function AboutContent() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000); // Adjust loading time as needed
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <AboutContentSkeleton />;
+  }
   return (
     <div className='about-section'>
       <div className='about-banner'>

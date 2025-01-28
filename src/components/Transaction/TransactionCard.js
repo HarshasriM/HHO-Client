@@ -8,7 +8,7 @@ import HandshakeIcon from '@mui/icons-material/Handshake';
 function TransactionCard({ transaction }) {
   const getCardColor = (type) => {
     switch (type) {
-      case 'donate':
+      case 'donation':
         return '#fa9a34'; // Orange for donate
       case 'credit':
         return '#4caf50'; // Green for credit
@@ -59,20 +59,20 @@ function TransactionCard({ transaction }) {
           <Typography
             variant="body1"
             sx={{
-              color: 'black', // Set amount text color to yellow
+              color: getCardColor(transaction.transaction_type), // Set amount text color to yellow
               fontWeight: 'bold',
               fontFamily: '"Playpen Sans", cursive',
             }}
           >
             ₹{transaction.amount}
             {transaction.transaction_type === 'credit' && (
-              <AddCircleIcon sx={{ color: 'black', marginLeft: 1 }} />
+              <AddCircleIcon sx={{ color: '#4caf50', marginLeft: 1 }} />
             )}
             {transaction.transaction_type === 'debit' && (
-              <RemoveCircleIcon sx={{ color: 'black', marginLeft: 1 }} />
+              <RemoveCircleIcon sx={{ color: '#f44336', marginLeft: 1 }} />
             )}
             {transaction.transaction_type === 'donation' && (
-              <HandshakeIcon sx={{ color: 'black', marginLeft: 1 }} />
+              <HandshakeIcon sx={{ color: '#fa9a34', marginLeft: 1 }} />
             )}
           </Typography>
         </ListItem>

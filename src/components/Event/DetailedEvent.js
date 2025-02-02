@@ -104,7 +104,7 @@ function DetailedEvent() {
     <div className="event-info">
       <div className="event-date">
         <FontAwesomeIcon icon={faCalendarAlt} className="icon" />
-        <span>{event.event_start_date.split("T")[0]}</span> to <span>{event.event_end_date.split("T")[0]}</span>
+        {/* <span>{event.event_start_date.split("T")[0]}</span> to <span>{event.event_end_date.split("T")[0]}</span> */}
       </div>
       <div className="event-location">
         <FontAwesomeIcon icon={faMapMarkerAlt} className="icon" />

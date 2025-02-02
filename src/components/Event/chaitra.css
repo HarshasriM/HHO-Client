@@ -1,100 +1,11 @@
- .event-banner-container {
-    height: 86vh;
-    width: 100vw;
-    background-image: url('./people.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    margin-top: 0px;
-}
-
-.event-banner-content {
-    z-index: 2;
-    color: white;
-    text-align: center;
-    padding: 40px;
-    background-color: rgba(0, 0, 0, 0.5);
-    max-width: 800px;
-    border-radius: 8px;
-}
-
-.event-info {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.event-date, .event-location {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.icon {
-    font-size: 20px;
-    color: #a77ed6;
-}
-
-.chaitra-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #f9f9f9;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1.25s ease, transform 1.25s ease;
-}
-
-.chaitra-section.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.content {
-    width: 60%;
-}
-
-.logo {
-    width: 35vw;
-    text-align: right;
-    transition: transform 0.3s ease;
-}
-
-.logo img {
-    width: 100%;
-    border-radius: 50%;
-    
-}
-
-.logo:hover{
-    transform: scale(1.05);
-}
-.event-name{
-    font-size: 50px;
-    font-weight: bold;
-}
-.span-el{
-    color: #FA9A34;
-}
-.event-des{
-    font-size: 18px;
-} */
-
 /* General Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-.event-banner-container {
+  }
+  
+  .event-banner-container {
     height: 86vh;
     width: 100vw;
     background-image: url('./people.jpg');
@@ -106,9 +17,9 @@
     justify-content: center;
     position: relative;
     margin-top: 0px;
-}
-
-.event-banner-content {
+  }
+  
+  .event-banner-content {
     z-index: 2;
     color: white;
     text-align: center;
@@ -116,80 +27,101 @@
     background-color: rgba(0, 0, 0, 0.5);
     max-width: 800px;
     border-radius: 8px;
-}
-
-.event-info {
+  }
+  
+  .event-info {
     display: flex;
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
-}
-
-.event-date, .event-location {
+  }
+  
+  .event-date,
+  .event-location {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.icon {
+  }
+  
+  .icon {
     font-size: 20px;
     color: #a77ed6;
-}
-
-/* Animation Section */
-.chaitra-section {
+  }
+  
+  .chaitra-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 40px;
     background-color: #ffffff;
     overflow: hidden;
-}
-
-.chaitra-section .content,
-.chaitra-section .logo {
+    opacity: 0;
+    transform: translateY(20px); /* Slight vertical shift */
+    transition: opacity 1.25s ease, transform 1.25s ease;
+  }
+  
+  .chaitra-section.animate {
+    opacity: 1;
+    transform: translateY(0); /* Reset vertical position */
+  }
+  
+  /* Content and Logo Initial States */
+  .chaitra-section .content {
     padding: 20px;
     opacity: 0;
-    transform: translateX(-40px); /* Start content slightly off-screen to the left */
+    transform: translateX(-40px); /* Content slides in from left */
     transition: opacity 1.25s ease, transform 1.25s ease;
-}
-
-.chaitra-section.animate .content {
+  }
+  
+  .chaitra-section .logo {
+    opacity: 0;
+    transform: translateX(40px); /* Logo slides in from right */
+    transition: opacity 1.25s ease, transform 1.25s ease;
+  }
+  
+  /* When the section becomes visible, apply the animations */
+  .chaitra-section.animate .content {
     opacity: 1;
-    transform: translateX(0); /* Slide content in from left */
-}
-
-.chaitra-section.animate .logo {
+    transform: translateX(0); /* Content moves to its normal position */
+  }
+  
+  .chaitra-section.animate .logo {
     opacity: 1;
-    transform: translateX(20px); /* Slide logo in from right */
-}
-
-/* Logo Styles */
-.logo {
-    width: 40vw;
-    text-align: right;
+    transform: translateX(0); /* Logo moves to its normal position */
+  }
+  
+  /* Logo Styles */
+  .logo {
     transition: transform 0.3s ease;
-}
-
-.logo img {
+  }
+  
+  .logo img {
     width: 35vw;
     border-radius: 50%;
-}
-
-.logo:hover {
+  }
+  
+  .logo:hover {
     transform: scale(1.05);
-}
-
-/* Content Text Styling */
-.event-name {
+  }
+  
+  /* Content Text Styling */
+  .event-name {
     font-size: 50px;
     font-weight: bold;
-}
-
-.span-el {
-    color: #FA9A34;
-}
-
-.event-des {
+  }
+  
+  .span-el {
+    color: #fa9a34;
+  }
+  
+  .event-des {
     font-size: 18px;
-}
+  }
+  
+  .detail-section {
+    padding: 30px 10px 40px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  

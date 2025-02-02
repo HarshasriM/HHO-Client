@@ -3,83 +3,104 @@
 }
 
 .wrapper {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap; /* Prevents wrapping */
   padding: 6px 6px 30px;
 }
 
 .event-card {
-  width: 260px;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
   height: 360px;
   border-radius: 15px;
-  padding: 1.5rem;
-  margin: auto;
-  background: white;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  transition: 0.4s ease-out;
-  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+  
+  transition: transform 0.4s ease-out;
 }
 
 .event-card:hover {
-  transform: translateY(20px);
+  transform: translateY(-10px); /* Slight upward motion on hover */
 }
 
-.event-card:hover:before {
-  opacity: 1;
-}
-
-.event-card:hover .info {
-  opacity: 1;
-  transform: translateY(0px);
-}
-
-.event-card:before {
-  content: "";
+/* Image Styling */
+.image-container {
   position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
   width: 100%;
   height: 100%;
-  border-radius: 15px;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 2;
-  transition: 0.5s;
-  opacity: 0;
 }
 
 .event-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+
+  border-radius: 15px;
+  filter: blur(3px); 
+  z-index: 1; 
+}
+
+.event-card::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay to enhance the text */
+  z-index: 2;
 }
 
-.event-card .info {
-  position: relative;
+/* Title Overlay */
+.title-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 3;
   color: white;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: 0.5s;
+  text-align: center;
+  font-size: 32px; /* Larger font size */
+  font-weight: bold;
+  pointer-events: none; /* Ensures it doesn't block hover */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  padding: 10px;
+  border-radius: 5px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Adding text shadow for better visibility */
 }
 
+.event-card:hover .title-overlay {
+  opacity: 0; /* Fade out the title overlay on hover */
+  transform: translate(-50%, -100%); /* Move title upwards */
+}
+
+/* Info Section */
+.event-card .info {
+  position: absolute;
+  bottom: -100%; /* Hidden below the card initially */
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.8); /* Dark background for better readability */
+  color: white;
+  padding: 1.6rem;
+  border-radius: 15px;
+  transition: bottom 0.6s ease, transform 1s ease; /* Smooth sliding transition */
+}
+
+/* Info Text Styling */
 .event-card .info h1 {
   margin: 0px;
+  font-size: 28px;
 }
 
 .event-card .info p {
   letter-spacing: 1px;
-  font-size: 15px;
+  font-size: 12px;
   margin-top: 8px;
 }
 
+/* Button Styling */
 .event-card-button {
   padding: 0.6rem;
   outline: none;
@@ -89,12 +110,24 @@
   color: black;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.4s ease;
-  
+  transition: background-color 0.4s ease, color 0.4s ease;
+  text-decoration: none;
+  margin-top: 10px; /* Adjusted margin-top for spacing between text and button */
+  display: inline-block;
+  text-align: center;
 }
 
-.event-card-button:hover{
+.event-card-button:hover {
   background: rgb(238, 162, 74);
   color: white;
   text-decoration: none;
+}
+
+/* Adjust the info section to appear on hover */
+.event-card:hover .info {
+  bottom: 0;
+}
+.title{
+  font-size: 28px;
+  font-weight: bold;
 }

@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import "./AboutContent.css";
 import "./TeamSection.css";
 import axios from 'axios';
+import TeamSkeleton from '../Skeletons/TeamSkeleton';
 import { AppContext } from '../../context/Context';
 function Team() {
     const [teamData, setTeamData] = useState(null);
     const{token,apiUrl} = useContext(AppContext);
+    const [loading, setLoading] = useState(true);
 
+    
     useEffect(() => {
         // const headers = {
         //     'Content-Type': 'application/json',
@@ -16,11 +19,23 @@ function Team() {
         axios.get(`${apiUrl}/api/users/offUsers/`).then(res=>{
             console.log(res.data);
             setTeamData(res.data);
+
             setTeamData(res.data.filter((item, index) => {
                 return item.role === 'Accountant' || item.role ==='Core'
             }));
+            const timer = setTimeout(() => {
+                setLoading(false);
+              }, 3000); // Adjust loading time as needed
+              return () => clearTimeout(timer);
 
         })
+        .catch(() => {
+            console.log("No data fetched")
+            const timer = setTimeout(() => {
+                setLoading(false);
+              }, 3000); // Adjust loading time as needed
+              return () => clearTimeout(timer);
+        }); 
     }, []);
     console.log(teamData)
 
@@ -74,7 +89,7 @@ function Team() {
         <div className='about-team text-center'>
             <h1 className='about-title mb-2'>Our <span className='span'>Team</span></h1>
             <div className='team' id="team">
-                {teamdetails(teamData)}
+            {loading ? <TeamSkeleton /> : teamdetails(teamData)}
             </div>
 
         </div>

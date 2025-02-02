@@ -1,6 +1,10 @@
-import logo from './logo.svg';
+
+import logo from './logo.svg'
+
+import { Circles } from "react-loader-spinner";
+
 import './App.css';
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import {Routes,Route} from 'react-router-dom';
 import Home from './Pages/Home/Home';
@@ -36,11 +40,53 @@ import NewDonation from './components/Dashbord/Accountant/NewDonation';
 import AllDonations from './components/Dashbord/Accountant/AllDonations';
 import DetailedEvent from './components/Event/DetailedEvent';
 import NewUser from "./components/Dashbord/Admin/Users/NewUser";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 function App() {
   const{handleClose,open,alertMsg,errorOcc} = useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSlowNetwork, setIsSlowNetwork] = useState(false);
+  useEffect(() => {
+    // Detect slow network using `navigator.connection`
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection) {
+      const { effectiveType } = connection; // e.g., "4g", "3g", "2g", "slow-2g"
+      if (["2g", "slow-2g"].includes(effectiveType)) {
+        const networking = setTimeout(()=>setIsSlowNetwork(true),1000);
+        return () => clearTimeout(networking);
+      }
+    }
+  },[])
+  
+  useEffect(() => {
+    // Simulate slow loading (e.g., data fetching or large asset loading)
+    const loadingTimeout = setTimeout(() => setIsLoading(false), 3000); // Show loader for 3 seconds
+
+    return () => clearTimeout(loadingTimeout);
+  }, []);
+  if (isLoading || isSlowNetwork) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          backgroundColor: "#f5f5f5",
+        }}
+      >
+        <Circles
+          height="80"
+          width="80"
+          color="#fa9a34"
+          ariaLabel="loading"
+        />
+      </div>
+    );
+  }
   return (
     <>
       <Navbar />

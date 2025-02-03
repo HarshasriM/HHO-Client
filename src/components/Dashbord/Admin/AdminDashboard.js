@@ -14,6 +14,7 @@ import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import GroupsIcon from '@mui/icons-material/Groups';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 
 // Import icons for the nav items
@@ -30,6 +31,16 @@ const NAV_ITEMS = [
       { label: 'All Testimonials', route: "/dashboard/all-testimonials" },
     ],
   },
+  
+  {
+    label: "Users",
+    icon: <GroupIcon />,
+    subItems: [
+      { label: 'New User', route: "/dashboard/users/new" },
+      { label: 'All Users', route: "/dashboard/users" },
+
+    ],
+  },
   {
     label: "Activities",
     icon: <EventIcon />,
@@ -39,14 +50,13 @@ const NAV_ITEMS = [
     ],
   },
   {
-    label: "Users",
-    icon: <GroupIcon />,
+    label: 'Our Team',
+    icon: <GroupsIcon />,
     subItems: [
-      { label: 'New User', route: "/dashboard/users/new" },
-      { label: 'All Users', route: "/dashboard/users" },
-
+      { label: 'Add New Team', route: "/dashboard/new-team" },
+      { label: 'List of teams', route: "/dashboard/all-teams" },
     ],
-  }
+  },
 ];
 
 const theme = createTheme();
@@ -94,7 +104,7 @@ function AdminDashbord() {
           }}
         >
           <Typography variant="h6" sx={{ mb: 2 }}>
-            Accountant Panel
+            Admin Panel
           </Typography>
           <Divider />
           <List sx={{ p: 0 }}>

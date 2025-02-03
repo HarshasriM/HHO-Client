@@ -13,7 +13,9 @@ function PrivateRole({ children }) {
       '/dashboard/new-activity',
       '/dashboard/all-activities',
       '/dashboard/users',
-      '/dashboard/users/new'
+      '/dashboard/users/new',
+      '/dashboard/new-team',
+      '/dashboard/all-teams'
     ],
     Core: ['/dashboard/new-event', '/dashboard/events'],
     Accountant: ['/dashboard/new-transaction', '/dashboard/past-transactions','/dashboard/new-donation','/dashboard/all-donations'],

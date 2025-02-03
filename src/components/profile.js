@@ -29,7 +29,7 @@ function ProfileMenu() {
 
   return (
     <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title="Open settings">
+      <Tooltip title="">
         <Typography
           onClick={handleOpenUserMenu}
           sx={{

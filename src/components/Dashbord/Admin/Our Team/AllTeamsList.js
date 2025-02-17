@@ -1,62 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import { TextField, Select, MenuItem, InputLabel, FormControl, Container, Typography, Box } from '@mui/material';
 
-const teamMembers = [
-  {
-    year: "2025",
-    batch: [
-      { sNo: 1, name: "John Doe", id: "T001", role: "Developer", branch: "CSE", year: "3rd" },
-      { sNo: 2, name: "Jane Smith", id: "T002", role: "Designer", branch: "IT", year: "2nd" },
-      { sNo: 3, name: "Alex Johnson", id: "T003", role: "Project Manager", branch: "ECE", year: "4th" },
-      { sNo: 4, name: "Emily Davis", id: "T004", role: "Tester", branch: "EEE", year: "3rd" },
-      { sNo: 5, name: "Michael Brown", id: "T005", role: "Analyst", branch: "ME", year: "2nd" },
-      { sNo: 6, name: "Chris Lee", id: "T006", role: "Developer", branch: "CSE", year: "3rd" },
-      { sNo: 7, name: "Sara White", id: "T007", role: "Designer", branch: "IT", year: "2nd" },
-      { sNo: 8, name: "Tom Black", id: "T008", role: "Project Manager", branch: "ECE", year: "4th" },
-      { sNo: 9, name: "Lucy Green", id: "T009", role: "Tester", branch: "EEE", year: "3rd" },
-      { sNo: 10, name: "Robert Gray", id: "T010", role: "Analyst", branch: "ME", year: "2nd" },
-    ]
-  },
-  {
-    year: "2024",
-    batch: [
-      { sNo: 1, name: "Anna Brown", id: "T011", role: "Developer", branch: "CSE", year: "3rd" },
-      { sNo: 2, name: "James White", id: "T012", role: "Designer", branch: "IT", year: "2nd" },
-      { sNo: 3, name: "Liam Johnson", id: "T013", role: "Project Manager", branch: "ECE", year: "4th" },
-      { sNo: 4, name: "Olivia Green", id: "T014", role: "Tester", branch: "EEE", year: "3rd" },
-      { sNo: 5, name: "Mason Black", id: "T015", role: "Analyst", branch: "ME", year: "2nd" },
-      { sNo: 6, name: "Sophia Blue", id: "T016", role: "Developer", branch: "CSE", year: "3rd" },
-      { sNo: 7, name: "Noah Red", id: "T017", role: "Designer", branch: "IT", year: "2nd" },
-      { sNo: 8, name: "Emma Pink", id: "T018", role: "Project Manager", branch: "ECE", year: "4th" },
-      { sNo: 9, name: "William Yellow", id: "T019", role: "Tester", branch: "EEE", year: "3rd" },
-      { sNo: 10, name: "Ava Violet", id: "T020", role: "Analyst", branch: "ME", year: "2nd" },
-    ]
-  }
-];
-
-const columns = [
-  { name: 'S No', selector: row => row.sNo, sortable: true },
-  { name: 'Name', selector: row => row.name, sortable: true },
-  { name: 'ID', selector: row => row.id },
-  { name: 'Role', selector: row => row.role },
-  { name: 'Branch', selector: row => row.branch },
-  { name: 'Year', selector: row => row.year }
-];
-
 const OurTeamList = () => {
+  const [teamMembers, setTeamMembers] = useState([]); // Ensure it's always an array
   const [search, setSearch] = useState('');
-  const [selectedYear, setSelectedYear] = useState('2025');
+  const [selectedYear, setSelectedYear] = useState('');
 
-  const filteredData = teamMembers
-    .find(team => team.year === selectedYear)
-    .batch.filter(member => member.name.toLowerCase().includes(search.toLowerCase()));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/users/offusers/data");
+        const data = await response.json();
+  
+        console.log("Fetched data:", data); // Debugging log
+  
+        if (data && Array.isArray(data.records)) {
+          setTeamMembers(data.records);
+  
+          // Ensure selectedYear is set to a valid value
+          if (data.records.length > 0) {
+            setSelectedYear(data.records[0].year);
+          }
+        } else {
+          console.error("Error: Expected an array but received:", typeof data.records);
+          setTeamMembers([]);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setTeamMembers([]);
+      }
+    };
+    fetchData();
+  }, []);  
 
-  const years = [...new Set(teamMembers.map(team => team.year))];
+  // console.log("teamMembers state:", teamMembers); // Debugging log
+  // console.log("Selected Year:", selectedYear);
+
+  const selectedTeam = teamMembers.find(team => team.year === selectedYear);
+  // console.log("Selected Team:", selectedTeam);
+  // console.log("Batch Members:", selectedTeam.batch);
+
+  const filteredData = selectedTeam && Array.isArray(selectedTeam.batch) 
+    ? selectedTeam.batch.filter(member => 
+        member.name && member.name.toLowerCase().includes(search.toLowerCase())
+      ) 
+    : [];
+
+  console.log("Filtered Data:", filteredData); // Debugging log
+
+  const years = Array.isArray(teamMembers) ? [...new Set(teamMembers.map(team => team.year))] : [];
+
+  const columns = [
+    { name: 'S No', selector: row => row.sNo, sortable: true },
+    { name: 'Name', selector: row => row.name, sortable: true },
+    { name: 'ID', selector: row => row.id },
+    { name: 'Role', selector: row => row.role },
+    { name: 'Branch', selector: row => row.branch },
+    { name: 'Year', selector: row => row.year }
+  ];
 
   return (
     <Container maxWidth="lg" sx={{ py: 2, bgcolor: 'background.paper' }}>
-      <Typography variant="h4" align="center" gutterBottom sx={{color:'orange'}}>
+      <Typography variant="h4" align="center" gutterBottom sx={{color:'orange',fontWeight: "bold"}}>
         List of Teams
       </Typography>
       <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
@@ -70,8 +76,11 @@ const OurTeamList = () => {
         <FormControl sx={{ minWidth: 120 }}>
           <InputLabel>Year</InputLabel>
           <Select
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
+            value={selectedYear || ""}
+            onChange={(e) => {
+              console.log("Year selected:", e.target.value);
+              setSelectedYear(e.target.value);
+            }}
             label="Year"
           >
             {years.map((year) => (
